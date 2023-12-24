@@ -1,0 +1,19 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        master01:
+          ansible_user: serveradmin
+          ansible_host: 172.20.24.11
+        master02:
+          ansible_user: serveradmin
+          ansible_host: 172.20.24.12
+        master03:
+          ansible_user: serveradmin
+          ansible_host: 172.20.24.13
+    worker:
+      hosts:
+        worker01:
+          ansible_user: serveradmin
+          ansible_host: 172.20.24.14
