@@ -15,7 +15,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   dependsOn:
     - name: csi-addons-controller-manager
@@ -36,7 +36,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   dependsOn:
     - name: rook-ceph
