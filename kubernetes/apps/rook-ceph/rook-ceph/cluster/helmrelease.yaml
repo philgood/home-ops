@@ -103,7 +103,7 @@ spec:
 
     ingress:
       dashboard:
-        ingressClassName: "internal-nginx"
+        ingressClassName: "internal"
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         host:
