@@ -30,6 +30,12 @@ spec:
     cephClusterSpec:
       network:
         provider: host
+      mgr:
+        modules:
+         - name: pg_autoscaler # This is already enabled by default, but needs to be here so that we don't override the default behavior.
+           enabled: true
+          - name: rook # This enables the rook module.
+            enabled: true
 
       resources:
         mgr:
@@ -106,6 +112,7 @@ spec:
         ingressClassName: "internal"
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          hajimari.io/icon: fa6-solid:chess-rook
         host:
           name: &host rook.narden.au
           path: "/"
