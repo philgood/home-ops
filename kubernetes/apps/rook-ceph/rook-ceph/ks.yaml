@@ -23,7 +23,7 @@ metadata:
   name: rook-ceph-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/operator
+  path: ./kubernetes/apps/rook-ceph/rook-ceph/operator
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -42,7 +42,7 @@ metadata:
   name: rook-ceph-cluster
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/cluster
+  path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
@@ -61,7 +61,7 @@ metadata:
   name: rook-ceph-addons
   namespace: flux-system
 spec:
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/add-ons
+  path: ./kubernetes/apps/rook-ceph/rook-ceph/add-ons
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
