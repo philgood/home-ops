@@ -1,22 +1,22 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
+  namespace: rook-ceph
 spec:
   interval: 30m
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.13.1
+      version: v1.13.0
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
   values:
     toolbox:
-      enabled: false
+      enabled: true
 
     monitoring:
       enabled: true
@@ -35,45 +35,45 @@ spec:
         mgr:
           requests:
             cpu: "125m"
-            memory: "512Mi"
+            memory: "549M"
           limits:
-            memory: "2Gi"
+            memory: "1219M"
         mon:
           requests:
             cpu: "49m"
-            memory: "512Mi"
+            memory: "477M"
           limits:
-            memory: "1Gi"
+            memory: "1059M"
         osd:
           requests:
             cpu: "442m"
-            memory: "2Gi"
+            memory: "2678M"
           limits:
-            memory: "6Gi"
+            memory: "5944M"
         mgr-sidecar:
           requests:
             cpu: "49m"
-            memory: "128Mi"
+            memory: "94M"
           limits:
-            memory: "256Mi"
+            memory: "208M"
         crashcollector:
           requests:
             cpu: "15m"
-            memory: "64Mi"
+            memory: "64M"
           limits:
-            memory: "64Mi"
+            memory: "64M"
         logcollector:
           requests:
             cpu: "100m"
-            memory: "100Mi"
+            memory: "100M"
           limits:
-            memory: "1Gi"
+            memory: "1G"
         cleanup:
           requests:
             cpu: "250m"
-            memory: "100Mi"
+            memory: "100M"
           limits:
-            memory: "1Gi"
+            memory: "1G"
 
       crashCollector:
         disable: false
@@ -107,11 +107,14 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         host:
-          name: &host rook-main.narden.au
+          name: &host rook.narden.au
           path: "/"
         tls:
           - hosts:
               - *host
+
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: false
 
     cephBlockPools:
       - name: ceph-blockpool
@@ -136,12 +139,6 @@ spec:
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
 
-    cephBlockPoolsVolumeSnapshotClass:
-      enabled: true
-      name: csi-ceph-blockpool
-      isDefault: false
-      deletionPolicy: Delete
-
     cephFileSystems:
       - name: ceph-filesystem
         spec:
@@ -158,9 +155,9 @@ spec:
             resources:
               requests:
                 cpu: "35m"
-                memory: "1Gi"
+                memory: "64M"
               limits:
-                memory: "3Gi"
+                memory: "1Gi"
         storageClass:
           enabled: true
           isDefault: false
@@ -177,10 +174,32 @@ spec:
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
 
-    cephFileSystemVolumeSnapshotClass:
-      enabled: true
-      name: csi-ceph-filesystem
-      isDefault: false
-      deletionPolicy: Delete
-
-    cephObjectStores: []
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 1
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128M
+              limits:
+                memory: 4Gi
+            instances: 1
+          healthCheck:
+            bucket:
+              interval: 60s
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
