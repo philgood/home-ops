@@ -126,6 +126,8 @@ spec:
             limits:
               memory: 256Mi
 
+    enableDiscoveryDaemon: true # Not strictly necessary to enable the rook module, but is a pre-requisite to enable features from it.
+
     monitoring:
       enabled: true
 
