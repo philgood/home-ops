@@ -1,0 +1,31 @@
+{
+ "collection_info": {
+  "namespace": "ibm",
+  "name": "storage_virtualize",
+  "version": "2.1.0",
+  "authors": [
+   "Shilpi Jain (github.com/Shilpi-J)",
+   "Sumit Gupta (github.com/sumitguptaibm)"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "storage"
+  ],
+  "description": "Ansible Collections for IBM Storage Virtualize",
+  "license": [],
+  "license_file": "LICENSE",
+  "dependencies": {},
+  "repository": "https://github.com/ansible-collections/ibm.storage_virtualize",
+  "documentation": null,
+  "homepage": "https://github.com/ansible-collections/ibm.storage_virtualize",
+  "issues": "https://github.com/ansible-collections/ibm.storage_virtualize/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "c1a2f1b758ac028af7465ae36e7ae723ec8fc82cb12aff0f105c04262f0a7a5e",
+  "format": 1
+ },
+ "format": 1
+}
