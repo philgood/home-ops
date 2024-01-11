@@ -1,8 +1,14 @@
+<<<<<<< HEAD
+=======
+# Editors
+.vscode/
+>>>>>>> 9a56008 (feat: initialize repo)
 # Trash
 .DS_Store
 Thumbs.db
 # k8s
 kubeconfig
+<<<<<<< HEAD
 .decrypted~*.yaml
 .config.env
 *.agekey
@@ -12,3 +18,7 @@ kubeconfig
 .venv*
 # Taskfile
 .tasks
+=======
+# sops
+.decrypted~*.yaml
+>>>>>>> 9a56008 (feat: initialize repo)

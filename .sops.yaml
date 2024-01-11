@@ -1,5 +1,6 @@
 ---
 creation_rules:
+<<<<<<< HEAD
   - path_regex: kubernetes/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData)$"
     key_groups:
@@ -14,3 +15,7 @@ creation_rules:
     key_groups:
       - age:
           - "age1caj9cj4p8cw959s0kdsvlhswq2hrp2y70qhg8v8n9dd82dzffdks4druav"
+=======
+- encrypted_regex: '((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))'
+  pgp: >-
+>>>>>>> 9a56008 (feat: initialize repo)
