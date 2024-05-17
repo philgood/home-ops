@@ -6,7 +6,7 @@ metadata:
   name: &app spoolman
   namespace: flux-system
 spec:
-  targetNamespace: spoolman
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
