@@ -3,13 +3,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: spoolman
-  namespace: flux-system
 spec:
-  accessModes:
-    - ReadWriteOnce
-
+  accessModes: ["ReadWriteMany"]
   resources:
     requests:
-      storage: 1Gi
-
-  storageClassName: ceph-block
+      storage: 2Gi
+  storageClassName: ceph-filesystem
