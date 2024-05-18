@@ -25,7 +25,7 @@ spec:
 
         pod:
           securityContext:
-            runAsUser: 0
+            runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
@@ -36,8 +36,8 @@ spec:
               repository: ghcr.io/donkie/spoolman
               tag: "0.17.0"
               PullPolicy: IfNotPresent
-            securityContext:
-              runAsUser: 0
+            #securityContext:
+            #  runAsUser: 0
             resources:
               requests:
                 cpu: 14m
