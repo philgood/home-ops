@@ -10,11 +10,12 @@ spec:
   chart:
     spec:
       chart: app-template
+      repoURL: https://bjw-s.github.io/helm-charts
       version: 2.6.0
       interval: 30m
       sourceRef:
-        kind: HelmRepository
-        name: bjw-s
+      #  kind: HelmRepository
+       # name: bjw-s
         namespace: flux-system
 
   values:
