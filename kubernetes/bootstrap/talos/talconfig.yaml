@@ -21,7 +21,7 @@ cniConfig:
 nodes:
   - hostname: "metal01"
     ipAddress: "172.20.24.10"
-    installDisk: "/dev/sdb"
+    installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
@@ -38,7 +38,7 @@ nodes:
           ip: "172.20.24.9"
   - hostname: "metal02"
     ipAddress: "172.20.24.11"
-    installDisk: "/dev/sdb"
+    installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
@@ -55,7 +55,7 @@ nodes:
           ip: "172.20.24.9"
   - hostname: "metal03"
     ipAddress: "172.20.24.12"
-    installDisk: "/dev/sdb"
+    installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
