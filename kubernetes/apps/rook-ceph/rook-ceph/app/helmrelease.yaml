@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: rook-ceph-operator
+  name: rook-ceph
 spec:
   interval: 30m
   releaseName: rook-ceph
@@ -38,8 +38,8 @@ spec:
           operator: "Exists"
         - effect: "NoSchedule"
           operator: "Exists"
-    
-    
+
+
     csiRBDProvisionerResource: |
         - name : csi-provisioner
           resource:
@@ -137,7 +137,7 @@ spec:
 
     enableDiscoveryDaemon: true # Not strictly necessary to enable the rook module, but is a pre-requisite to enable features from it.
 
-    
+
     monitoring:
       enabled: true
 
