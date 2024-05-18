@@ -10,13 +10,12 @@ spec:
   chart:
     spec:
       chart: app-template
-      repoURL: https://bjw-s.github.io/helm-charts
-      version: 2.6.0
+      version: 2.2.0
       interval: 30m
-     # sourceRef:
-      #  kind: HelmRepository
-       # name: bjw-s
-      #  namespace: flux-system
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
 
   values:
     controllers:
@@ -35,7 +34,7 @@ spec:
           main:
             image:
               repository: ghcr.io/donkie/spoolman
-              tag: 0.17.0
+              tag: "0.17.0"
               PullPolicy: IfNotPresent
             securityContext:
               runAsUser: 0
