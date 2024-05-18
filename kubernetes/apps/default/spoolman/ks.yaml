@@ -10,15 +10,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 10m
   path: ./kubernetes/apps/default/spoolman/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
   wait: false
-  interval: 10m
-  retryInterval: 1m
-  timeout: 5m
-  postBuild:
-    substitute:
-      APP: *app
