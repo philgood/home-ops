@@ -42,3 +42,6 @@ spec:
         memory: 128Mi # unchangable
         cpu: 100m # unchangable
       limits: {}
+
+    enableDiscoveryDaemon: true # Not strictly necessary to enable the rook module, but is a pre-requisite to enable features from it.
+
