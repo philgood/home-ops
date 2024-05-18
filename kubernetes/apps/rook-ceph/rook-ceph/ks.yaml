@@ -37,19 +37,3 @@ spec:
   postBuild:
     substitute:
       APP: rook
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: rook-ceph-addons
-  namespace: flux-system
-spec:
-  interval: 10m
-  path: "./kubernetes/apps/rook-ceph/rook-ceph/add-ons"
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  wait: false
-  dependsOn:
-    - name: rook-ceph-cluster
