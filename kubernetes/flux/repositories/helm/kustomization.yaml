@@ -13,3 +13,6 @@ resources:
   - ./postfinance.yaml
   - ./spegel.yaml
   - ./stakater.yaml
+  - ./rook-ceph.yaml
+  - ./piraeus.yaml
+  - ./backube.yaml
