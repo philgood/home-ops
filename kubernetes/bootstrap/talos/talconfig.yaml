@@ -117,7 +117,6 @@ patches:
     machine:
       network:
         nameservers:
-          - 172.20.24.2,172.20.20.129
 
   # Configure NTP
   - |-
