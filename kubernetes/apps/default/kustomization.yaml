@@ -5,5 +5,5 @@ resources:
   - ./namespace.yaml
 
 # Applications
-
+  - ./hajimari.yaml
   - ./spoolman/ks.yaml
