@@ -86,9 +86,9 @@ spec:
                 service:
                   name: app
                   port: http
-        tls:
-          - hosts:
-              - *app
+        #tls:
+        #  - hosts:
+        #      - *app
 
     persistence:
       config:
