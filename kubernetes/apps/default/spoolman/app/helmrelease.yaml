@@ -7,6 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -16,7 +17,19 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       spoolman:
@@ -35,15 +48,22 @@ spec:
             image:
               repository: ghcr.io/donkie/spoolman
               tag: 0.17.0
-            securityContext:
-              runAsUser: 0
+            env:
+              TZ: ${TIMEZONE}
             resources:
               requests:
                 cpu: 14m
                 memory: 431M
               limits:
                 memory: 431M
-
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
@@ -72,7 +92,6 @@ spec:
 
     persistence:
       config:
-        enabled: true
-        existingClaim: spoolman-config
+        existingClaim: *app
         globalMounts:
           - path: /home/app/.local/share/spoolman
