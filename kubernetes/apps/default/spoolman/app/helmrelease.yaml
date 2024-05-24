@@ -84,11 +84,11 @@ spec:
             paths:
               - path: /
                 service:
-                  name: app
+                  #name: app
                   port: http
-        #tls:
-        #  - hosts:
-        #      - *app
+        tls:
+          - hosts:
+              - *app
 
     persistence:
       config:
