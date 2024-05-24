@@ -102,6 +102,9 @@ spec:
                 service:
                   identifier: app
                   port: http
+        tls:
+          - hosts:
+              - *host
       codeserver:
         className: internal
         hosts:
@@ -111,6 +114,9 @@ spec:
               service:
                 identifier: codeserver
                 port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: *app
