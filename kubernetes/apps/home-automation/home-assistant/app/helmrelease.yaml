@@ -104,7 +104,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host
+              - *app
       codeserver:
         className: internal
         hosts:
@@ -116,7 +116,7 @@ spec:
                 port: http
         tls:
           - hosts:
-              - *host
+              - *app
     persistence:
       config:
         existingClaim: *app
