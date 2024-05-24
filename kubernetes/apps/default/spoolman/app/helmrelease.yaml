@@ -68,7 +68,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host
+              - *app
 
     persistence:
       config:
