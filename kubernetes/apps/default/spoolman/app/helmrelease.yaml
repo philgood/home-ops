@@ -35,6 +35,14 @@ spec:
       spoolman:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+         config-permission-fix:
+            image: busybox
+            command: [ "/bin/chown", "-R", "1000:1000", "/home/app/.local/share/spoolman/" ]
+            securityContext:
+              runAsGroup: 0
+              runAsNonRoot: false
+              runAsUser: 0
         containers:
           app:
             image:
