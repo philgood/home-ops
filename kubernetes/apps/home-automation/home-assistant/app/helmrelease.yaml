@@ -82,6 +82,7 @@ spec:
             port: 8123
       codeserver:
         controller: *app
+        type: ClusterIP
         ports:
           http:
             enabled: true
@@ -89,8 +90,8 @@ spec:
     ingress:
       app:
         className: external
-        #annotations:
-        #  external-dns.alpha.kubernetes.io/target: echo-server.${SECRET_DOMAIN}
+        annotations:
+          external-dns.alpha.kubernetes.io/target: echo-server.${SECRET_DOMAIN}
         hosts:
           - host: hass.${SECRET_DOMAIN}
             paths:
