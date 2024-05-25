@@ -88,4 +88,4 @@ spec:
       config:
         existingClaim: *app
         globalMounts:
-          - path: /home/app/.local/share/spoolman
+          - path: /home/app/.local/share/spoolman/
