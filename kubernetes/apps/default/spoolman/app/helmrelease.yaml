@@ -35,19 +35,14 @@ spec:
       spoolman:
         annotations:
           reloader.stakater.com/auto: "true"
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-
         containers:
           app:
             image:
               repository: ghcr.io/donkie/spoolman
               tag: 0.17.0
             securityContext:
-             #runAsUser: 472
-             privileged: true
+             runAsUser: 0
+             runAsGroup: 0
 
             env:
               TZ: ${TIMEZONE}
