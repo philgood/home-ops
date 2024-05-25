@@ -4,8 +4,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: spoolman
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes:
+   - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
   storageClassName: longhorn
+  volumeMode: Filesystem
