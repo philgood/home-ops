@@ -41,9 +41,9 @@ spec:
             image:
               repository: ghcr.io/donkie/spoolman
               tag: 0.17.0
-            securityContext:
-             runAsUser: 472
-             fsGroup: 472
+            #securityContext:
+            # runAsUser: 472
+             #fsGroup: 472
             env:
               TZ: ${TIMEZONE}
             resources:
