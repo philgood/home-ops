@@ -37,7 +37,9 @@ spec:
           reloader.stakater.com/auto: "true"
         initContainers:
          config-permission-fix:
-            image: busybox
+            image:
+              repository: busybox
+              tag: latest
             command: [ "/bin/chown", "-R", "1000:1000", "/home/app/.local/share/spoolman/" ]
             securityContext:
               runAsGroup: 0
