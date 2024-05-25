@@ -92,6 +92,6 @@ spec:
 
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: spoolman-config
         globalMounts:
           - path: /home/app/.local/share/spoolman
