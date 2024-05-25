@@ -5,9 +5,17 @@ kind: HelmRelease
 metadata:
   name: &app spoolman
   namespace: flux-system
+
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+
 spec:
   interval: 30m
-  timeout: 15m
+timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -30,6 +38,7 @@ spec:
       namespace: storage
     - name: volsync
       namespace: storage
+
   values:
     controllers:
       spoolman:
