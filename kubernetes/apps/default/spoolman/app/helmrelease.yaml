@@ -41,8 +41,6 @@ spec:
               repository: ghcr.io/donkie/spoolman
               tag: 0.17.0
             securityContext:
-             runAsGroup: 0
-             runAsNonRoot: false
              runAsUser: 0
             env:
               TZ: ${TIMEZONE}
