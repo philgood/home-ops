@@ -2,13 +2,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: bitwarden
+  name: &app bitwarden
   namespace: kube-system
 spec:
   dependsOn:
     - name: external-secrets
       namespace: kube-system
-  interval: 5m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -17,16 +18,32 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      interval: 5m
+      interval: 30m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: uninstall
+      retries: 3
   values:
-    image:
-      repository: ghcr.io/larivierec/bitwarden-cli
-      tag: latest
-    envFrom:
-      - secretRef:
-          name: bitwarden-cli
+    controllers:
+      bitwarden:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/larivierec/bitwarden-cli
+              tag: latest
+            envFrom:
+              - secretRef:
+                  name: bitwarden-cli
     service:
-      main:
+      app:
+        controller: *app
+        nameOveride: *app
         ports:
           http:
             port: 8087

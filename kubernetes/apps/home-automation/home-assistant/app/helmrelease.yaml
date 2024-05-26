@@ -33,11 +33,20 @@ spec:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          01-init-db:
+            envFrom: &envFrom
+              - secretRef:
+                  name: home-assistant-secret
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: "16.3"
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/home-assistant
-              tag: 2024.5.4@sha256:274e7aec22c2faad7f2b23dd7533ea2d3198f23cd37552c791b3e25b29a3eb5f
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2024.5.5@sha256:f27154dd525a6bd36f9a27af470c0862dedc270d8ef7d4b3f49f59d80b433617
+            envFrom: *envFrom
             env:
               TZ: ${TIMEZONE}
             probes:
@@ -56,7 +65,7 @@ spec:
               repository: ghcr.io/coder/code-server
               tag: 4.89.1
             env:
-              TZ: Australia/Canberra
+              TZ: ${TIMEZONE}
             args:
               - "/config"
               - --auth
@@ -77,6 +86,9 @@ spec:
       app:
         controller: *app
         nameOverride: *app
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 172.20.24.15
         ports:
           http:
             port: 8123
@@ -91,7 +103,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: echo-server.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
           - host: hass.${SECRET_DOMAIN}
             paths:
@@ -104,6 +116,8 @@ spec:
               - *app
       codeserver:
         className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
           - host: hass-code.${SECRET_DOMAIN}
             paths:
