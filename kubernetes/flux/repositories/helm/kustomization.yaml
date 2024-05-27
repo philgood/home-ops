@@ -18,3 +18,4 @@ resources:
   - ./piraeus.yaml
   - ./backube.yaml
   - ./external-secrets.yaml
+  - ./cloudnative-pg.yaml
