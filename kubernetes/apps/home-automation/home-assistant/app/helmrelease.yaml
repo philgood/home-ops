@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app home-assistant
+  name: home-assistant
 spec:
   interval: 30m
-  timeout: 15m
   chart:
     spec:
       chart: app-template
@@ -23,35 +22,41 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: longhorn
-      namespace: storage
-    - name: volsync
-      namespace: storage
   values:
     controllers:
       home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          01-init-db:
+            envFrom: &envFrom
+              - secretRef:
+                  name: home-assistant-secret
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: "16.3"
         containers:
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.5.5 #@sha256:7c9514d573dddae6eaa0ec452e70f52a3e789cb6f348cb69d4fecc2bfa3dc10e
+              tag: 2024.5.5@sha256:f27154dd525a6bd36f9a27af470c0862dedc270d8ef7d4b3f49f59d80b433617
+            envFrom: *envFrom
+            env:
+              HASS_TRUSTED_PROXIES: 172.20.24.0/24,10.69.0.0/16,10.96.0.0/16
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
-                memory: 256Mi
+                cpu: 41m
+                memory: 552Mi
               limits:
-                memory: 768Mi
-          code:
+                memory: 552Mi
+          codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.89.1
+              tag: 4.89.1@sha256:3b56b9e77d242241c107b6e9ec3be91ea23ab733e016f8a5e318c974b2a97107
             args:
               - --auth
               - "none"
@@ -60,64 +65,106 @@ spec:
               - --extensions-dir
               - "/config/.vscode"
               - "--port"
-              - "80"
+              - "12321"
               - /config
             resources:
               requests:
-                cpu: 10m
-                memory: 128Mi
+                cpu: 41m
+                memory: 593Mi
               limits:
-                memory: 1Gi
+                memory: 593Mi
 
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+
     service:
       app:
-        controller: *app
+        controller: home-assistant
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 172.20.24.100
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: 8123
+          mdns-tcp:
+            enabled: true
+            port: 5353
+            protocol: TCP
+            targetPort: 5353
+          mdns-udp:
+            enabled: true
+            port: 5353
+            protocol: UDP
+            targetPort: 5353
+          sonos:
+            enabled: true
+            port: 1400
+          emulated-hue:
+            enabled: true
+            port: 80
+          upnp:
+            enabled: true
+            port: 1900
+            protocol: UDP
+            targetPort: 1900
       codeserver:
-        controller: *app
+        type: ClusterIP
+        controller: home-assistant
         ports:
           http:
             enabled: true
-            port: 8080
+            port: 12321
+            protocol: TCP
+            targetPort: 12321
     ingress:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        className: internal
         hosts:
-          - host: hass.${SECRET_DOMAIN}
+          - host: &host hass.${SECRET_DOMAIN}
             paths:
               - path: /
+                pathType: Prefix
                 service:
                   identifier: app
                   port: http
         tls:
           - hosts:
-              - *app
+              - *host
       codeserver:
         className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hosts:
-          - host: hass-code.${SECRET_DOMAIN}
+          - host: &host hass-code.${SECRET_DOMAIN}
             paths:
-            - path: /
-              service:
-                identifier: codeserver
-                port: http
+              - path: /
+                service:
+                  identifier: codeserver
+                  port: http
         tls:
           - hosts:
-              - *app
+              - *host
     persistence:
       config:
-        existingClaim: *app
+        enabled: true
+        existingClaim: home-assistant-config
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config
+            codeserver:
+              - path: /config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
+      tmp:
+        type: emptyDir
