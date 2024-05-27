@@ -43,7 +43,6 @@ spec:
     service:
       app:
         controller: *app
-        nameOveride: *app
         ports:
           http:
             port: 8087
