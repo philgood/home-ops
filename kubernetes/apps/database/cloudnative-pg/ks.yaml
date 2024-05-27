@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: databases
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
   path: ./kubernetes/main/apps/databases/cloudnative-pg/app
   prune: true
   sourceRef:
