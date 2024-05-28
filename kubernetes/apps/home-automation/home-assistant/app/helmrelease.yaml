@@ -127,7 +127,7 @@ spec:
             targetPort: 12321
     ingress:
       app:
-        className: internal
+        className: external
         hosts:
           - host: &host hass.${SECRET_DOMAIN}
             paths:
