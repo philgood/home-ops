@@ -149,7 +149,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host
+              - *codeserverHost
     persistence:
       config:
         enabled: true
