@@ -27,14 +27,6 @@ spec:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
-        #initContainers:
-        # 01-init-db:
-        #    envFrom: &envFrom
-        #      - secretRef:
-        #          name: home-assistant-secret
-        #    image:
-        #      repository: ghcr.io/onedr0p/postgres-init
-        #      tag: "16.3"
         containers:
           app:
             image:
@@ -129,6 +121,12 @@ spec:
             port: 21065
             protocol: TCP
             targetPort: 21065
+          airplay:
+            enabled: true
+            port: 554
+          airplay2:
+            enabled: true
+            port: 3689
       codeserver:
         type: ClusterIP
         controller: home-assistant
