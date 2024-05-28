@@ -126,9 +126,9 @@ spec:
             targetPort: 1900
           homekit:
             enabled: true
-            port: 21063
+            port: 21065
             protocol: TCP
-            targetPort: 21063
+            targetPort: 21065
       codeserver:
         type: ClusterIP
         controller: home-assistant
