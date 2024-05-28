@@ -25,16 +25,16 @@ spec:
   values:
     controllers:
       home-assistant:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        initContainers:
-         01-init-db:
-            envFrom: &envFrom
-              - secretRef:
-                  name: home-assistant-secret
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.3"
+        #annotations:
+        #  reloader.stakater.com/auto: "true"
+        #initContainers:
+        # 01-init-db:
+        #   envFrom: &envFrom
+        #      - secretRef:
+        #          name: home-assistant-secret
+        #  image:
+        #      repository: ghcr.io/onedr0p/postgres-init
+        #      tag: "16.3"
         containers:
           app:
             image:
@@ -42,12 +42,14 @@ spec:
               tag: 2024.5.5@sha256:f27154dd525a6bd36f9a27af470c0862dedc270d8ef7d4b3f49f59d80b433617
             env:
               TZ: ${TIMEZONE}
-              POSTGRES_HOST: postgres-rw.database.svc.cluster.local
+              POSTGRES_HOST: postgres16-rw.database.svc.cluster.local
               POSTGRES_DB: home_assistant
               HASS_HTTP_TRUSTED_PROXY_1: 172.20.24.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 10.69.0.0/16
               HASS_HTTP_TRUSTED_PROXY_3: 10.96.0.0/16
-            envFrom: *envFrom
+            envFrom:
+             - secretRef:
+                 name: home-assistant-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
