@@ -84,6 +84,8 @@ spec:
                 memory: 1Gi
 
     defaultPodOptions:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
