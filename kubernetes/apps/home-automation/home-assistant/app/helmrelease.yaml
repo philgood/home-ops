@@ -42,7 +42,9 @@ spec:
               tag: 2024.5.5@sha256:f27154dd525a6bd36f9a27af470c0862dedc270d8ef7d4b3f49f59d80b433617
          #   envFrom: *envFrom
             env:
-              HASS_TRUSTED_PROXIES: 172.20.24.0/24,10.69.0.0/16,10.96.0.0/16
+              HASS_HTTP_TRUSTED_PROXY_1: 172.20.24.0/24
+              HASS_HTTP_TRUSTED_PROXY_2: 10.69.0.0/16
+              HASS_HTTP_TRUSTED_PROXY_3: 10.96.0.0/16
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -54,7 +56,7 @@ spec:
                 cpu: 41m
                 memory: 552Mi
               limits:
-                memory: 786Mi
+                memory: 1Gi
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
@@ -74,7 +76,7 @@ spec:
                 cpu: 41m
                 memory: 593Mi
               limits:
-                memory: 593Mi
+                memory: 1Gi
 
     defaultPodOptions:
       securityContext:
