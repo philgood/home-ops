@@ -90,7 +90,6 @@ spec:
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: 172.20.24.100
-        externalTrafficPolicy: Cluster
         ports:
           http:
             port: 8123
@@ -127,11 +126,12 @@ spec:
     ingress:
       app:
         className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host hass.${SECRET_DOMAIN}
+          - host: hass.${SECRET_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: app
                   port: http
