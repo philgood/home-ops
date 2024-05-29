@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./spoolman/ks.yaml
-  - ./whoogle/ks.yaml
