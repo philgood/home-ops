@@ -127,6 +127,16 @@ spec:
           airplay2:
             enabled: true
             port: 3689
+          lifx-tcp:
+            enabled: true
+            port: 56700
+            protocol: TCP
+            targetPort: 56700
+          lifx-udp:
+            enabled: true
+            port: 56700
+            protocol: UDP
+            targetPort: 56700
       codeserver:
         type: ClusterIP
         controller: home-assistant
