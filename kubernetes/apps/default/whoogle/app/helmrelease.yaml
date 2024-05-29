@@ -9,7 +9,8 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.2.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -27,12 +28,12 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      whoogle:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/benbusby/whoogle-search
               tag: 0.8.4
@@ -57,12 +58,12 @@ spec:
               limits:
                 memory: 250Mi
     service:
-      main:
+      app:
         ports:
           http:
             port: 5000
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
