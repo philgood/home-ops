@@ -117,6 +117,9 @@ spec:
             port: 1900
             protocol: UDP
             targetPort: 1900
+          lifx:
+            enabled: true
+            port: 56700
       codeserver:
         type: ClusterIP
         controller: home-assistant
