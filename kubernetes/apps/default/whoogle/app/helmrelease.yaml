@@ -70,11 +70,11 @@ spec:
         annotations:
           hajimari.io/icon: mdi:google
         hosts:
-          - host: &host whoogle.${SECRET_DOMAIN}
+          - host: whoogle.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
-                  name: app
+                  identifier: app
                   port: http
         tls:
           - hosts:
