@@ -67,7 +67,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
+        className: external
         annotations:
           hajimari.io/icon: mdi:google
         hosts:
