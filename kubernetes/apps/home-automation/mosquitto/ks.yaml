@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: longhorn
     - name: external-secrets
-  path: ./kubernetes/main/apps/default/mosquitto/app
+  path: ./kubernetes/apps/default/mosquitto/app
   prune: true
   sourceRef:
     kind: GitRepository
