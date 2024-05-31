@@ -28,22 +28,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          config-permission-fix:
-            image:
-              repository: docker.io/library/busybox
-              tag: latest
-            command: [ "/bin/chown", "-R", "1883:1883", "/data" ]
-            securityContext:
-              runAsGroup: 0
-              runAsNonRoot: false
-              runAsUser: 0
           init-config:
             image:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
               tag: 2.0.18@sha256:cb3afd02611b0c58b328196ab00de0158322b4c1e014841fb182d2a0ea3a79b9
             command: ["/bin/sh", "-c"]
             args:
-              - cp /tmp/secret/* /mosquitto/external_config/;
+              - chmod 0600 /data;
+                cp /tmp/secret/* /mosquitto/external_config/;
                 mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd;
                 chmod 0600 /mosquitto/external_config/mosquitto_pwd;
 
