@@ -56,9 +56,9 @@ spec:
     defaultPodOptions:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-      #securityContext:
+      securityContext:
       #  runAsNonRoot: true
-      #  runAsUser: 568
+        runAsUser: 0
       #  runAsGroup: 568
       #  seccompProfile: { type: RuntimeDefault }
 
