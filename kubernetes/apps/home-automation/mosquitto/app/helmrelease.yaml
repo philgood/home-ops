@@ -37,7 +37,15 @@ spec:
               - cp /tmp/secret/* /mosquitto/external_config/;
                 mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd;
                 chmod 0600 /mosquitto/external_config/mosquitto_pwd;
-
+          config-permission-fix:
+            image:
+              repository: docker.io/library/busybox
+              tag: latest
+            command: [ "/bin/chown", "-R", "1883:1883", "/data/" ]
+            securityContext:
+              runAsGroup: 0
+              runAsNonRoot: false
+              runAsUser:
         containers:
           app:
             image:
