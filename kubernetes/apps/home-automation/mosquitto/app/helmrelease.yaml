@@ -32,7 +32,7 @@ spec:
             image:
               repository: docker.io/library/busybox
               tag: latest
-            command: [ "/bin/chown", "-R", "1883:1883", "/data/" ]
+            command: [ "/bin/chown", "-R", "1000:1000", "/data/" ]
             securityContext:
               runAsGroup: 0
               runAsNonRoot: false
