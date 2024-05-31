@@ -57,10 +57,11 @@ spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       securityContext:
-      #  runAsNonRoot: true
-        runAsUser: 0
-      #  runAsGroup: 568
-      #  seccompProfile: { type: RuntimeDefault }
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatc
 
     service:
       app:
