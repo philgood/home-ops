@@ -45,7 +45,7 @@ spec:
             securityContext:
               runAsGroup: 0
               runAsNonRoot: false
-              runAsUser:
+              runAsUser: 0
         containers:
           app:
             image:
