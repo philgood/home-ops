@@ -53,15 +53,13 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-    defaultPodOptions:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatc
+    pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            runAsNonRoot: true
+            fsGroup: 2000
+            fsGroupChangePolicy: OnRootMismatchc
 
     service:
       app:
