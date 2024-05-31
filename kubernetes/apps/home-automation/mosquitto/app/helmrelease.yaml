@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -22,9 +22,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: openebs
-      namespace: storage
   values:
     controllers:
       mosquitto:
@@ -34,19 +31,24 @@ spec:
           init-config:
             image:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
-              tag: 2.0.18
+              tag: 2.0.18@sha256:cb3afd02611b0c58b328196ab00de0158322b4c1e014841fb182d2a0ea3a79b9
             command: ["/bin/sh", "-c"]
-            args: ["cp /tmp/secret/* /mosquitto/external_config/ && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd"]
+            args:
+              - cp /tmp/secret/* /mosquitto/external_config/;
+                mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd;
+                chmod 0600 /mosquitto/external_config/mosquitto_pwd;
+
         containers:
           app:
             image:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
-              tag: 2.0.18
+              tag: 2.0.18@sha256:cb3afd02611b0c58b328196ab00de0158322b4c1e014841fb182d2a0ea3a79b9
             resources:
               requests:
-                cpu: 5m
+                cpu: 10m
+                memory: 100Mi
               limits:
-                memory: 16Mi
+                memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -54,27 +56,31 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 1000
+        runAsGroup: 1000
         seccompProfile: { type: RuntimeDefault }
+
     service:
       app:
-        controller: *app
+        controller: mosquitto
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_DOMAIN}
-          io.cilium/lb-ipam-ips: ${SVC_MQTT_ADDR:=temp}
+          external-dns.alpha.kubernetes.io/hostname: external.${SECRET_DOMAIN}
+          io.cilium/lb-ipam-ips: 172.20.24.99
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: 1883
+
     persistence:
-      data:
-        existingClaim: mosquitto
+      config:
+        enabled: true
+        existingClaim: mosquitto-config
+        globalMounts:
+          - path: /data
       config-file:
         type: configMap
-        name: mosquitto-configmap # overriden by kustomizeconfig
+        name: mosquitto-configmap
         advancedMounts:
           mosquitto:
             app:
@@ -82,7 +88,7 @@ spec:
                 subPath: mosquitto.conf
       secret-file:
         type: secret
-        name: mosquitto
+        name: mosquitto-secret
         advancedMounts:
           mosquitto:
             init-config:
