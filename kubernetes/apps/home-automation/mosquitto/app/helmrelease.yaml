@@ -34,8 +34,7 @@ spec:
               tag: 2.0.18@sha256:cb3afd02611b0c58b328196ab00de0158322b4c1e014841fb182d2a0ea3a79b9
             command: ["/bin/sh", "-c"]
             args:
-              - chmod 0600 /data;
-                cp /tmp/secret/* /mosquitto/external_config/;
+              - cp /tmp/secret/* /mosquitto/external_config/;
                 mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd;
                 chmod 0600 /mosquitto/external_config/mosquitto_pwd;
 
@@ -57,11 +56,11 @@ spec:
     defaultPodOptions:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        seccompProfile: { type: RuntimeDefault }
+      #securityContext:
+      #  runAsNonRoot: true
+      #  runAsUser: 568
+      #  runAsGroup: 568
+      #  seccompProfile: { type: RuntimeDefault }
 
     service:
       app:
