@@ -62,11 +62,9 @@ spec:
     ingress:
       app:
         enabled: true
-        type: LoadBalancer
+        className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: esphome.${SECRET_DOMAIN}
-          io.cilium/lb-ipam-ips: 172.20.24.98
-        externalTrafficPolicy: Cluster
+          io.cilium/lb-ipam-ips: 172.20.24.99
         hosts:
           - host: &host "esphome.${SECRET_DOMAIN}"
             paths:
