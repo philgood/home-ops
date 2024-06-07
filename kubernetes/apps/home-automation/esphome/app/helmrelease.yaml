@@ -64,7 +64,7 @@ spec:
         enabled: true
         className: internal
         annotations:
-          io.cilium/lb-ipam-ips: 172.20.24.99
+          io.cilium/lb-ipam-ips: 172.20.24.98
         hosts:
           - host: &host "esphome.${SECRET_DOMAIN}"
             paths:
