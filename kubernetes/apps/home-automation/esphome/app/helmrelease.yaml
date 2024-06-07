@@ -62,9 +62,11 @@ spec:
     ingress:
       app:
         enabled: true
-        className: internal
-        #annotations:
-        #  nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: esphome.${SECRET_DOMAIN}
+          io.cilium/lb-ipam-ips: 172.20.24.98
+        externalTrafficPolicy: Cluster
         hosts:
           - host: &host "esphome.${SECRET_DOMAIN}"
             paths:
