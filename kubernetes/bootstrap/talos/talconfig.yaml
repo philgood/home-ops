@@ -36,6 +36,8 @@ nodes:
             gateway: "172.20.24.1"
         vip:
           ip: "172.20.24.9"
+    nameservers:
+      - "172.20.24.1"
   - hostname: "metal02"
     ipAddress: "172.20.24.11"
     installDisk: "/dev/sda"
@@ -53,6 +55,8 @@ nodes:
             gateway: "172.20.24.1"
         vip:
           ip: "172.20.24.9"
+    nameservers:
+      - "172.20.24.1"
   - hostname: "metal03"
     ipAddress: "172.20.24.12"
     installDisk: "/dev/sda"
@@ -70,6 +74,8 @@ nodes:
             gateway: "172.20.24.1"
         vip:
           ip: "172.20.24.9"
+    nameservers:
+      - "172.20.24.1"
 
 patches:
   # Configure containerd
