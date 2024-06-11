@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: bitwarden
+  namespace: kube-system
 spec:
   interval: 30m
   chart:
@@ -55,10 +56,10 @@ spec:
                 enabled: false
             resources:
               requests:
-                memory: 256Mi
-                cpu: 100m
+                cpu: 34m
+                memory: 247M
               limits:
-                memory: 512Mi
+                memory: 1241M
 
     service:
       app:

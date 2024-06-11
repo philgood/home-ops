@@ -5,7 +5,7 @@ metadata:
   name: external-secrets
   namespace: kube-system
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: external-secrets
@@ -22,6 +22,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
@@ -38,3 +39,9 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
+    resources:
+      requests:
+        cpu: 22m
+        memory: 144M
+      limits:
+        memory: 724M
