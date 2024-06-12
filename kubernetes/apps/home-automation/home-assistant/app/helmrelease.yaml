@@ -39,7 +39,7 @@ spec:
               HASS_HTTP_TRUSTED_PROXY_1: 172.20.24.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 10.69.0.0/16
               HASS_HTTP_TRUSTED_PROXY_3: 10.96.0.0/16
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
                   name: home-assistant-secret
             securityContext:
