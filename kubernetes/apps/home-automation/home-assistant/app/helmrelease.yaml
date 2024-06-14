@@ -34,7 +34,7 @@ spec:
                   name: home-assistant-secret
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: "16.3"
+              tag: 16
         containers:
           app:
             image:
@@ -88,9 +88,9 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 1000 #568
+        runAsGroup: 1000 #568
+        fsGroup: 1000 #568
         fsGroupChangePolicy: OnRootMismatch
 
     service:
