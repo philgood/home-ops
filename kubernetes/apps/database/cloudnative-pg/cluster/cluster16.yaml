@@ -43,24 +43,24 @@ spec:
           action: replace,
         }
       - { regex: cluster, action: labeldrop }
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://postgresql/
-      endpointURL: https://s3.${SECRET_DOMAIN}
-      serverName: postgres16-v3
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-secret
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: cloudnative-pg-secret
-          key: MINIO_SECRET_KEY
+  #backup:
+  #  retentionPolicy: 30d
+  #  barmanObjectStore:
+  #    data:
+  #      compression: bzip2
+  #    wal:
+  #      compression: bzip2
+  #      maxParallel: 8
+  #    destinationPath: s3://postgresql/
+  #    endpointURL: https://s3.${SECRET_DOMAIN}
+  #    serverName: postgres16-v3
+  #    s3Credentials:
+  #      accessKeyId:
+  #        name: cloudnative-pg-secret
+  #        key: MINIO_ACCESS_KEY
+  #      secretAccessKey:
+  #        name: cloudnative-pg-secret
+  #        key: MINIO_SECRET_KEY
 
   # externalClusters:
   #   - name: *previousCluster
