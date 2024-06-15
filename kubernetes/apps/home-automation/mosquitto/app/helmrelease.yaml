@@ -53,7 +53,9 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-    defaultPodOptions:
+    defaultPodOptions:i
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
