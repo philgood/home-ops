@@ -35,7 +35,7 @@ spec:
           annotations:
             external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
           hosts:
-            - host: &host hass.${SECRET_DOMAIN}
+            - host: &host obico.${SECRET_DOMAIN}
               paths:
                 - path: /
                   service:
