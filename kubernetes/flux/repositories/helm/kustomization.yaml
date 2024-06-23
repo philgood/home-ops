@@ -19,3 +19,4 @@ resources:
   - ./backube.yaml
   - ./external-secrets.yaml
   - ./cloudnative-pg.yaml
+  - ./gabe565-charts.yaml
