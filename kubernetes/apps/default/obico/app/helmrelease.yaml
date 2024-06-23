@@ -21,7 +21,7 @@ spec:
         repository: ghcr.io/gabe565/obico/web
         tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
       env:
-        ACCOUNT_ALLOW_SIGN_UP: "True"
+        ACCOUNT_ALLOW_SIGN_UP: "False"
 
       persistence:
         data:
