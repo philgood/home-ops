@@ -33,12 +33,10 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          server:
             image:
               repository: ghcr.io/gabe565/obico/web
               tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
-            securityContext:
-             runAsUser: 0
             env:
               TZ: ${TIMEZONE}
             resources:
