@@ -54,7 +54,7 @@ spec:
         nameOverride: *app
         ports:
           http:
-            port: 3333
+            port: 8000
 
       persistence:
         data:
