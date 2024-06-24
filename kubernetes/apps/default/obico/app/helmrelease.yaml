@@ -22,6 +22,7 @@ spec:
         tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
       env:
         ACCOUNT_ALLOW_SIGN_UP: "False"
+        OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
 
       persistence:
         data:
