@@ -57,7 +57,7 @@ spec:
                 memory: 300Mi
     service:
       app:
-        controller: *name
+        controller: *app
         ports:
           http:
             port: 8080
