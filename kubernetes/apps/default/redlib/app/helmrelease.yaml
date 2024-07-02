@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name redlib
+  namespace: flux-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+  targetNamespace: redlib
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    fullnameOverride: *name
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      redlib:
+        replicas: 2
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: quay.io/redlib/redlib
+              tag: latest@sha256:20c41694a23d10ebbb76fe395cb0cd833f072965fdaf3c018f8e9ad517a29aae
+            env:
+              REDLIB_DEFAULT_FRONT_PAGE: "default"
+              REDLIB_DEFAULT_THEME: "dracula"
+              REDLIB_DEFAULT_HIDE_HLS_NOTIFICATION: "on"
+              REDLIB_DEFAULT_LAYOUT: "compact"
+              REDLIB_DEFAULT_SHOW_NSFW: "on"
+              REDLIB_DEFAULT_USE_HLS: "on"
+              REDLIB_SFW_ONLY: "off"
+            resources:
+              requests:
+                cpu: 50m
+                memory: 150Mi
+              limits:
+                cpu: 200m
+                memory: 300Mi
+    service:
+      app:
+        controller: *name
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        hosts:
+          - host: redlib.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *app

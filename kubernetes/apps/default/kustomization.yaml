@@ -6,3 +6,4 @@ resources:
   - ./spoolman/ks.yaml
   - ./whoogle/ks.yaml
   - ./obico/ks.yaml
+  - ./redlib/ks.yaml
