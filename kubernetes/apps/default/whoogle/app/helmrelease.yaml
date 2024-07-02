@@ -48,6 +48,7 @@ spec:
               WHOOGLE_ALT_IMG: bibliogram.art
               # WHOOGLE_ALT_WIKI: wikiless.org
               WHOOGLE_CONFIG_ALTS: 1
+              WHOOGLE_MINIMAL: 1
               WHOOGLE_CONFIG_COUNTRY: AU
               # WHOOGLE_CONFIG_GET_ONLY: 1
               WHOOGLE_CONFIG_THEME: system
