@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: quay.io/redlib/redlib
-              tag: latest@sha256:20c41694a23d10ebbb76fe395cb0cd833f072965fdaf3c018f8e9ad517a29aae
+              tag: latest@sha256:2cbe7add65b3100bb7303e4486ec8e759d420b6325f0a9133fd27814ac1b5559
             env:
               REDLIB_DEFAULT_FRONT_PAGE: "default"
               REDLIB_DEFAULT_THEME: "dracula"
