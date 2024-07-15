@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app bloghugo
+  namespace: flux-system
+spec:
+  interval: 15m
+  chart:
+    spec:
+      interval: 15m
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/euvaz/bloghugo
+              tag: v0.1.4@sha256:0236ff96314f43437297939c0e64eba9af6e807f0a8ae2212168ad5369c03801
+            env:
+              TZ: "${TIMEZONE}"
+            resources:
+              requests:
+                cpu: 5m
+                memory: 100M
+              limits:
+                memory: 100M
+    service:
+      main:
+        controller: *app
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
+        className: external
+        hosts:
+          - host: blog.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *app
