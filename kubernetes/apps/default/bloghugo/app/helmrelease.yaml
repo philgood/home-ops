@@ -25,7 +25,7 @@ spec:
     controllers:
       bloghugo:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/euvaz/bloghugo
               tag: v0.1.4@sha256:0236ff96314f43437297939c0e64eba9af6e807f0a8ae2212168ad5369c03801
