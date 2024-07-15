@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/philgood/bloghugo
-              tag: vmain@sha256:3c17ec10f35c85cea6f9ec3979d7b638b4d69c3fc50f77841bdb39ace0a5c4c9
+              tag: vmain@sha256:d79d8879d4bce99cb42c488782cfa357c638cdec68592e3c85ab5b3000263e3a
             env:
               TZ: "${TIMEZONE}"
             resources:
