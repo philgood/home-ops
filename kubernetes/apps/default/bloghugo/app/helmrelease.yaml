@@ -27,8 +27,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/euvaz/bloghugo
-              tag: v0.1.4@sha256:0236ff96314f43437297939c0e64eba9af6e807f0a8ae2212168ad5369c03801
+              repository: ghcr.io/philgood/bloghugo
+              tag: vmain@sha256:3c17ec10f35c85cea6f9ec3979d7b638b4d69c3fc50f77841bdb39ace0a5c4c9
             env:
               TZ: "${TIMEZONE}"
             resources:
