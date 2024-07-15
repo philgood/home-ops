@@ -38,13 +38,13 @@ spec:
               limits:
                 memory: 100M
     service:
-      main:
+      app:
         controller: *app
         ports:
           http:
             port: 80
     ingress:
-      main:
+      app:
         className: external
         hosts:
           - host: blog.${SECRET_DOMAIN}
