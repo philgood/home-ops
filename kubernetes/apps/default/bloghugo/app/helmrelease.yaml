@@ -45,6 +45,7 @@ spec:
             port: 80
     ingress:
       app:
+        enabled: true
         className: external
         hosts:
           - host: blog.${SECRET_DOMAIN}
