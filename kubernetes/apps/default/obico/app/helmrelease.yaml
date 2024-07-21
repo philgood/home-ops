@@ -23,6 +23,7 @@ spec:
       env:
         ACCOUNT_ALLOW_SIGN_UP: "False"
         OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
+        PUSHOVER_APP_TOKEN: "an6netr58vr8zucm3nmb9n8w7ce498"
 
       persistence:
         data:
