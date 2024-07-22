@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/philgood/bloghugo
-              tag: latest@sha256:af1b43a63eba2ae01b930c04800c577efc95fe19983676f5501bc9ff550b0c8e
+              tag: latest@sha256:36c9ee8ec1bc3bed29a44cd36a05cf150e89004c9d66f33c1704f180c7d6521d
             resources:
               requests:
                 cpu: 5m
