@@ -7,4 +7,4 @@ resources:
   - ./whoogle/ks.yaml
   - ./obico/ks.yaml
   - ./redlib/ks.yaml
-  #- ./bloghugo/ks.yaml
+  - ./bloghugo/ks.yaml
