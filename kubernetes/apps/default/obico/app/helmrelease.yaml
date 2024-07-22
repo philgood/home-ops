@@ -19,7 +19,7 @@ spec:
     server:
       image:
         repository: ghcr.io/gabe565/obico/web
-        tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
+        tag: latest
       env:
         ACCOUNT_ALLOW_SIGN_UP: "False"
         OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
