@@ -43,8 +43,7 @@ spec:
             port: 80
     ingress:
       app:
-        enabled: true
-        ClassName: external
+        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
