@@ -49,7 +49,7 @@ spec:
           app:
             image:
               repository: ghcr.io/donkie/spoolman
-              tag: 0.18.1
+              tag: 0.19.3
             securityContext:
              runAsUser: 0
             env:
