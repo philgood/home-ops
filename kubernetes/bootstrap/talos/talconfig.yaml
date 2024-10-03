@@ -22,7 +22,7 @@ nodes:
   - hostname: "metal01"
     ipAddress: "172.20.24.10"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/c9078f9419961640c712a8bf2bb9174933dfcf1da383fd8ea2b7dc21493f8bac #376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -36,12 +36,10 @@ nodes:
             gateway: "172.20.24.1"
         vip:
           ip: "172.20.24.9"
-    nameservers:
-      - "172.20.24.1"
   - hostname: "metal02"
     ipAddress: "172.20.24.11"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/c9078f9419961640c712a8bf2bb9174933dfcf1da383fd8ea2b7dc21493f8bac #376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -55,12 +53,10 @@ nodes:
             gateway: "172.20.24.1"
         vip:
           ip: "172.20.24.9"
-    nameservers:
-      - "172.20.24.1"
   - hostname: "metal03"
     ipAddress: "172.20.24.12"
     installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/c9078f9419961640c712a8bf2bb9174933dfcf1da383fd8ea2b7dc21493f8bac #376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -74,8 +70,6 @@ nodes:
             gateway: "172.20.24.1"
         vip:
           ip: "172.20.24.9"
-    nameservers:
-      - "172.20.24.1"
 
 patches:
   # Configure containerd
@@ -151,23 +145,6 @@ patches:
             source: /var/openebs/local
             options: ["bind", "rshared", "rw"]
 
-  # Mount Longhorn storage in kubelet
-  - |-
-    machine:
-      kubelet:
-        extraMounts:
-          - destination: /var/mnt/longhorn
-            type: bind
-            source: /var/mnt/longhorn
-            options: ["bind", "rshared", "rw"]
-
-   # Mount 2nd disk for Longhorn Storage
-  - |-
-     machine:
-       disks:
-       - device: /dev/nvme0n1
-         partitions:
-           - mountpoint: /var/mnt/longhorn
 
 
 controlPlane:
