@@ -5,4 +5,4 @@ machine:
       - iommu=pt
       - mitigations=off
       - net.ifnames=0
-      # - pcie_ports=native
+      - pcie_ports=native
