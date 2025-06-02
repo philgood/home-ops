@@ -21,6 +21,8 @@ env:
 includes:
   bootstrap: .taskfiles/bootstrap
   talos: .taskfiles/talos
+  kubernetes: .taskfiles/kubernetes
+  external-secrets: .taskfiles/ExternalSecrets
 
 tasks:
 
