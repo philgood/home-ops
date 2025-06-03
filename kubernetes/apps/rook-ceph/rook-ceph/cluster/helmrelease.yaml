@@ -67,7 +67,7 @@ spec:
       network:
         provider: host
         addressRanges:
-          public: ["10.43.0.0/16"]
+          public: ["10.42.0.0/16","10.43.0.0/16"]
           cluster: ["169.254.255.0/24"]
         connections:
           requireMsgr2: true
