@@ -14,7 +14,8 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: kubernetes
+    name: flux-system
+    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: false
@@ -36,7 +37,8 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: kubernetes
+    name: flux-system
+    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: true
