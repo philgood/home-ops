@@ -66,6 +66,9 @@ spec:
             enabled: true
       network:
         provider: host
+        addressRanges:
+          public: ["10.43.0.0/16"]
+          cluster: ["169.254.255.0/24"]
         connections:
           requireMsgr2: true
       storage:
