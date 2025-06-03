@@ -23,6 +23,7 @@ includes:
   talos: .taskfiles/talos
   kubernetes: .taskfiles/kubernetes
   external-secrets: .taskfiles/ExternalSecrets
+  sops: .taskfiles/Sops
 
 tasks:
 
