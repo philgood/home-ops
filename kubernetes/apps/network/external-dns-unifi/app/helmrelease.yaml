@@ -46,7 +46,7 @@ spec:
           - name: UNIFI_API_KEY
             valueFrom:
               secretKeyRef:
-                name: external-dns-unifi-secret
+                name: &secret unifi-dns-secret
                 key: UNIFI_API_KEY
         livenessProbe:
           httpGet:
@@ -70,3 +70,5 @@ spec:
     domainFilters: ["narden.au"]
     serviceMonitor:
       enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret
