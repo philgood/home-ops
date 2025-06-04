@@ -8,6 +8,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 1h
   path: ./kubernetes/apps/network/external-dns-unifi/app
   prune: true
   retryInterval: 2m
