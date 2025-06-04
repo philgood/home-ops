@@ -45,9 +45,9 @@ spec:
   ingressClassName: internal
   tls:
     - hosts:
-        - "truenas.${SECRET_DOMAIN}"
+        - "truenas.narden.au"
   rules:
-    - host: "truenas.${SECRET_DOMAIN}"
+    - host: "truenas.narden.au"
       http:
         paths:
           - path: /
