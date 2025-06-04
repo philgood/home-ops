@@ -70,5 +70,3 @@ spec:
     domainFilters: ["narden.au"]
     serviceMonitor:
       enabled: true
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *secret
