@@ -45,9 +45,9 @@ spec:
   ingressClassName: internal
   tls:
     - hosts:
-        - voron.${SECRET_DOMAIN}
+        - voron.narden.au
   rules:
-    - host: voron.${SECRET_DOMAIN}
+    - host: voron.narden.au
       http:
         paths:
           - path: /
