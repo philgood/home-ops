@@ -81,9 +81,3 @@ spec:
         existingClaim: hassactron-data
         globalMounts:
           - path: /data
-      options-secret:
-        type: secret
-        name: hassactron-secret
-        globalMounts:
-          - path: /data/options.json
-            subPath: options.json
