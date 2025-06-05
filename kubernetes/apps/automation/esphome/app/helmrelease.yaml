@@ -67,6 +67,8 @@ spec:
     persistence:
       config:
         existingClaim: esphome-config
+        globalMounts:
+          - path: /config
       esphome-cache:
         type: emptyDir
         globalMounts:
