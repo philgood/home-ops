@@ -70,7 +70,7 @@ spec:
             port: 1883
     persistence:
       data:
-        existingClaim: mosquitto
+        existingClaim: mosquitto-cache
       config-file:
         type: configMap
         name: mosquitto-configmap
