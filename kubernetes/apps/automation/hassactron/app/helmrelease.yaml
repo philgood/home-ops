@@ -55,34 +55,16 @@ spec:
           http:
             port: 80
             targetPort: 80
-    configMaps:
-      config:
-        data:
-          options.json: |
-           {
-            "MQTTBroker": "172.20.24.99",
-            "Zones": [
-              {
-                "Name": "Bedrooms",
-                "Id": 1
-              },
-              {
-                "Name": "Living",
-                "Id": 2
-              }
-            ],
-            "RegisterZoneTemperatures": false,
-            "ForwardToOriginalWebService": true
-            }
 
     persistence:
       data:
-       existingClaim: hassactron-data
-      config-file:
-        type: configMap
-        name: hassactron
-        advancedMounts:
-          hassactron:
-            app:
-              - path: /data/options.json
-                subPath: options.json
+        enabled: true
+        existingClaim: hassactron-data
+        globalMounts:
+          - path: /data
+      options-secret:
+        type: secret
+        name: hassactron-secret
+        globalMounts:
+          - path: /data/options.json
+            subPath: options.json
