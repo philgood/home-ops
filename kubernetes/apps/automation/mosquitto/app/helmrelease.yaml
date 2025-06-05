@@ -66,13 +66,17 @@ spec:
       config:
         data:
           mosquitto.conf: |
-            allow_anonymous true
-            autosave_interval 60
-            connection_messages false
-            listener 1883
-            per_listener_settings false
             persistence true
             persistence_location /data
+            per_listener_settings false
+            listener 1883
+            allow_anonymous false
+            persistence true
+            persistence_location /data
+            autosave_interval 1800
+            connection_messages false
+            autosave_interval 60
+            password_file /mosquitto/external_config/mosquitto_pwd
     persistence:
       data:
         existingClaim: mosquitto-cache
