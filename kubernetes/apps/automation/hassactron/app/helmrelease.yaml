@@ -82,7 +82,7 @@ spec:
         type: configMap
         name: hassactron
         advancedMounts:
-          mosquitto:
+          hassactron:
             app:
               - path: /data/options.json
                 subPath: options.json
