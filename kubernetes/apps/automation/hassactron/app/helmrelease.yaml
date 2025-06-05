@@ -77,7 +77,12 @@ spec:
 
     persistence:
       data:
-        enabled: true
-        existingClaim: hassactron-data
-        globalMounts:
-          - path: /data
+       existingClaim: hassactron-data
+      config-file:
+        type: configMap
+        name: hassactron
+        advancedMounts:
+          mosquitto:
+            app:
+              - path: /data/options.json
+                subPath: options.json
