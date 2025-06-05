@@ -55,6 +55,25 @@ spec:
           http:
             port: 80
             targetPort: 80
+    configMaps:
+      config:
+        data:
+          options.json: |
+           {
+            "MQTTBroker": "172.20.24.99",
+            "Zones": [
+              {
+                "Name": "Bedrooms",
+                "Id": 1
+              },
+              {
+                "Name": "Living",
+                "Id": 2
+              }
+            ],
+            "RegisterZoneTemperatures": false,
+            "ForwardToOriginalWebService": true
+            }
 
     persistence:
       data:

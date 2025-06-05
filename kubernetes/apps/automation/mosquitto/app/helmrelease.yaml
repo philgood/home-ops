@@ -66,20 +66,16 @@ spec:
       config:
         data:
           mosquitto.conf: |
-            per_listener_settings false
+            allow_anonymous true
+            autosave_interval 60
+            connection_messages false
             listener 1883
-            allow_anonymous false
+            per_listener_settings false
             persistence true
             persistence_location /data
-            autosave_interval 1800
-            connection_messages false
-            autosave_interval 60
-            password_file /mosquitto/external_config/mosquitto_pwd
     persistence:
       data:
         existingClaim: mosquitto-cache
-        globalMounts:
-          - path: /data
       config-file:
         type: configMap
         name: mosquitto
@@ -88,14 +84,4 @@ spec:
             app:
               - path: /mosquitto/config/mosquitto.conf
                 subPath: mosquitto.conf
-      secret-file:
-        type: secret
-        name: mosquitto-secret
-        advancedMounts:
-          mosquitto:
-            init-config:
-              - path: /tmp/secret
-      external-config:
-        type: emptyDir
-        globalMounts:
-          - path: /mosquitto/external_config
+
