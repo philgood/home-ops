@@ -11,4 +11,5 @@ resources:
   #- ./k8s-gateway/ks.yaml
   - ./external-services/ks.yaml
   - ./external-dns-unifi/ks.yaml
+  - ./echo/ks.yaml
 
