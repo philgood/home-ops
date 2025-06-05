@@ -7,7 +7,7 @@ components:
   - ../../components/common
 resources:
   # Flux-Kustomizations
-  #- ./home-assistant/ks.yaml
+  - ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
   - ./esphome/ks.yaml
   - ./hassactron/ks.yaml
