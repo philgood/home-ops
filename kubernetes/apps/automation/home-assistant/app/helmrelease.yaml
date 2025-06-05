@@ -60,7 +60,7 @@ spec:
         controller: home-assistant
         ports:
           http:
-            port: 8123
+            port: &port 8123
           mdns-tcp:
             enabled: true
             port: 5353
