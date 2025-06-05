@@ -19,13 +19,29 @@ spec:
   values:
     controllers:
       mosquitto:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-config:
+            image:
+              repository: public.ecr.aws/docker/library/eclipse-mosquitto
+              tag: 2.0.21@sha256:94f5a3d7deafa59fa3440d227ddad558f59d293c612138de841eec61bfa4d353
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                cp /tmp/secret/mosquitto_pwd /mosquitto/external_config/;
+                chmod 600 /mosquitto/external_config/mosquitto_pwd;
+                mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd;
         containers:
           app:
             image:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
-              tag: 2.0.21
-            env:
-              TZ: Australia/Sydney
+              tag: 2.0.21@sha256:94f5a3d7deafa59fa3440d227ddad558f59d293c612138de841eec61bfa4d353
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -34,14 +50,14 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 100Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+                memory: 64Mi
+        pod:
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
+            fsGroup: 65534
+            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: mosquitto
@@ -52,25 +68,28 @@ spec:
         ports:
           http:
             port: 1883
-    configMaps:
-      config:
-        data:
-          mosquitto.conf: |
-            allow_anonymous true
-            autosave_interval 60
-            connection_messages false
-            listener 1883
-            per_listener_settings false
-            persistence true
-            persistence_location /data
     persistence:
       data:
-        existingClaim: mosquitto-cache
+        existingClaim: mosquitto
       config-file:
         type: configMap
-        name: mosquitto
+        name: mosquitto-configmap
         advancedMounts:
           mosquitto:
             app:
               - path: /mosquitto/config/mosquitto.conf
                 subPath: mosquitto.conf
+                readOnly: true
+      secret-file:
+        type: secret
+        name: mosquitto-secret
+        advancedMounts:
+          mosquitto:
+            init-config:
+              - path: /tmp/secret/mosquitto_pwd
+                subPath: mosquitto_pwd
+                readOnly: true
+      external-config:
+        type: emptyDir
+        globalMounts:
+          - path: /mosquitto/external_config
