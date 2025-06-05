@@ -10,4 +10,4 @@ resources:
   #- ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
   #- ./esphome/ks.yaml
-  #- ./hassactron/ks.yaml
+  - ./hassactron/ks.yaml
