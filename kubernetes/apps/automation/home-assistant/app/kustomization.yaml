@@ -6,10 +6,6 @@ resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
   - ./externalsecret.yaml
-configMapGenerator:
-  - name: home-assistant-configmap
-    files:
-      - configuration.yaml=./resources/configuration.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
