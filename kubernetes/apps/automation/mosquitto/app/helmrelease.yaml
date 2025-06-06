@@ -70,7 +70,10 @@ spec:
             port: 1883
     persistence:
       data:
-        existingClaim: mosquitto-cache
+        type: persistentVolumeClaim
+        size: 256Mi
+        storageClass: ceph-block
+        accessMode: ReadWriteOnce
       config-file:
         type: configMap
         name: mosquitto-configmap
