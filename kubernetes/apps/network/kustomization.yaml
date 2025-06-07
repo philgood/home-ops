@@ -9,6 +9,6 @@ resources:
   - ./cloudflare-dns/ks.yaml
   - ./cloudflare-tunnel/ks.yaml
   #- ./k8s-gateway/ks.yaml
-  - ./external-dns-unifi/ks.yaml
+  - ./external-dns/ks.yaml
   - ./echo/ks.yaml
 
