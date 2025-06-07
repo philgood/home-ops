@@ -52,14 +52,14 @@ spec:
     matchLabels:
       kubernetes.io/os: linux
   bgpInstances:
-    - name: "instance-64514"
+    - name: cilium #instance-64514
       localASN: 64514
       peers:
-        - name: "peer-64513-ipv4"
+        - name: unifi #peer-64513-ipv4
           peerASN: 64513
-          peerAddress: "172.20.24.1"
+          peerAddress: 172.20.24.1
           peerConfigRef:
-            name: "cilium-bgp-peer-config-ipv4"
+            name: cilium-bgp-peer-config-ipv4
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliumloadbalancerippool_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
