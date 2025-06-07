@@ -45,7 +45,7 @@ spec:
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumBGPClusterConfig
 metadata:
-  name: cilium-bgp-cluster-config
+  name: "cilium-bgp-cluster-config"
 spec:
   nodeSelector:
     matchLabels:
