@@ -43,12 +43,12 @@ spec:
         valueFrom:
           secretKeyRef:
             name: &secret external-dns-cloudflare-secret
-            key: email
+            key: CF_API_EMAIL
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
             name: *secret
-            key: api-key
+            key: CF_API_TOKEN
     extraArgs:
       - --cloudflare-dns-records-per-page=1000
       - --cloudflare-proxied
