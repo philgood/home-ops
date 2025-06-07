@@ -35,6 +35,14 @@ kind: CiliumBGPPeerConfig
 metadata:
   name: cilium-bgp-peer-config-ipv4
 spec:
+  timers:
+    holdTimeSeconds: 9
+    keepAliveTimeSeconds: 5
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  transport:
+    peerPort: 179
   families:
     - afi: ipv4
       safi: unicast
