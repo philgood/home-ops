@@ -12,7 +12,7 @@ spec:
       kubernetes.io/os: linux
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliumbgpadvertisement_v2alpha1.json
-apiVersion: cilium.io/v2alpha1
+apiVersion: "cilium.io/v2alpha1"
 kind: CiliumBGPAdvertisement
 metadata:
   name: cilium-bgp-advertisement
@@ -20,7 +20,6 @@ metadata:
     advertise: bgp
 spec:
   advertisements:
-    # - advertisementType: "PodCIDR"
     - advertisementType: "Service"
       service:
         addresses:
@@ -30,19 +29,11 @@ spec:
           - { key: somekey, operator: NotIn, values: ["never-used-value"] }
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliumbgppeerconfig_v2alpha1.json
-apiVersion: cilium.io/v2alpha1
+apiVersion: "cilium.io/v2alpha1"
 kind: CiliumBGPPeerConfig
 metadata:
   name: cilium-bgp-peer-config-ipv4
 spec:
-  timers:
-    holdTimeSeconds: 9
-    keepAliveTimeSeconds: 5
-  gracefulRestart:
-    enabled: true
-    restartTimeSeconds: 15
-  transport:
-    peerPort: 179
   families:
     - afi: ipv4
       safi: unicast
@@ -51,7 +42,7 @@ spec:
           advertise: "bgp"
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliumbgpclusterconfig_v2alpha1.json
-apiVersion: cilium.io/v2alpha1
+apiVersion: "cilium.io/v2alpha1"
 kind: CiliumBGPClusterConfig
 metadata:
   name: cilium-bgp-cluster-config
