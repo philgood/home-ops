@@ -42,19 +42,19 @@ spec:
           advertise: "bgp"
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliumbgpclusterconfig_v2alpha1.json
-apiVersion: "cilium.io/v2alpha1"
+apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPClusterConfig
 metadata:
-  name: "cilium-bgp-cluster-config"
+  name: cilium-bgp-cluster-config
 spec:
   nodeSelector:
     matchLabels:
       kubernetes.io/os: linux
   bgpInstances:
-    - name: "instance-64514"
+    - name: "cilium"
       localASN: 64514
       peers:
-        - name: "peer-64513-ipv4"
+        - name: "unifi"
           peerASN: 64513
           peerAddress: "172.20.24.1"
           peerConfigRef:
