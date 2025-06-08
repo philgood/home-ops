@@ -23,7 +23,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app multus-networks
+  name: &app multus-network
   namespace: &namespace network
 spec:
   commonMetadata:
@@ -33,7 +33,7 @@ spec:
     - name: multus
       namespace: *namespace
   interval: 15m
-  path: ./kubernetes/apps/network/multus/networks
+  path: ./kubernetes/apps/network/multus/network
   prune: true
   retryInterval: 2m
   sourceRef:
