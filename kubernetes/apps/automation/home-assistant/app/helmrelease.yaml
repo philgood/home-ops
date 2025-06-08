@@ -47,13 +47,6 @@ spec:
                 memory: 7000Mi
 
     defaultPodOptions:
-      annotations:
-        k8s.v1.cni.cncf.io/networks: |
-          [{
-            "name": "multus-iot",
-            "namespace": "network",
-            "ips": ["172.20.21.200/24"]
-          }]
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
