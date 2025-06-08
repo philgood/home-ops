@@ -48,12 +48,13 @@ spec:
 
     defaultPodOptions:
       annotations:
-        k8s.v1.cni.cncf.io/networks: |
-          [{
-            "name": "multus-iot",
-            "namespace": "network",
-            "ips": ["172.20.21.200/24"]
-          }]
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name":"multus-iot",
+                "namespace": "network",
+                "ips": ["172.20.21.200/24"],
+                "mac": "48:c3:71:7c:c5:37"
+              }]
       securityContext:
         runAsNonRoot: true
         runAsUser: 568

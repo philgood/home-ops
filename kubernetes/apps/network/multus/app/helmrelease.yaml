@@ -1,14 +1,14 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app multus
+  name: multus
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
-    namespace: flux-system
   install:
     remediation:
       retries: -1
@@ -29,9 +29,12 @@ spec:
           multus:
             image:
               repository: ghcr.io/k8snetworkplumbingwg/multus-cni
-              tag: latest@sha256:e30a3a8130d82b72d8c195b26ce55f318f28ca7f9446ab6e2cae8d8283eeeabb
+              tag: v4.2.1@sha256:6bebbda31416810875367484b8125026b2816885b79c89c2df863a6ed77dd4a6
+            command:
+              - /thin_entrypoint
             args:
-              - --cleanup-config-on-exit
+              - --cleanup-config-on-exit=true
+              - --multus-log-level=debug
             resources:
               requests:
                 cpu: 10m
@@ -40,7 +43,7 @@ spec:
             securityContext:
               privileged: true
         serviceAccount:
-          name: *app
+          identifier: multus
     defaultPodOptions:
       hostNetwork: true
     persistence:
@@ -54,3 +57,26 @@ spec:
         hostPath: /opt/cni/bin
         globalMounts:
           - path: /host/opt/cni/bin
+    rbac:
+      roles:
+        multus:
+          type: ClusterRole
+          rules:
+            - apiGroups: ["k8s.cni.cncf.io"]
+              resources: ["*"]
+              verbs: ["*"]
+            - apiGroups: [""]
+              resources: ["pods", "pods/status"]
+              verbs: ["get", "update"]
+            - apiGroups: ["", "events.k8s.io"]
+              resources: ["events"]
+              verbs: ["create", "patch", "update"]
+      bindings:
+        multus:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: multus
+          subjects:
+            - identifier: multus
+    serviceAccount:
+      multus: {}
