@@ -52,8 +52,8 @@ spec:
               [{
                 "name": "multus-iot-network",
                 "namespace": "network",
-                "ips": ["192.168.50.3/24"],
-                "mac": "5e:db:78:b3:b8:91"
+                "ips": ["172.20.21.200/24"],
+                "mac": "66:5c:99:41:da:09"
               }]
       securityContext:
         runAsNonRoot: true
