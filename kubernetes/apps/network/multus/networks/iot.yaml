@@ -10,18 +10,17 @@ spec:
       "name": "multus-iot",
       "plugins": [
         {
-          "type": "macvlan",
+          "type": "ipvlan",
           "master": "eth1.21",
-          "mode": "bridge",
+          "capabilities": {
+            "ips": true
+          },
           "ipam": {
             "type": "static",
             "routes": [
               {"dst": "0.0.0.0/0", "gw": "172.20.21.1"}
             ]
           }
-        },
-        {
-          "type": "sbr"
         }
       ]
     }
