@@ -12,15 +12,20 @@ spec:
         {
           "type": "macvlan",
           "master": "bond0.21",
+          "mode": "bridge",
           "capabilities": {
             "ips": true
           },
           "ipam": {
             "type": "static",
             "routes": [
-              {"dst": "0.0.0.0/0", "gw": "172.20.21.1"}
+              { "dst": "172.20.21.0/24", "gw": "172.20.21.1" }
             ]
           }
+        },
+        {
+          "capabilities": { "mac": true },
+          "type": "tuning"
         }
       ]
     }
