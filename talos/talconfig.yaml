@@ -28,8 +28,12 @@ nodes:
     talosImageURL: factory.talos.dev/installer/8932fcd0ce59494ca459d7cc285c283d7eb797b66bad926b6f803bc168c62385
     controlPlane: true
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:7a:b4:e5"
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "58:47:ca:7a:b4:e5"
+              driver: igc
         dhcp: false
         addresses:
           - "172.20.24.10/24"
@@ -66,8 +70,12 @@ nodes:
     talosImageURL: factory.talos.dev/installer/8932fcd0ce59494ca459d7cc285c283d7eb797b66bad926b6f803bc168c62385
     controlPlane: true
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:7a:c4:c1"
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "58:47:ca:7a:c4:c1"
+              driver: igc
         dhcp: false
         addresses:
           - "172.20.24.11/24"
@@ -104,8 +112,12 @@ nodes:
     talosImageURL: factory.talos.dev/installer/8932fcd0ce59494ca459d7cc285c283d7eb797b66bad926b6f803bc168c62385
     controlPlane: true
     networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "58:47:ca:7a:c3:dd"
+      - interface: bond0
+        bond:
+          mode: active-backup
+          deviceSelectors:
+            - hardwareAddr: "58:47:ca:7a:c3:dd"
+              driver: igc
         dhcp: false
         addresses:
           - "172.20.24.12/24"

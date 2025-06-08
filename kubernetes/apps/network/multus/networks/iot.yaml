@@ -10,8 +10,8 @@ spec:
       "name": "multus-iot",
       "plugins": [
         {
-          "type": "ipvlan",
-          "master": "eth1.21",
+          "type": "macvlan",
+          "master": "bond0.21",
           "capabilities": {
             "ips": true
           },
