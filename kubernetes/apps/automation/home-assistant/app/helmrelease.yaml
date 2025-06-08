@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: home-assistant
+  name: &app home-assistant
 spec:
   interval: 1h
   chartRef:
@@ -28,6 +28,7 @@ spec:
               tag: 2025.5.3@sha256:a480637f5064050f27e053a756ef2083b4346656e7c15713b574cfb1a9bbf3af
             env:
               TZ: Australia/Sydney
+              HOME_ASSISTANT_EXTERNAL_URL: https://hass.narden.au
               HASS_HTTP_TRUSTED_PROXY_1: 172.20.20.0/20
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
             envFrom:
@@ -57,7 +58,6 @@ spec:
 
     service:
       app:
-        controller: home-assistant
         ports:
           http:
             port: &port 8123
@@ -91,7 +91,7 @@ spec:
         hostnames:
           - hass.narden.au
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
@@ -107,12 +107,6 @@ spec:
           home-assistant:
             app:
               - path: /config
-      backups:
-        type: nfs
-        server: 172.20.24.243
-        path: /mnt/DataPool/apps/homeassistant
-        globalMounts:
-          - path: /config/backups
       config-cache:
         type: emptyDir
         globalMounts:
