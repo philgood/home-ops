@@ -34,6 +34,13 @@ nodes:
           deviceSelectors:
             - hardwareAddr: "58:47:ca:7a:b4:e5"
               driver: igc
+        vlans:
+            - addresses:
+              - 172.20.21.10/24
+              routes: []
+              dhcp: false
+              vlanId: 21
+              mtu: 1500
         dhcp: false
         addresses:
           - "172.20.24.10/24"
@@ -76,6 +83,13 @@ nodes:
           deviceSelectors:
             - hardwareAddr: "58:47:ca:7a:c4:c1"
               driver: igc
+        vlans:
+            - addresses:
+              - 172.20.21.11/24
+              routes: []
+              dhcp: false
+              vlanId: 21
+              mtu: 1500
         dhcp: false
         addresses:
           - "172.20.24.11/24"
@@ -118,6 +132,13 @@ nodes:
           deviceSelectors:
             - hardwareAddr: "58:47:ca:7a:c3:dd"
               driver: igc
+        vlans:
+            - addresses:
+              - 172.20.21.12/24
+              routes: []
+              dhcp: false
+              vlanId: 21
+              mtu: 1500
         dhcp: false
         addresses:
           - "172.20.24.12/24"
