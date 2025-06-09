@@ -85,7 +85,6 @@ spec:
         size: 512Mi
         storageClass: ceph-block
         accessMode: ReadWriteOnce
-        existingClaim: *app
       config-logs:
         type: emptyDir
         globalMounts:
