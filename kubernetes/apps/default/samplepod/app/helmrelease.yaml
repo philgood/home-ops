@@ -9,7 +9,7 @@ metadata:
     k8s.v1.cni.cncf.io/networks: |
       [{
         "name": "multus-iot",
-        "namespace": "network",
+        "namespace": "default",
         "mac": "c6:5e:a4:8e:7a:59",
         "ips": ["172.20.21.202/24"]
       }]
