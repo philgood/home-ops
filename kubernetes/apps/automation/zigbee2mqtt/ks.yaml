@@ -8,8 +8,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/common/volsync
+  #components:
+  #  - ../../../../components/common/volsync
   dependsOn:
     - name: mosquitto
       namespace: *namespace
