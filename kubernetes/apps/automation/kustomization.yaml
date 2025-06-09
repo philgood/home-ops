@@ -11,3 +11,4 @@ resources:
   - ./mosquitto/ks.yaml
   - ./esphome/ks.yaml
   - ./hassactron/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
