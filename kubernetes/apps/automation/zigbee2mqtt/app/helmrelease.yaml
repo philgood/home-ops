@@ -81,7 +81,10 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
-        existingClaim: *app
+        type: persistentVolumeClaim
+        size: 512Mi
+        storageClass: ceph-block
+        accessMode: ReadWriteOnce
       config-logs:
         type: emptyDir
         globalMounts:
