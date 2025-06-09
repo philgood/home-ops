@@ -21,10 +21,6 @@ spec:
       namespace: volsync-system
   interval: 1h
   path: ./kubernetes/apps/automation/zigbee2mqtt/app
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 1Gi
   prune: true
   retryInterval: 2m
   sourceRef:
