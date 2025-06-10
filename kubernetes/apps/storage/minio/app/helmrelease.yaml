@@ -111,7 +111,7 @@ spec:
     persistence:
       config:
         type: nfs
-        server: 172.20.24.240
+        server: nas.internal
         path: /mnt/DataPool/apps/minio
         globalMounts:
           - path: /data
