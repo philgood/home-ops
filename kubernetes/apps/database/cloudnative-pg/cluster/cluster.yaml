@@ -26,7 +26,6 @@ spec:
       cpu: 500m
     limits:
       memory: 4Gi
-      hugepages-2Mi: 2Gi
   monitoring:
     enablePodMonitor: true
     # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
