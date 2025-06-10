@@ -50,11 +50,11 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: AWS_SECRET_ACCESS_KEY
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres-009
-  externalClusters:
-    - name: *previousCluster
-      barmanObjectStore:
-        <<: *barmanObjectStore
-        serverName: *previousCluster
+  #bootstrap:
+  #  recovery:
+  #    source: &previousCluster postgres-009
+  #externalClusters:
+  #  - name: *previousCluster
+  #    barmanObjectStore:
+  #      <<: *barmanObjectStore
+   #     serverName: *previousCluster
