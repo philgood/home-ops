@@ -40,7 +40,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 4
-      destinationPath: s3://cloudnative-pg/
+      destinationPath: s3://cnpg/
       endpointURL: http://s3.narden.au
       serverName: &currentCluster postgres-010
       s3Credentials:
