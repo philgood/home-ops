@@ -92,7 +92,7 @@ spec:
         hostnames: ["minio.narden.au"]
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
@@ -102,7 +102,7 @@ spec:
         hostnames: ["s3.narden.au"]
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
