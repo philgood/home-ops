@@ -10,8 +10,8 @@ spec:
   targets:
     staticConfig:
       static:
-        - unifi.internal
-        - truenas.internal
+        - "172.20.20.129"
+        - nas.internal
         #- ups.internal
         #- kvm.internal
         #- pikvm.internal
