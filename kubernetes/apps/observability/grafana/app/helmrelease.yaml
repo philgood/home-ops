@@ -251,7 +251,7 @@ spec:
       main:
         enabled: true
         hostnames:
-          - "{{ .Release.Name }}.k13.dev"
+          - "{{ .Release.Name }}.narden.au"
         parentRefs:
           - name: internal
             namespace: kube-system
