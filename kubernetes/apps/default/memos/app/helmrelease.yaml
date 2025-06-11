@@ -52,9 +52,9 @@ spec:
             resources:
               requests:
                 cpu: 25m
-                memory: 105M
+                memory: 512M
               limits:
-                memory: 105M
+                memory: 512M
     service:
       app:
         controller: memos
