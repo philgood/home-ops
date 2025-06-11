@@ -73,8 +73,3 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
-    persistence:
-      data:
-        existingClaim: *app
-        globalMounts:
-          - path: /var/opt/memos
