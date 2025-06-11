@@ -22,7 +22,7 @@ includes:
   bootstrap: .taskfiles/bootstrap
   talos: .taskfiles/talos
   kubernetes: .taskfiles/kubernetes
-  external-secrets: .taskfiles/ExternalSecrets
+  volsync: .taskfiles/volsync
   sops: .taskfiles/Sops
 
 tasks:
