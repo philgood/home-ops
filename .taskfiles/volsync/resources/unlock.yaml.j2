@@ -11,10 +11,18 @@ spec:
       automountServiceAccountToken: false
       restartPolicy: OnFailure
       containers:
-        - name: restic
+        - name: nfs
           image: docker.io/restic/restic:latest
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
-                name: {{ ENV.APP }}-restic-secret
+                name: {{ ENV.APP }}-volsync-secret
+          volumeMounts:
+            - name: repository
+              mountPath: /repository
           resources: {}
+      volumes:
+        - name: repository
+          nfs:
+            server: nas.internal
+            path: /mnt/DataPool/apps/volsync
