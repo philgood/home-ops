@@ -50,12 +50,6 @@ spec:
                 "ips": ["172.20.21.201/24"],
                 "mac": "3e:59:e4:f7:43:38"
               }]
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
