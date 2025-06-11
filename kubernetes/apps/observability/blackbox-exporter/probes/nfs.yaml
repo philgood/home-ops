@@ -10,4 +10,4 @@ spec:
   targets:
     staticConfig:
       static:
-        - truenas.internal
+        - nas.internal
