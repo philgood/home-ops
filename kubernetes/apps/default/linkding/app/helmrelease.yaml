@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     controllers:
-      memos:
+      linkding:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -36,6 +36,8 @@ spec:
               repository: sissbruecker/linkding
               tag: 1.40.0@sha256:e498575b84f5e84d36ed69ed0036ff33916b3d1bb5908f1892ac935e1754590d
             envFrom: *envFrom
+            env:
+              TZ: Australia/Sydney
             resources:
               requests:
                 cpu: 10m
