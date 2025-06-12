@@ -35,13 +35,14 @@ spec:
             image:
               repository: ghcr.io/atuinsh/atuin
               tag: v18.6.1@sha256:869a85bcc169ae9a3ea65dcf32a99dae982d28d8562172e2712d3313d7349203
-            env:
+            nv:
               ATUIN_HOST: 0.0.0.0
-              ATUIN_PORT: &port 8080
-              ATUIN_OPEN_REGISTRATION: true
-              ATUIN_METRICS__ENABLE: true
+              ATUIN_PORT: &port 80
+              ATUIN_OPEN_REGISTRATION: "true"
+              ATUIN_METRICS__ENABLE: "true"
               ATUIN_METRICS__HOST: 0.0.0.0
-              ATUIN_METRICS__PORT: &metricsPort 8081
+              ATUIN_METRICS__PORT: &metricsPort 8080
+              ATUIN_TLS__ENABLE: "false"
               TZ: Australia/Sydney
             envFrom: *envFrom
             args:
