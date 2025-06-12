@@ -8,3 +8,4 @@ components:
 resources:
   - ./memos/ks.yaml
   - ./linkding/ks.yaml
+  - ./spoolman/ks.yaml
