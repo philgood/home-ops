@@ -8,17 +8,25 @@ server:
   public_instance: false
 
 search:
-  autocomplete: google
-  favicon_resolver: duckduckgo
-  languages:
-    - all
-    - en
-    - en-US
-    - pt
-    - pt-PT
+  safe_search: 0
+  autocomplete: ""
+  favicon_resolver: ""
+  default_lang: ""
+  ban_time_on_fail: 5
+  max_page: 0
+  max_ban_time_on_fail: 120
+  suspended_times:
+    SearxEngineAccessDenied: 86400
+    SearxEngineCaptcha: 86400
+    SearxEngineTooManyRequests: 3600
+    cf_SearxEngineCaptcha: 1296000
+    cf_SearxEngineAccessDenied: 86400
+    recaptcha_SearxEngineCaptcha: 604800
+  formats:
+    - html
 
 general:
-  instance_name: Rafaribe Search
+  instance_name: rph Search
 
 ui:
   default_theme: simple
