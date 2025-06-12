@@ -10,3 +10,4 @@ resources:
   - ./linkding/ks.yaml
   - ./spoolman/ks.yaml
   #- ./searxng/ks.yaml
+  - ./atuin/ks.yaml
