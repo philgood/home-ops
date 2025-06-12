@@ -11,3 +11,4 @@ resources:
   - ./spoolman/ks.yaml
   #- ./searxng/ks.yaml
   - ./atuin/ks.yaml
+  - ./paperless/ks.yaml
