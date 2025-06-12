@@ -92,7 +92,7 @@ spec:
                 enabled: true
                 spec:
                   failureThreshold: 30
-                  periodSeconds: 5
+                  periodSeconds: 30
             resources:
               requests:
                 cpu: 25m
@@ -117,7 +117,16 @@ spec:
               - "gotenberg"
               - "--chromium-disable-javascript=true"
               - "--chromium-allow-list=file:///tmp/.*"
-
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
     service:
       app:
         controller: *app
