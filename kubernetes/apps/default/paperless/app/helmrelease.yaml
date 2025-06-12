@@ -83,16 +83,7 @@ spec:
                   secretKeyRef:
                     name: *app
                     key: PAPERLESS_ADMIN_PASSWORD
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 30
+
             resources:
               requests:
                 cpu: 25m
