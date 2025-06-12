@@ -38,8 +38,6 @@ spec:
             envFrom: *envFrom
             env:
               TZ: Australia/Sydney
-              OIDC_VERIFY_SSL: "True"
-              OIDC_USE_NONCE: "False"
 
             probes:
               liveness: &probes
@@ -49,13 +47,11 @@ spec:
                   httpGet:
                     path: /health
                     port: &port 9090
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
+                  timeoutSeconds: 10
+                  failureThreshold: 30
               readiness: *probes
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 10m
