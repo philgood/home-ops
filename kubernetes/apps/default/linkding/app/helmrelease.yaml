@@ -38,12 +38,8 @@ spec:
             envFrom: *envFrom
             env:
               TZ: Australia/Sydney
-            resources:
-              requests:
-                cpu: 10m
-                memory: 100M
-              limits:
-                memory: 250M
+              OIDC_VERIFY_SSL: "True"
+              OIDC_USE_NONCE: "False"
 
             probes:
               liveness: &probes
@@ -60,6 +56,10 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
 
     service:
       app:
