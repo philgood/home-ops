@@ -13,7 +13,7 @@ spec:
       namespace: database
     - name: external-secrets
       namespace: external-secrets
-  path: ./kubernetes/apps/default/spoolman/app
+  path: ./kubernetes/apps/default/atuin/app
   prune: true
   sourceRef:
     kind: GitRepository
