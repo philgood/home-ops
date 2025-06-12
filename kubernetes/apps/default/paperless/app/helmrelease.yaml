@@ -68,8 +68,8 @@ spec:
               # Configure redis integration
               PAPERLESS_REDIS: redis://dragonfly.storage.svc.cluster.local:6379
               # Configure user permissions
-              USERMAP_UID: "1000"
-              USERMAP_GID: "1000"
+              USERMAP_UID: "568"
+              USERMAP_GID: "568"
               # Configure filename format
               PAPERLESS_FILENAME_FORMAT: "{correspondent}/{document_type}/{created_year}/{created_year}{created_month}{title}"
               # Configure admin user
