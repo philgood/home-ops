@@ -63,10 +63,10 @@ spec:
 
     service:
       app:
-        controller: linkding
+        controller: *app
         ports:
           http:
-            port: *port
+            port: &port 9090
 
     defaultPodOptions:
       securityContext:
