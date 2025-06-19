@@ -46,6 +46,11 @@ spec:
       helperPod:
         image:
           registry: quay.io/
+    probes:
+      liveness:
+        enabled: true
+      readiness:
+        enabled: true
     openebs-crds:
       csi:
         volumeSnapshots:
