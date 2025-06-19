@@ -1,15 +1,15 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: "${APP}-volsync"
 spec:
   secretStoreRef:
+    name: akeyless-secret-store
     kind: ClusterSecretStore
-    name: onepassword-connect
   target:
-    name: "${APP}-volsync-secret"
+    name:  "${APP}-volsync-secret"
+    creationPolicy: Owner
     template:
       engineVersion: v2
       data:
@@ -19,9 +19,9 @@ spec:
         AWS_SECRET_ACCESS_KEY: "{{ .MINIO_ROOT_PASSWORD }}"
   dataFrom:
     - extract:
-        key: minio
+        key: /minio
     - extract:
-        key: volsync-minio-template
+        key: /volsync-minio-template
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
