@@ -73,10 +73,8 @@ spec:
 
     persistence:
       config:
-        type: persistentVolumeClaim
-        size: 512Mi
-        storageClass: ceph-block
-        accessMode: ReadWriteOnce
+        enabled: true
+        existingClaim: esphome
         globalMounts:
           - path: /config
       esphome-cache:
