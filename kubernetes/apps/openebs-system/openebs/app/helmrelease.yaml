@@ -46,11 +46,6 @@ spec:
       helperPod:
         image:
           registry: quay.io/
-    probes:
-      liveness:
-        enabled: true
-      readiness:
-        enabled: true
     openebs-crds:
       csi:
         volumeSnapshots:
@@ -71,3 +66,9 @@ spec:
       replicated:
         mayastor:
           enabled: false
+    loki:
+      enabled: false
+    alloy:
+      enabled: false
+    minio:
+      enabled: false
