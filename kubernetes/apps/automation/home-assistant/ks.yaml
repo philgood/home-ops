@@ -9,12 +9,18 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/volsync
   dependsOn:
     - name: mosquitto
       namespace: automation
     - name: rook-ceph-cluster
       namespace: rook-ceph
   path: ./kubernetes/apps/automation/home-assistant/app
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   sourceRef:
     kind: GitRepository
