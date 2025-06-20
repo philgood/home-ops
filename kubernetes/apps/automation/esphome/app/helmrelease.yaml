@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     controllers:
-      esphome:
+      esphomes:
         containers:
           app:
             image:
@@ -53,7 +53,7 @@ spec:
 
     service:
       app:
-        controller: esphome
+        controller: esphomes
         ports:
           http:
             port: &port 6052
