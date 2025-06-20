@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app esphome
+  name: &app esphomes
   namespace: &namespace automation
 spec:
   commonMetadata:
