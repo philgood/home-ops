@@ -107,7 +107,7 @@ spec:
         hostnames:
           - hass.narden.au
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
