@@ -71,9 +71,7 @@ spec:
 
     persistence:
       config:
-        type: persistentVolumeClaim
-        size: 512Mi
-        storageClass: ceph-block
-        accessMode: ReadWriteOnce
+        enabled: true
+        existingClaim: spoolman-data
         globalMounts:
           - path: /home/app/.local/share/spoolman/
