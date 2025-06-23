@@ -6,9 +6,9 @@ namespace: default
 components:
  - ../../components/common
 resources:
-  - ./memos/ks.yaml
+  #- ./memos/ks.yaml
   - ./linkding/ks.yaml
   - ./spoolman/ks.yaml
-  #- ./searxng/ks.yaml
   - ./atuin/ks.yaml
   - ./paperless/ks.yaml
+  - ./obsidian-couchdb/ks.yaml
