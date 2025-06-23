@@ -8,8 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  #components:
-  #  - ../../../../components/common/volsync
   dependsOn:
     - name: mosquitto
       namespace: *namespace
@@ -30,3 +28,9 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: true
+  components:
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 5Gi
