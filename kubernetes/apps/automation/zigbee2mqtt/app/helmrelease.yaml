@@ -71,7 +71,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
-        existingClaim: zigbee2mqtt
+        existingClaim: zigbee2mqtt-data
       config-logs:
         type: emptyDir
         globalMounts:
