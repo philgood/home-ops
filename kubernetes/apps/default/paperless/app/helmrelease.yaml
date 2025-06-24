@@ -137,7 +137,7 @@ spec:
                 port: *port
     persistence:
       data:
-        existingClaim: *app
+        existingClaim: paperless-data
         advancedMounts:
           paperless:
             app:
