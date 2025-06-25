@@ -1,19 +1,19 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app obico
 spec:
+  interval: 15m
   chart:
     spec:
       chart: obico
       version: 0.6.0
-      reconcileStrategy: ChartVersion
+      interval: 30m
       sourceRef:
         kind: HelmRepository
-        namespace: flux-system
         name: gabe565
-  interval: 1h
   driftDetection:
     mode: enabled
   values:
