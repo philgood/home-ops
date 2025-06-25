@@ -34,6 +34,32 @@ spec:
             - "15856:3334"
             - "15857:3334"
             - "15858:3334"
+        persistence:
+        data:
+          enabled: true
+          existingClaim: obico-data
+        media:
+          enabled: true
+          existingClaim: obico-media
+        
+        service:
+           app:
+            ports:
+              http:
+                port: &port 443
+        
+        route:
+          app:
+            hostnames:
+                - obico.narden.au
+            parentRefs:
+                - name: external
+                  namespace: kube-system
+                  sectionName: https
+            rules:
+                - backendRefs:
+                - identifier: app
+                  port: *port
         resources:
               requests:
                 cpu: 50m
@@ -47,38 +73,10 @@ spec:
             tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
         env:
          DEBUG: "False"
-          
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
+        
 
-    service:
-      app:
-        ports:
-          http:
-            port: &port 443
+    
 
-    route:
-      app:
-        hostnames:
-          - obico.narden.au
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+    
 
-    persistence:
-        data:
-          enabled: true
-          existingClaim: obico-data
-        media:
-          enabled: true
-          existingClaim: obico-media
+    
