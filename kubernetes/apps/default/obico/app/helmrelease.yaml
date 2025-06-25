@@ -2,10 +2,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: obico
+  name: gabe565-charts
 spec:
   interval: 5m0s
-  url: oci://ghcr.io/gabe565/charts/obico
+  url: oci://ghcr.io/gabe565/charts
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
