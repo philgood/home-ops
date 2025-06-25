@@ -35,8 +35,5 @@ spec:
       secret:
         secretName: &secret tailscale-operator-secret
     operatorConfig:
-      securityContext:
-        capabilities:
-            add: [NET_ADMIN]
       podAnnotations:
         secret.reloader.stakater.com/reload: *secret
