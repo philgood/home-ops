@@ -46,7 +46,7 @@ spec:
            app:
             ports:
               http:
-                port: &port 443
+                port: &port 3334
         
         route:
           app:
