@@ -1,50 +1,40 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app obico
 spec:
+  chart:
+    spec:
+      chart: obico
+      version: 0.6.0
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        namespace: flux-system
+        name: gabe565
   interval: 1h
-  chartRef:
-    kind: OCIRepository
-    name: app-template
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  driftDetection:
+    mode: enabled
   values:
-    controllers:
-      obico:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          app:
-            image:
-              repository: ghcr.io/gabe565/obico/web
-              tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
-            env:
-                ACCOUNT_ALLOW_SIGN_UP: "False"
-                OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
+    server:
+        image:
+            repository: ghcr.io/gabe565/obico/web
+            tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
+        env:
+            ACCOUNT_ALLOW_SIGN_UP: "False"
+            OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
             #envFrom:
             #  - secretRef:
             #      name: obico-secret
-            ports:
-                - "15853:3334"
-                - "15854:3334"
-                - "15855:3334"
-                - "15856:3334"
-                - "15857:3334"
-                - "15858:3334"
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-            resources:
+        ports:
+            - "15853:3334"
+            - "15854:3334"
+            - "15855:3334"
+            - "15856:3334"
+            - "15857:3334"
+            - "15858:3334"
+        resources:
               requests:
                 cpu: 50m
                 memory: 4000Mi
