@@ -51,7 +51,7 @@ spec:
               limits:
                 memory: 4000Mi
         
-      ml-api:
+    ml-api:
         image:
             repository: ghcr.io/gabe565/obico/ml-api
             tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
