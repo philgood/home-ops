@@ -6,7 +6,6 @@ namespace: default
 components:
  - ../../components/common
 resources:
-  - ./obico/ks.yaml
   - ./linkding/ks.yaml
   - ./spoolman/ks.yaml
   - ./atuin/ks.yaml
