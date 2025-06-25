@@ -14,8 +14,8 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: cloudnative-pg
-      namespace: database
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   path: ./kubernetes/apps/default/obico/app
   postBuild:
     substitute:
