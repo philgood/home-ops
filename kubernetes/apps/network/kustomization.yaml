@@ -11,4 +11,5 @@ resources:
   - ./cloudflare-dns/ks.yaml
   - ./echo/ks.yaml
   - ./multus/ks.yaml
+  - ./tailscale/ks.yaml
 
