@@ -1,0 +1,94 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app obico
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      obico:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gabe565/obico/web
+              tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
+            env:
+                ACCOUNT_ALLOW_SIGN_UP: "False"
+                OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
+            #envFrom:
+            #  - secretRef:
+            #      name: obico-secret
+            ports:
+                - "15853:3334"
+                - "15854:3334"
+                - "15855:3334"
+                - "15856:3334"
+                - "15857:3334"
+                - "15858:3334"
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+            resources:
+              requests:
+                cpu: 50m
+                memory: 4000Mi
+              limits:
+                memory: 4000Mi
+        
+      ml-api:
+        image:
+            repository: ghcr.io/gabe565/obico/ml-api
+            tag: sha-50b9a9cf770c3dd444bf7488cb9b1ba5c96dc8fd
+        env:
+         DEBUG: "False"
+          
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
+    service:
+      app:
+        ports:
+          http:
+            port: &port 443
+
+    route:
+      app:
+        hostnames:
+          - obico.narden.au
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+
+    persistence:
+        data:
+          enabled: true
+          existingClaim: obico-data
+        media:
+          enabled: true
+          existingClaim: obico-media

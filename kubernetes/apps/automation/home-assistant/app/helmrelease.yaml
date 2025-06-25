@@ -77,16 +77,6 @@ spec:
             port: 5353
             protocol: UDP
             targetPort: 5353
-          homekit-tcp:
-            enabled: true
-            port: 21063
-            protocol: TCP
-            targetPort: 21063
-          homekit-udp:
-            enabled: true
-            port: 21063
-            protocol: UDP
-            targetPort: 21063
           sonos:
             enabled: true
             port: 1400
