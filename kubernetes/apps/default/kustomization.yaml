@@ -11,3 +11,4 @@ resources:
   - ./atuin/ks.yaml
   - ./paperless/ks.yaml
   - ./obsidian-couchdb/ks.yaml
+  - ./mealie/ks.yaml
