@@ -37,3 +37,25 @@ spec:
     - name: horizontalpodautoscaler
       value: keda-hpa-.*
       isRegex: true
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+    name: ceph-node-packet-drop
+namespace: observability
+spec:
+    matchers:
+      - name: alertname
+        value: CephNodeNetworkPacketDrops
+        isRegex: false
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+    name: ceph-node-packet-error
+namespace: observability
+spec:
+    matchers:
+        - name: alertname
+          value: CephNodeNetworkPacketErrors
+          isRegex: false
