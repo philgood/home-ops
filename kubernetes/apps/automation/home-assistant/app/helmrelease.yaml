@@ -95,6 +95,7 @@ spec:
             enabled: true
             port: 21064
             protocol: TCP
+            targetPort: 21064
             
     route:
       app:
