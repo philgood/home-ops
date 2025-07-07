@@ -91,7 +91,11 @@ spec:
           lifx:
             enabled: true
             port: 56700
-
+          homekit:
+            enabled: true
+            port: 21064
+            protocol: TCP
+            
     route:
       app:
         hostnames:
