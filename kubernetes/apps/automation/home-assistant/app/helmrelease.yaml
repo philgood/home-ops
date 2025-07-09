@@ -45,7 +45,22 @@ spec:
                 memory: 4000Mi
               limits:
                 memory: 7000Mi
-
+        
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.101.2
+            env:
+              TZ: Australia/Sydney
+            args:
+              - "/config"
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+                
     defaultPodOptions:
       annotations:
             k8s.v1.cni.cncf.io/networks: |
@@ -64,6 +79,8 @@ spec:
 
     service:
       app:
+        primary: true
+        forceRename: home-assistant
         ports:
           http:
             port: &port 8123
@@ -96,6 +113,11 @@ spec:
             port: 21064
             protocol: TCP
             targetPort: 21064
+      codeserver:
+        ports:
+          http:
+            enabled: true
+            port: &codeserver-port 8080
             
     route:
       app:
@@ -107,8 +129,20 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: app
+              - identifier: home-assistant
                 port: *port
+      codeserver:
+        hostnames:
+          - hass-code.narden.au
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: home-assistant-codeserver
+                port: *codeserver-port           
+        
 
     persistence:
       config:
@@ -117,6 +151,8 @@ spec:
         advancedMounts:
           home-assistant:
             app:
+              - path: /config
+          codeserver:
               - path: /config
       config-cache:
         type: emptyDir
