@@ -79,9 +79,6 @@ spec:
 
     service:
       app:
-        primary: true
-        forceRename: home-assistant
-        controller: *app
         ports:
           http:
             port: &port 8123
@@ -115,7 +112,6 @@ spec:
             protocol: TCP
             targetPort: 21064
       codeserver:
-        controller: *app
         ports:
           http:
             enabled: true
@@ -131,7 +127,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: home-assistant
+              - identifier: app
                 port: *port
       codeserver:
         hostnames:
@@ -142,7 +138,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant-codeserver
+              - name: codeserver
                 port: *codeserver-port           
         
 
