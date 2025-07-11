@@ -8,5 +8,5 @@ components:
 resources:
   # Flux-Kustomizations
   - ./jellyfin/ks.yaml
-  - ./prowlerr/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
