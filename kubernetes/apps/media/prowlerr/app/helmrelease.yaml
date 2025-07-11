@@ -82,6 +82,6 @@ spec:
             sectionName: https
     persistence:
       config:
-        existingClaim: prowlarr
+        existingClaim: prowlarr-data
       tmp:
         type: emptyDir
