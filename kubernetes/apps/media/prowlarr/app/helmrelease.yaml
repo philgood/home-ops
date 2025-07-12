@@ -35,10 +35,12 @@ spec:
               PROWLARR__LOG__LEVEL: info
               PROWLARR__SERVER__PORT: &port 80
               PROWLARR__UPDATE__BRANCH: develop
+              PROWLARR__AUTH__APIKEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: prowlarr
+                    key: PROWLARR_API_KEY
               TZ: Australia/Sydney
-            envFrom:
-              - secretRef:
-                  name: prowlarr-secret
             probes:
               liveness:
                 enabled: true
