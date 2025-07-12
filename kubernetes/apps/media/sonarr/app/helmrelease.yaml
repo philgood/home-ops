@@ -91,4 +91,4 @@ spec:
         globalMounts:
           - path: /media
       tmp:
-        type: emptyDir\
+        type: emptyDir
