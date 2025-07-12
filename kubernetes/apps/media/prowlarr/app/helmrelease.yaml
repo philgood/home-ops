@@ -62,8 +62,8 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     service:
-      controller: prowlarr
       app:
+        controller: prowlarr
         ports:
           http:
             port: *port
