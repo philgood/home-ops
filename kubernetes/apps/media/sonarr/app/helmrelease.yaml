@@ -80,11 +80,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: sonarr
-      config-cache:
-        existingClaim: sonarr-cache
+        enabled: true
+        existingClaim: sonarr-config
         globalMounts:
-          - path: /config/MediaCover
+          - path: /config
       media:
         type: nfs
         server: nas.internal
