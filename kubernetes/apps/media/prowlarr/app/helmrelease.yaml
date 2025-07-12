@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: &app prowlarr
 spec:
   interval: 1h
   chartRef:
@@ -38,7 +38,7 @@ spec:
               TZ: Australia/Sydney
             envFrom:
               - secretRef:
-                  name: prowlarr-secret
+                  name: *app
             probes:
               liveness:
                 enabled: true
@@ -63,7 +63,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: prowlarr
+        controller: *app
         ports:
           http:
             port: *port
@@ -74,6 +74,10 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
     persistence:
       config:
         enabled: true
