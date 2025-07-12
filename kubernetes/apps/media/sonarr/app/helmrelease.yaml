@@ -79,6 +79,8 @@ spec:
               - identifier: app
                 port: *port
     persistence:
+      config:
+        existingClaim: sonarr
       config-cache:
         existingClaim: sonarr-cache
         globalMounts:
