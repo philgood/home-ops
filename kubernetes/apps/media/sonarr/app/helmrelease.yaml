@@ -89,6 +89,6 @@ spec:
         server: nas.internal
         path: /mnt/DataPool/media
         globalMounts:
-          - path: /media/tv
+          - path: /media
       tmp:
         type: emptyDir
