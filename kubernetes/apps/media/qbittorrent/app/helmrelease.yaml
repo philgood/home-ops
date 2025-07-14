@@ -83,7 +83,7 @@ spec:
         server: nas.internal
         path: /mnt/DataPool/media
         globalMounts:
-          - path: /media/downloads/qbittorrent
-            subPath: downloads/qbittorrent
+          - path: /media/Downloads/qbittorrent
+            subPath: Downloads/qbittorrent
       tmp:
         type: emptyDir
