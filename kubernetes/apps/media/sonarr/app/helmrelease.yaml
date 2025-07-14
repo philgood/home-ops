@@ -87,7 +87,7 @@ spec:
       media:
         type: nfs
         server: nas.internal
-        path: /mnt/DataPool/media/tv
+        path: /mnt/DataPool/media
         globalMounts:
           - path: /media
       tmp:
