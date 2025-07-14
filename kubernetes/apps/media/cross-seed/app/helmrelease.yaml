@@ -31,22 +31,15 @@ spec:
               TZ: Australia/Sydney
             args: ["daemon"]
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
                 spec:
-                  httpGet:
-                    path: /api/ping
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+                  failureThreshold: 30
+                  periodSeconds: 5
             resources:
               requests:
                 cpu: 10m
