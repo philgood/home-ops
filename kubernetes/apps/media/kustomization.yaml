@@ -11,4 +11,4 @@ resources:
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./sonarr/ks.yaml
-  - ./cross-seed/ks.yaml
+  #- ./cross-seed/ks.yaml
