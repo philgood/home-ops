@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tesla-proxy
+  name: &app tesla-proxy
 spec:
   interval: 1h
   chartRef:
@@ -63,14 +63,18 @@ spec:
 
     service:
       app:
+        forceRename: tesla-proxy
+        controller: *app
         ports:
           http:
            port: &app-port 8099
       setup:
+        controller: *app
         ports:
           http:
               port: &setup-port 8097
       keyserver:
+        controller: *app
         ports:
           http:
             port: &keyserver-port 8098     
@@ -84,7 +88,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: setup
+              - identifier: tesla-proxy-setup
                 port: *setup-port
       keyserver:
         hostnames:
@@ -95,9 +99,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              #- path: /.well-known/appspecific/com.tesla.3p.public-key.pem
-              #  pathType: Prefix 
-              - identifier: keyserver
+              - identifier: tesla-proxy-keyserver
                 port: *keyserver-port       
         
     persistence:
