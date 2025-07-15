@@ -63,8 +63,6 @@ spec:
 
     service:
       app:
-        forceRename: tesla-proxy
-        controller: *app
         ports:
           http:
            port: &app-port 8099
