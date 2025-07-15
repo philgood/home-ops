@@ -66,17 +66,17 @@ spec:
         controller: tesla-proxy
         ports:
           http:
-            port: 8099
+              port: 8099
 	  setup:
         controller: tesla-proxy
         ports:
           http:
-            port: 8097
+              port: 8097
       keyserver:
         controller: tesla-proxy
         ports:
           http:
-            port: 8098     
+              port: 8098     
 
     route:
       setup:
