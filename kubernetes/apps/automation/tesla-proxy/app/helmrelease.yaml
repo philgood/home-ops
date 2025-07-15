@@ -69,12 +69,10 @@ spec:
           http:
            port: &app-port 8099
       setup:
-        controller: tesla-proxy-setup
         ports:
           http:
               port: &setup-port 8097
       keyserver:
-        controller: *app
         ports:
           http:
             port: &keyserver-port 8098     
@@ -88,7 +86,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: tesla-proxy-setup
+              - identifier: app
                 port: *setup-port
       keyserver:
         hostnames:
