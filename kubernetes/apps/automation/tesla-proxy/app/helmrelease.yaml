@@ -68,7 +68,6 @@ spec:
           http:
             port: 8099
 	  setup:
-        enabled: false
         controller: tesla-proxy
         ports:
           http:
