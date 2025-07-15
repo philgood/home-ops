@@ -65,7 +65,7 @@ spec:
       app:
         ports:
           http:
-              port: &app-port 8099
+           port: &app-port 8099
 	  setup:
         ports:
           http:
