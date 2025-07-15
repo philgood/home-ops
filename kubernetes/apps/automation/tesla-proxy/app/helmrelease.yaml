@@ -103,12 +103,12 @@ spec:
                 port: *keyserver-port       
         
     persistence:
-      config:
-        existingClaim: tesla-proxy-config
-        advancedMounts:
-          tesla-proxy:
-            app:
-              - path: /config
+      #config:
+      #  existingClaim: tesla-proxy-config
+      #  advancedMounts:
+      #    tesla-proxy:
+      #      app:
+      #        - path: /config
       tesla-public-key:
         type: secret
         name: tesla-proxy-secret
