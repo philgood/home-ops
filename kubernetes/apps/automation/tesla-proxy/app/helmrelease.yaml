@@ -63,21 +63,17 @@ spec:
 
     service:
       app:
-        controller: tesla-proxy
         ports:
           http:
-              port: 8099
+              port: &app-port 8099
 	  setup:
-        controller: tesla-proxy
         ports:
           http:
-              port: 8097
+              port: &setup-port 8097
       keyserver:
-        controller: tesla-proxy
         ports:
           http:
-              port: 8098     
-
+            port: &keyserver-port 8098     
     route:
       setup:
         hostnames:
@@ -89,7 +85,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: setup
-                port: 8097
+                port: *setup-port
       keyserver:
         hostnames:
           - tesla.narden.au
@@ -102,7 +98,7 @@ spec:
               - path: /.well-known/appspecific/com.tesla.3p.public-key.pem
                 pathType: Prefix 
               - identifier: keyserver
-                port: 8098       
+                port: *keyserver-port       
         
     persistence:
       config:
