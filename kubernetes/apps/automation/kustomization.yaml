@@ -12,3 +12,4 @@ resources:
   - ./esphome/ks.yaml
   - ./hassactron/ks.yaml
   - ./zigbee2mqtt/ks.yaml
+  - ./tesla-proxy/ks.yaml
