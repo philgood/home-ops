@@ -88,15 +88,13 @@ spec:
                 port: *setup-port
       keyserver:
         hostnames:
-          - tesla.narden.au
+          - tesla.narden.au/.well-known/appspecific/com.tesla.3p.public-key.pem
         parentRefs:
           - name: external
             namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
-              - path: /.well-known/appspecific/com.tesla.3p.public-key.pem
-                pathType: Prefix 
               - identifier: keyserver
                 port: *keyserver-port       
         
