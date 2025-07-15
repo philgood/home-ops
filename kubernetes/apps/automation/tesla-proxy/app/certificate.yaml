@@ -8,8 +8,8 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: tesla.narden.au
+  commonName: teswall.narden.au
   dnsNames:
-    - tesla.narden.au
+    - teswall.narden.au
   privateKey:
     rotationPolicy: Always
