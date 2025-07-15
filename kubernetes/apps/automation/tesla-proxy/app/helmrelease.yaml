@@ -105,6 +105,13 @@ spec:
                 port: 8098       
         
     persistence:
+      config:
+        enabled: true
+        existingClaim: tesla-proxy-config
+        advancedMounts:
+          tesla-proxy:
+            app:
+              - path: /config
       tesla-public-key:
         type: secret
         name: tesla-proxy-secret
