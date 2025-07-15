@@ -69,7 +69,7 @@ spec:
           http:
            port: &app-port 8099
       setup:
-        controller: *app
+        controller: tesla-proxy-setup
         ports:
           http:
               port: &setup-port 8097
