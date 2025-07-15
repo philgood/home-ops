@@ -102,7 +102,6 @@ spec:
         
     persistence:
       config:
-        enabled: true
         existingClaim: tesla-proxy-config
         advancedMounts:
           tesla-proxy:
