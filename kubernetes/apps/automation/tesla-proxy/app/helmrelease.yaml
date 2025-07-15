@@ -118,12 +118,12 @@ spec:
             keyserver:
               - path: /config/tesla/com.tesla.3p.public-key.pem
                 subPath: PUBLIC_KEY_PEM
-      tesla-private-key:
-        type: secret
-        name: tesla-proxy-secret
-        defaultMode: 420  # 644 (octal) in decimal
-        advancedMounts:
-          tesla-proxy:
-            app:
-              - path: /config/tesla/com.tesla.3p.private-key.pem
-                subPath: PRIVATE_KEY_PEM
+      #tesla-private-key:
+      ##  type: secret
+      #  name: tesla-proxy-secret
+      #  defaultMode: 420  # 644 (octal) in decimal
+      #  advancedMounts:
+      #    tesla-proxy:
+      #      app:
+      #        - path: /config/tesla/com.tesla.3p.private-key.pem
+      #         subPath: PRIVATE_KEY_PEM
