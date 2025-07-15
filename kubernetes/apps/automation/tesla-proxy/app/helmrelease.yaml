@@ -98,9 +98,9 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-         - backendRefs:
-              - identifier: tesla-proxy-keyserver
-                port: *keyserver-port
+         #- backendRefs:
+         #     - identifier: tesla-proxy-keyserver
+         #       port: *keyserver-port
          - matches:
              - path: 
                  type: Prefix
