@@ -100,7 +100,7 @@ spec:
          #       port: *keyserver-port
          - matches:
              - path: 
-                 type: Prefix
+                 type: PathPrefix
                  value: /.well-known/appspecific/com.tesla.3p.public-key.pem       
         
     persistence:
