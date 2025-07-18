@@ -96,7 +96,7 @@ spec:
             sectionName: https
         rules:
          - backendRefs:
-              - identifier: tesla-proxy-keyserver
+              - identifier: keyserver
                 port: *keyserver-port
          #- matches:
          #    - path: 
