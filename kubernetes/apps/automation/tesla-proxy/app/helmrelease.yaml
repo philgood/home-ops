@@ -98,10 +98,10 @@ spec:
          - backendRefs:
               - identifier: keyserver
                 port: *keyserver-port
-         #- matches:
-         #    - path: 
-         #        type: PathPrefix
-         #        value: /.well-known/appspecific/com.tesla.3p.public-key.pem       
+         - matches:
+             - path: 
+                 type: PathPrefix
+                 value: /.well-known/appspecific/com.tesla.3p.public-key.pem       
         
     persistence:
       #config:
