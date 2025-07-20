@@ -45,22 +45,29 @@ spec:
                 memory: 4000Mi
               limits:
                 memory: 7000Mi
-        
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.102.1
+              tag: 4.102.1@sha256:8e54ed8a175d4dc223186078dc0c89157887ad8a2c17b41b2ff6f1a0b3d724d9
             env:
-              TZ: Australia/Sydney
+              TZ: America/Edmonton
             args:
-              - "/config"
-              - --auth
-              - "none"
-              - --user-data-dir
-              - "/config/.vscode"
-              - --extensions-dir
-              - "/config/.vscode"
-                
+              [
+                "--auth",
+                "none",
+                "--user-data-dir",
+                "/config/.vscode",
+                "--extensions-dir",
+                "/config/.vscode",
+                "--port",
+                "12321",
+                "/config",
+              ]
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       annotations:
             k8s.v1.cni.cncf.io/networks: |
@@ -113,7 +120,7 @@ spec:
             targetPort: 21064
           codeserver:
             enabled: true
-            port: &codeserverPort 8080
+            port: &codeserverPort 12321
             
     route:
       app:
