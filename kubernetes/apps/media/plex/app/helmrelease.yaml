@@ -51,6 +51,10 @@ spec:
         supplementalGroups: [44]
     service:
       app:
+        controller: plex
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 172.20.24.79  
         ports:
           http:
             port: &port 32400
@@ -89,6 +93,7 @@ spec:
         server: nas.internal
         path: /mnt/DataPool/media
         globalMounts:
+          - path: /media
             readOnly: true
       tmpfs:
         type: emptyDir
