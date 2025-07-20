@@ -25,7 +25,7 @@ spec:
               repository: ghcr.io/home-operations/plex
               tag: 1.41.9.9961@sha256:6c86319bb3275135f5da5aec71b45e48305669ecbceee0f88d335bebf0d0f218
             env:
-              PLEX_ADVERTISE_URL: https://{{ .Release.Name }}.narden.au:443
+              PLEX_ADVERTISE_URL: https://{{ .Release.Name }}.narden.au:443,http://172.20.24.79:32400
               PLEX_NO_AUTH_NETWORKS: 10.42.0.0/16,172.20.21.0/24,172.20.22.0/24
               TZ: Australia/Sydney
             securityContext:
@@ -54,7 +54,7 @@ spec:
         controller: plex
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 172.20.24.79  
+          lbipam.cilium.io/ips: 172.20.24.79
         ports:
           http:
             port: &port 32400
