@@ -111,11 +111,9 @@ spec:
             port: 21064
             protocol: TCP
             targetPort: 21064
-      codeserver:
-        ports:
-          http:
+          codeserver:
             enabled: true
-            port: &codeserver-port 8080
+            port: &codeserverPort 8080
             
     route:
       app:
@@ -139,7 +137,7 @@ spec:
         rules:
           - backendRefs:
               - name: app
-                port: *codeserver-port           
+                port: *codeserverPort           
         
 
     persistence:
