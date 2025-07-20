@@ -89,6 +89,7 @@ spec:
         server: nas.internal
         path: /mnt/DataPool/media
         globalMounts:
+          - path: /media
             readOnly: true
       tmpfs:
         type: emptyDir
