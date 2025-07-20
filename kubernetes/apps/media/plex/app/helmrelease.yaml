@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app plex
+  name: plex
 spec:
   interval: 1h
   chartRef:
@@ -79,7 +79,7 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: plex
       config-cache:
         existingClaim: plex-cache
         globalMounts:
