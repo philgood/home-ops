@@ -12,3 +12,4 @@ resources:
   - ./qbittorrent/ks.yaml
   - ./sonarr/ks.yaml
   - ./overseerr/ks.yaml
+  - ./plex/ks.yaml
