@@ -39,10 +39,12 @@ spec:
               MEMOS_DRIVER: postgres
               MEMOS_PORT: "5230"
               MEMOS_PUBLIC: false
+              MEMOS_DSN:
+                valueFrom:
+                  secretKeyRef:
+                    name: memos-secret
+                    key: POSTGRES_URL
               TZ: Australia/Sydney
-            envFrom:
-              - secretRef:
-                  name: memos-secret
 
             probes:
               liveness: &probe
