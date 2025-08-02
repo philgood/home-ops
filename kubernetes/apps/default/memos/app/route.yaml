@@ -6,12 +6,23 @@ metadata:
   name: &app memos
 spec:
   hostnames:
-    - "memos.narden.au"
+    - "${APP_SUBDOMAIN:-${APP}}.narden.au"
   parentRefs:
-    - name: external
+    - name: internal
       namespace: kube-system
       sectionName: https
   rules:
     - backendRefs:
-        - name: memos
-          port: 5230 
+        - name: "memos-grpc"
+          namespace: default
+          port: 5231
+      matches:
+        - headers:
+            - type: Exact
+              name: Content-Type
+              value: "application/grpc-web+proto"
+    - backendRefs:
+        - name: memos-app
+          namespace: default
+          port: 5230
+          weight: 1

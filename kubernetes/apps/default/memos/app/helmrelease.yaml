@@ -67,23 +67,20 @@ spec:
         
     service:
       app:
-        controller: *app
+        controller: memos
         ports:
           http:
-            port: &port 5230
+            port: 5230
+            appProtocol: http
+      grpc:
+        controller: memos
+        ports:
+          http:
+            port: 5231
+            targetPort: 5230
+            appProtocol: kubernetes.io/h2c
 
-    route:
-      app:
-        hostnames:
-          - memos.narden.au
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+    route: {}
                 
     persistence:
       data:
