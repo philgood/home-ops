@@ -14,7 +14,7 @@ spec:
   rules:
     - backendRefs:
         - name: "memos-grpc"
-          namespace: default
+          namespace: kube-system
           port: 5231
       matches:
         - headers:
@@ -23,6 +23,6 @@ spec:
               value: "application/grpc-web+proto"
     - backendRefs:
         - name: memos-app
-          namespace: default
+          namespace: kube-system
           port: 5230
           weight: 1
