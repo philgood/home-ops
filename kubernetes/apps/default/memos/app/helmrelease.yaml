@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: memos
+  name: &app memos
 spec:
   interval: 1h
   chartRef:
@@ -66,20 +66,23 @@ spec:
         
     service:
       app:
-        controller: memos
+        controller: *app
         ports:
           http:
-            port: 5230
-            appProtocol: http
-      grpc:
-        controller: memos
-        ports:
-          http:
-            port: 5231
-            targetPort: 5230
-            appProtocol: kubernetes.io/h2c
+            port: &port 5230
 
-    route: {}
+    route:
+      app:
+        hostnames:
+          - memos.narden.au
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
                 
     persistence:
       data:
