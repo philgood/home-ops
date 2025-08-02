@@ -13,16 +13,5 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - name: "memos-grpc"
-          namespace: kube-system
-          port: 5231
-      matches:
-        - headers:
-            - type: Exact
-              name: Content-Type
-              value: "application/grpc-web+proto"
-    - backendRefs:
-        - name: memos-app
-          namespace: kube-system
-          port: 5230
-          weight: 1
+        - name: memos
+          port: 5230 
