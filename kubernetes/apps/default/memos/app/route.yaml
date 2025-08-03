@@ -8,7 +8,7 @@ spec:
   hostnames:
     - "${APP_SUBDOMAIN:-${APP}}.narden.au"
   parentRefs:
-    - name: internal
+    - name: external
       namespace: kube-system
       sectionName: https
   rules:
