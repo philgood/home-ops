@@ -21,6 +21,9 @@ spec:
             - type: Exact
               name: Content-Type
               value: "application/grpc-web+proto"
+            - type: Exact
+              name: x-grpc-web
+              value: "1"
     - backendRefs:
         - name: memos-app
           port: 5230
