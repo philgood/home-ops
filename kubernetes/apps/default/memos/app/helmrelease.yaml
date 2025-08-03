@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/usememos/memos
-              tag: 0.24.4@sha256:e278981311adb91712328cdd81d2f7bcf132f055b051338bbfaecf0538ba69fe
+              tag: 0.25.0@sha256:e278981311adb91712328cdd81d2f7bcf132f055b051338bbfaecf0538ba69fe
             env:
               MEMOS_DRIVER: postgres
               MEMOS_MODE: prod
