@@ -51,6 +51,10 @@ spec:
         supplementalGroups: [44]
     service:
       app:
+        controller: jellyfin
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 172.20.24.78
         ports:
           http:
             port: &port 8096
