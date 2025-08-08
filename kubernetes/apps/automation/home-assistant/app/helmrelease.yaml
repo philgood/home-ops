@@ -60,7 +60,7 @@ spec:
                 "--extensions-dir",
                 "/config/.vscode",
                 "--port",
-                "12321",
+                "80",
                 "/config",
               ]
             resources:
@@ -120,7 +120,7 @@ spec:
             targetPort: 21064
           codeserver:
             enabled: true
-            port: &codeserverPort 12321
+            port: &codeserverPort 80
             
     route:
       app:
