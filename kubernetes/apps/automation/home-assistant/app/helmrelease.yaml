@@ -45,24 +45,24 @@ spec:
                 memory: 4000Mi
               limits:
                 memory: 7000Mi
-          codeserver:
+          code-server:
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.102.2@sha256:8c2aaafb74a2978f48d193135eb3ea6fc0e24563dd59c028b9f1808cefd0fa33
+            args:
+              - --auth
+              - none
+              - --disable-telemetry
+              - --disable-update-check
+              - --user-data-dir
+              - /config/.code-server
+              - --extensions-dir
+              - /config/.code-server
+              - --port
+              - "12321"
+              - /config
             env:
               TZ: Australia/Sydney
-            args:
-              [
-                "--auth",
-                "none",
-                "--user-data-dir",
-                "/config/.vscode",
-                "--extensions-dir",
-                "/config/.vscode",
-                "--port",
-                "80",
-                "/config",
-              ]
             resources:
               requests:
                 cpu: 10m
@@ -86,19 +86,13 @@ spec:
 
     service:
       app:
+        primary: true
         ports:
           http:
             port: &port 8123
           mdns-tcp:
             enabled: true
             port: 5353
-            protocol: TCP
-            targetPort: 5353
-          mdns-udp:
-            enabled: true
-            port: 5353
-            protocol: UDP
-            targetPort: 5353
           sonos:
             enabled: true
             port: 1400
@@ -108,19 +102,17 @@ spec:
           upnp:
             enabled: true
             port: 1900
-            protocol: UDP
-            targetPort: 1900
           lifx:
             enabled: true
             port: 56700
           homekit:
             enabled: true
             port: 21064
-            protocol: TCP
-            targetPort: 21064
-          codeserver:
-            enabled: true
-            port: &codeserverPort 80
+          code-server:
+      code-server:
+        ports:
+          code-server:
+            port: 12321
             
     route:
       app:
@@ -131,20 +123,22 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /code/
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /
+            backendRefs:
+              - identifier: code-server
+                port: 12321
           - backendRefs:
               - identifier: app
-                port: *port
-      codeserver:
-        hostnames:
-          - hass-code.narden.au
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: app
-                port: *codeserverPort
+                port: 8123
 
     persistence:
       config:
@@ -154,6 +148,9 @@ spec:
           home-assistant:
             app:
               - path: /config
+            code-server:
+              - path: /config
+              
       config-cache:
         type: emptyDir
         globalMounts:
