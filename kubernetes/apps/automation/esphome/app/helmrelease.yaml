@@ -37,9 +37,9 @@ spec:
             resources:
               requests:
                 cpu: 20m
-                memory: 2048M
+                memory: 3072M
               limits:
-                memory: 2048M
+                memory: 3072M
 
     defaultPodOptions:
       annotations:
