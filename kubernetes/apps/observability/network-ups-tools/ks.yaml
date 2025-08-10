@@ -19,3 +19,6 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: true
+  dependsOn:
+    - name: node-feature-discovery
+      namespace: kube-system
