@@ -37,6 +37,17 @@ spec:
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: &config network-ups-tools-config
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: cyberpower.feature.node.kubernetes.io/ups
+                        operator: In
+                        values: ["true"]
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
     service:
       app:
         controller: *app
