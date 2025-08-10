@@ -133,7 +133,7 @@ spec:
                   path:
                     type: ReplacePrefixMatch
                     replacePrefixMatch: /
-            backendRefs:
+          - backendRefs:
               - identifier: code-server
                 port: 12321
           - backendRefs:
