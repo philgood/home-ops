@@ -46,7 +46,6 @@ spec:
               tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
             env:
               TZ: Australia/Sydney
-              nodeName: alpha
             securityContext:
               privileged: true
             probes:
@@ -93,7 +92,6 @@ spec:
               password  = "nNpkeox7$upSQeKfekKQ"
               actions = SET
               instcmds = ALL
-              upsmon primary
           ups.conf: |-
             [kubernetes]
               driver = usbhid-ups
