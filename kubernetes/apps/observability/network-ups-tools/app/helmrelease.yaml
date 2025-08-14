@@ -45,17 +45,47 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+      nut-exporter:
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/druggeri/nut_exporter
+              tag: 3.2.1
+            env:
+              NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
+            args:
+              - --log.level=info
+              - --nut.vars_enable="battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status"
+            resources:
+              requests:
+                cpu: 15m
+                memory: 105Mi
+              limits:
+                memory: 105Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: [ALL] }
 
     service:
+      # Network UPS Tools service
       network-ups-tools:
         controller: network-ups-tools
         type: LoadBalancer
         annotations:
-          coredns.io/hostname: nut.narden.au    
+          coredns.io/hostname: nut.narden.au
         externalTrafficPolicy: Cluster
         ports:
           http:
             port: 3493
+            protocol: TCP
+      # nut_exporter service
+      nut-exporter:
+        controller: nut-exporter
+        ports:
+          http:
+            port: 9199
             protocol: TCP
 
     persistence:
