@@ -30,9 +30,9 @@ spec:
               NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
             args:
               - --log.level=debug
-              # # the first time I set this, the first and last entries were ignored, so I have doubled them.
-              - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status,ups.status"
-
+              - --nut.server=network-ups-tools.observability.svc.cluster.local
+              - --nut.port=3493
+              - --nut.vars_enable=battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status
             resources:
               requests:
                 cpu: 15m
@@ -59,9 +59,3 @@ spec:
             interval: 60s
             scrapeTimeout: 10s
             path: /ups_metrics
-            params:
-              targets:
-                - network-ups-tools.observability.svc.cluster.local:3493
-            relabelings:
-              - sourceLabels: [__param_target]
-                targetLabel: target
