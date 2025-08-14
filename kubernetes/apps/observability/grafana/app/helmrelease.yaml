@@ -93,9 +93,9 @@ spec:
               path: /var/lib/grafana/dashboards/default
     dashboards:
       default:
-        apc-ups:
+        cp-ups:
           # renovate: depName="APC UPS (SNMP)"
-          gnetId: 12340
+          gnetId: 9184
           revision: 1
           datasource: Prometheus
         blackbox-exporter:
