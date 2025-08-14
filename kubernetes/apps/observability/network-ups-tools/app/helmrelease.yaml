@@ -86,12 +86,13 @@ spec:
           upsd.conf: |-
             MAXAGE 20
             LISTEN 0.0.0.0
-            LISTEN ::
+            #LISTEN ::
           upsd.users: |-
             [upsmon]
               password  = "nNpkeox7$upSQeKfekKQ"
               actions = SET
               instcmds = ALL
+              upsmon master
           ups.conf: |-
             [kubernetes]
               driver = usbhid-ups
@@ -99,7 +100,7 @@ spec:
               desc = "Cyber Power System, Inc. UPS"
               pollinterval = 10
           upsmon.conf: |-
-            MONITOR kubernetes@localhost:3493 1 upsmon "nNpkeox7$upSQeKfekKQ" primary
+            MONITOR kubernetes@localhost:3493 1 upsmon "nNpkeox7$upSQeKfekKQ" master
             SHUTDOWNCMD "/sbin/shutdown -h +0"
             POWERDOWNFLAG /etc/killpower
             POLLFREQ 15
