@@ -95,7 +95,7 @@ spec:
       default:
         cp-ups:
           # renovate: depName="APC UPS (SNMP)"
-          gnetId: 9184
+          gnetId: 13116
           revision: 1
           datasource: Prometheus
         blackbox-exporter:
