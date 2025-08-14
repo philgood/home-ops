@@ -22,7 +22,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      network-ups-tools:
         strategy: RollingUpdate
         pod:
           annotations:
