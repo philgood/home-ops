@@ -92,7 +92,7 @@ spec:
               instcmds = ALL
               upsmon master
           ups.conf: |-
-            [ups="kubernetes"]
+            [kubernetes]
               driver = usbhid-ups
               port = auto
               desc = "Cyber Power System, Inc. UPS"
