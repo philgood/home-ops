@@ -1,18 +1,17 @@
----
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: nut-exporter-server
+  namespace: observability
   labels:
-    app.kubernetes.io/component: metrics
-    app.kubernetes.io/instance: nut-exporter
     app.kubernetes.io/name: nut-exporter
+    app.kubernetes.io/instance: nut-exporter
     prometheus: kube-prometheus
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: nut-exporter
       app.kubernetes.io/name: nut-exporter
+      app.kubernetes.io/instance: nut-exporter
   namespaceSelector:
     matchNames:
       - observability
@@ -20,5 +19,15 @@ spec:
     - port: http                # must match the Service port name
       path: /ups_metrics
       scheme: http
-      interval: 30s
-      scrapeTimeout: 30s
+      interval: 15s
+      scrapeTimeout: 10s
+      metricRelabelings:
+        # Rename metrics to match CyberPower Grafana dashboard
+        - sourceLabels: [__name__]
+          regex: network_ups_tools_(.*)
+          targetLabel: __name__
+          replacement: nut_$1
+        # Rename UPS label to match expected dashboard filter
+        - sourceLabels: [ups]
+          targetLabel: ups
+          replacement: cyberpower

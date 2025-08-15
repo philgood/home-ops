@@ -61,8 +61,3 @@ spec:
             interval: 60s
             scrapeTimeout: 10s
             path: /ups_metrics
-            metricRelabelings:
-             - sourceLabels: [__name__]
-               regex: network_ups_tools_(.*)
-               replacement: nut_$1
-               targetLabel: __name__
