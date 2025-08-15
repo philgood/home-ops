@@ -61,3 +61,13 @@ spec:
             interval: 60s
             scrapeTimeout: 10s
             path: /ups_metrics
+            metricRelabelings:
+          # Rename metrics from network_ups_tools_* → ups_*
+             - sourceLabels: [__name__]
+               regex: network_ups_tools_(.*)
+               targetLabel: __name__
+               replacement: ups_${1}
+          # Set a fixed UPS label so the Grafana dashboard matches
+             - sourceLabels: [ups]
+               targetLabel: ups
+               replacement: cyberpower
