@@ -74,14 +74,19 @@ spec:
                targetLabel: ups
                replacement: cyberpower
 
-          # Optional: make battery voltage match dashboard expectation
              - sourceLabels: [__name__]
-               regex: ups_battery_voltage
+               regex: network_ups_tools_ups_load
                targetLabel: __name__
-               replacement: ups_battery_volts
-
-          # Optional: make input voltage match dashboard expectation
-            - sourceLabels: [__name__]
-               regex: ups_input_voltage
+               replacement: ups_output_percent_load
+             - sourceLabels: [__name__]
+               regex: network_ups_tools_battery_charge
                targetLabel: __name__
-               replacement: ups_input_volts
+               replacement: ups_battery_charge
+             - sourceLabels: [__name__]
+               regex: network_ups_tools_input_voltage
+               targetLabel: __name__
+               replacement: ups_input_voltage
+             - sourceLabels: [__name__]
+               regex: network_ups_tools_battery_voltage
+               targetLabel: __name__
+               replacement: ups_battery_voltage
