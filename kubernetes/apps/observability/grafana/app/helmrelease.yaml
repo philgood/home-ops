@@ -95,7 +95,7 @@ spec:
       default:
         cyberpower-ups:
           gnetId: 21605
-          revision: 1
+          revision: 2
           datasource: Prometheus
         blackbox-exporter:
           # renovate: depName="Prometheus Blackbox Exporter"
