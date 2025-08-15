@@ -64,7 +64,7 @@ spec:
       config:
         type: configMap
         name: network-ups-tools
-        defaultMode: 0400
+        defaultMode: 0444
         globalMounts:
           - path: /etc/nut
       ups:
