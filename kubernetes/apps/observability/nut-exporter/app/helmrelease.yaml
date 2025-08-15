@@ -65,12 +65,24 @@ spec:
             scrapeTimeout: 10s
             path: /ups_metrics
             metricRelabelings:
-          # Rename metrics from network_ups_tools_* → ups_*
+          # Rename metrics: remove the network_ups_tools_ prefix
              - sourceLabels: [__name__]
                regex: network_ups_tools_(.*)
                targetLabel: __name__
                replacement: ups_${1}
-          # Set a fixed UPS label so the Grafana dashboard matches
-             - sourceLabels: [ups]
-               targetLabel: ups
+
+          # Add UPS name for dashboard filtering
+             - targetLabel: ups
                replacement: cyberpower
+
+          # Optional: make battery voltage match dashboard expectation
+             - sourceLabels: [__name__]
+               regex: ups_battery_voltage
+               targetLabel: __name__
+               replacement: ups_battery_volts
+
+          # Optional: make input voltage match dashboard expectation
+            - sourceLabels: [__name__]
+               regex: ups_input_voltage
+               targetLabel: __name__
+               replacement: ups_input_volts
