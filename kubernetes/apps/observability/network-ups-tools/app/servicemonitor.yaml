@@ -27,7 +27,7 @@ spec:
           regex: (pod)
       params:
         server:
-          - server-nut.narden.au
+          - nut.narden.au
       path: /ups_metrics
       port: metrics
       scheme: http
