@@ -4,7 +4,7 @@ spec:
   containers:
     - name: debug
       #image: docker.io/library/alpine:latest
-      image: docker.io/library/ubuntu:latest
+      image: nicolaka/netshoot
       command: ["/bin/sh"]
       stdin: true
       stdinOnce: true
