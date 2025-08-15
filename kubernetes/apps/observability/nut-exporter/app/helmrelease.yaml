@@ -28,6 +28,9 @@ spec:
               tag: 3.2.1
             env:
               NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
+              NUT_EXPORTER_PORT: "3493"
+              NUT_EXPORTER_UPS: kubernetes        # <-- Must match the UPS name in `upsc` output
+              NUT_EXPORTER_DEBUG: "true"          # Helpful for testing, can remove later
             args:
               - --log.level=debug
               #- --nut.vars_enable=battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status
