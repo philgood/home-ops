@@ -70,9 +70,8 @@ spec:
                regex: network_ups_tools_(.*)
                targetLabel: __name__
                replacement: ups_${1}
-
-          # Add UPS name for dashboard filtering
-             - targetLabel: ups
+             - sourceLabels: [ups]
+               targetLabel: ups
                replacement: cyberpower
 
           # Optional: make battery voltage match dashboard expectation
