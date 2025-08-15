@@ -93,8 +93,7 @@ spec:
               path: /var/lib/grafana/dashboards/default
     dashboards:
       default:
-        cp-ups:
-          # renovate: depName="CP UPS (SNMP)"
+        cyberpower-ups:
           gnetId: 9184
           revision: 1
           datasource: Prometheus
