@@ -8,6 +8,7 @@ spec:
   groups:
     - name: nut-exporter.rules
       rules:
+        # ========== ALERTS ==========
         - alert: NutExporterAbsent
           annotations:
             description: NUT Exporter has disappeared from Prometheus target discovery.
@@ -17,30 +18,62 @@ spec:
           for: 5m
           labels:
             severity: critical
+
         - alert: UpsOnBattery
           annotations:
             description: UPS {{ $labels.ups }} has lost power and is running on battery.
             summary: UPS is running on battery.
           expr: |
-            network_ups_tools_ups_status{flag="OB"} == 1
+            ups_status{flag="OB"} == 1
           for: 10s
           labels:
             severity: critical
+
         - alert: UpsLowBattery
           annotations:
             description: UPS {{ $labels.ups }} battery is low and the system is getting ready to shutdown.
             summary: UPS battery is low.
           expr: |
-            network_ups_tools_ups_status{flag="OB"} == 1
+            ups_status{flag="LB"} == 1
           for: 5s
           labels:
             severity: critical
+
         - alert: UpsBatteryReplace
           annotations:
             description: UPS {{ $labels.ups }} battery needs to be replaced.
             summary: Replace UPS battery.
           expr: |
-            network_ups_tools_ups_status{flag="RB"} == 1
+            ups_status{flag="RB"} == 1
           for: 10s
           labels:
             severity: critical
+
+        # ========== RECORDING RULES ==========
+        # Core metric renames
+        - record: ups_battery_charge
+          expr: network_ups_tools_battery_charge
+
+        - record: ups_output_percent_load
+          expr: network_ups_tools_ups_load
+
+        - record: ups_input_voltage
+          expr: network_ups_tools_input_voltage
+
+        - record: ups_output_voltage
+          expr: network_ups_tools_output_voltage
+
+        - record: ups_battery_voltage
+          expr: network_ups_tools_battery_voltage
+
+        # Battery runtime (seconds → minutes)
+        - record: ups_estimated_minutes_remaining
+          expr: network_ups_tools_battery_runtime / 60
+
+        # Estimated charge is same as battery_charge
+        - record: ups_estimated_charge_remaining
+          expr: network_ups_tools_battery_charge
+
+        # Status flags
+        - record: ups_status
+          expr: network_ups_tools_ups_status
