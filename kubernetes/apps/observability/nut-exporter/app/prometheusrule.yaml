@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: ups-rules
+  name: ups-alerts
   namespace: observability
 spec:
   groups:
@@ -52,43 +52,3 @@ spec:
       annotations:
         summary: "UPS load high"
         description: "UPS load is above 80%."
-
-  - name: ups.aliases
-    rules:
-    # Battery charge (percent)
-    - record: ups_battery_charge_percent
-      expr: network_ups_tools_battery_charge
-
-    # Estimated runtime (seconds → minutes)
-    - record: ups_estimated_minutes_remaining
-      expr: network_ups_tools_battery_runtime / 60
-
-    # Estimated runtime (seconds)
-    - record: ups_estimated_runtime_seconds
-      expr: network_ups_tools_battery_runtime
-
-    # Battery voltage
-    - record: ups_battery_voltage
-      expr: network_ups_tools_battery_voltage
-
-    # Input voltage
-    - record: ups_input_voltage
-      expr: network_ups_tools_input_voltage
-
-    # Output voltage
-    - record: ups_output_voltage
-      expr: network_ups_tools_output_voltage
-
-    # Output load (percent)
-    - record: ups_output_percent_load
-      expr: network_ups_tools_ups_load
-
-    # UPS status aliases
-    - record: ups_status_online
-      expr: network_ups_tools_ups_status{flag="OL"}
-    - record: ups_status_onbattery
-      expr: network_ups_tools_ups_status{flag="OB"}
-    - record: ups_status_lowbattery
-      expr: network_ups_tools_ups_status{flag="LB"}
-    - record: ups_status_charging
-      expr: network_ups_tools_ups_status{flag="CHRG"}
