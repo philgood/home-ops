@@ -19,38 +19,13 @@ spec:
     - port: http
       path: /ups_metrics
       scheme: http
-      interval: 30s
+      interval: 15s
       scrapeTimeout: 10s
-      metricRelabelings:
-        # Rename main UPS metrics to match CyberPower dashboard
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_ups_load
-          targetLabel: __name__
-          replacement: ups_output_percent_load
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_battery_charge
-          targetLabel: __name__
-          replacement: ups_battery_charge
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_battery_voltage
-          targetLabel: __name__
-          replacement: ups_battery_voltage
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_battery_voltage_nominal
-          targetLabel: __name__
-          replacement: ups_battery_voltage_nominal
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_input_voltage
-          targetLabel: __name__
-          replacement: ups_input_voltage
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_input_voltage_nominal
-          targetLabel: __name__
-          replacement: ups_input_voltage_nominal
-        - sourceLabels: [__name__]
-          regex: network_ups_tools_ups_status
-          targetLabel: __name__
-          replacement: ups_status_flags
+      metric_relabel_configs:
+         - source_labels: [__name__]
+           regex: network_ups_tools_(.*)
+           target_label: __name__
+           replacement: ups_${1}
         - sourceLabels: [ups]
           targetLabel: ups
           replacement: cyberpower
