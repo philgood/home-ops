@@ -64,15 +64,15 @@ spec:
       config:
         type: configMap
         name: network-ups-tools
-        defaultMode: 0444
+        defaultMode: 0640
         globalMounts:
           - path: /etc/nut
       ups:
         type: hostPath
         #hostPath: /dev/bus/usb/002/001
-        hostPath: /dev/bus/usb/001/002
+        hostPath: /dev/bus/usb
         globalMounts:
-          - path: /dev/bus/usb/001/001
+          - path: /dev/bus/usb
             readOnly: false
 
     configMaps:
@@ -82,7 +82,7 @@ spec:
           nut.conf: |-
             MODE=netserver
           upsd.conf: |-
-            MAXAGE 20
+            MAXAGE 45
             LISTEN 0.0.0.0
           upsd.users: |-
             [upsmon]
@@ -95,7 +95,7 @@ spec:
               driver = usbhid-ups
               port = auto
               desc = "Cyber Power System, Inc. UPS"
-              pollinterval = 10
+              pollinterval = 15
           upsmon.conf: |-
             MONITOR kubernetes@localhost:3493 1 upsmon "nNpkeox7$upSQeKfekKQ" master
             SHUTDOWNCMD "/sbin/shutdown -h +0"
