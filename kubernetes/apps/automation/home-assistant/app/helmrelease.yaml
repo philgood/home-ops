@@ -45,6 +45,7 @@ spec:
                 memory: 4000Mi
               limits:
                 memory: 7000Mi
+
           code-server:
             image:
               repository: ghcr.io/coder/code-server
@@ -68,15 +69,16 @@ spec:
                 cpu: 10m
               limits:
                 memory: 512Mi
+
     defaultPodOptions:
       annotations:
-            k8s.v1.cni.cncf.io/networks: |
-              [{
-                "name":"multus-iot",
-                "namespace": "network",
-                "ips": ["172.20.21.200/24"],
-                "mac": "3e:59:e4:f7:43:18"
-              }]
+        k8s.v1.cni.cncf.io/networks: |
+          [{
+            "name":"multus-iot",
+            "namespace": "network",
+            "ips": ["172.20.21.200/24"],
+            "mac": "3e:59:e4:f7:43:18"
+          }]
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
@@ -108,12 +110,12 @@ spec:
           homekit:
             enabled: true
             port: 21064
-          code-server:
+
       code-server:
         ports:
           code-server:
             port: 12321
-            
+
     route:
       app:
         hostnames:
@@ -133,9 +135,10 @@ spec:
                   path:
                     type: ReplacePrefixMatch
                     replacePrefixMatch: /
-          - backendRefs:
+            backendRefs:
               - identifier: code-server
                 port: 12321
+
           - backendRefs:
               - identifier: app
                 port: 8123
@@ -150,7 +153,7 @@ spec:
               - path: /config
             code-server:
               - path: /config
-              
+
       config-cache:
         type: emptyDir
         globalMounts:
