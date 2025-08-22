@@ -29,8 +29,8 @@ spec:
             env:
               NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
             args:
-              - --log.level=debug
-              - --nut.vars_enable=battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status,ups.status
+             - --log.level=debug
+             - --nut.vars_enable=battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status
             ports:
               - name: http
                 containerPort: 9199
@@ -62,7 +62,6 @@ spec:
             scrapeTimeout: 10s
             path: /ups_metrics
             metricRelabelings:
-          # Rename metrics: remove the network_ups_tools_ prefix
              - sourceLabels: [__name__]
                regex: network_ups_tools_(.*)
                targetLabel: __name__
@@ -70,20 +69,11 @@ spec:
              - sourceLabels: [ups]
                targetLabel: ups
                replacement: cyberpower
-
              - sourceLabels: [__name__]
-               regex: network_ups_tools_ups_load
+               regex: ups_load
                targetLabel: __name__
                replacement: ups_output_percent_load
              - sourceLabels: [__name__]
-               regex: network_ups_tools_battery_charge
+               regex: ups_battery_runtime
                targetLabel: __name__
-               replacement: ups_battery_charge
-             - sourceLabels: [__name__]
-               regex: network_ups_tools_input_voltage
-               targetLabel: __name__
-               replacement: ups_input_voltage
-             - sourceLabels: [__name__]
-               regex: network_ups_tools_battery_voltage
-               targetLabel: __name__
-               replacement: ups_battery_voltage
+               replacement: ups_battery_runtime_seconds
