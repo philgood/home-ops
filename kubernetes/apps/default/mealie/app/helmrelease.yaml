@@ -41,18 +41,10 @@ spec:
               TZ: Australia/Sydney
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: &port 9000
-                  initialDelaySeconds: 10
-                  periodSeconds: 5
-                  timeoutSeconds: 10
-                  failureThreshold: 30
-              readiness: *probes
+              readiness:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
