@@ -125,7 +125,11 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
+          # Match both /code and /code/
           - matches:
+              - path:
+                  type: PathPrefix
+                  value: /code
               - path:
                   type: PathPrefix
                   value: /code/
