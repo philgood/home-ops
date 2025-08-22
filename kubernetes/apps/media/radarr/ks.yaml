@@ -1,8 +1,8 @@
-/Users/rph/Documents/home-ops/kubernetes/apps/media/sonarr/ks.yaml---
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app sonarr
+  name: &app radarr
   namespace: &namespace media
 spec:
   commonMetadata:
@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  path: ./kubernetes/apps/media/sonarr/app
+  path: ./kubernetes/apps/media/radarr/app
   prune: true
   sourceRef:
     kind: GitRepository
