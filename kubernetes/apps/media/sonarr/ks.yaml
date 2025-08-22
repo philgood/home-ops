@@ -1,4 +1,4 @@
-/Users/rph/Documents/home-ops/kubernetes/apps/media/sonarr/ks.yaml---
+---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
