@@ -58,7 +58,7 @@ spec:
                 port: *port
 
     persistence:
-      emhass:
+      data:
         enabled: true
         existingClaim: emhass-data
         globalMounts:
