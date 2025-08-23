@@ -23,10 +23,24 @@ spec:
       interval: 15s
       scrapeTimeout: 10s
       metricRelabelings:
+        # Rename all network_ups_tools_* → ups_*
         - sourceLabels: [__name__]
           regex: network_ups_tools_(.*)
           targetLabel: __name__
           replacement: ups_${1}
+
+        # Override ups label → "cyberpower"
         - sourceLabels: [ups]
           targetLabel: ups
           replacement: cyberpower
+
+        # Remap for Grafana dashboard compatibility
+        - sourceLabels: [__name__]
+          regex: ups_load
+          targetLabel: __name__
+          replacement: ups_output_percent_load
+
+        - sourceLabels: [__name__]
+          regex: ups_battery_runtime
+          targetLabel: __name__
+          replacement: ups_battery_runtime_seconds
