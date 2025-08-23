@@ -23,7 +23,7 @@ spec:
           reloader.stakater.com/auto: "true"
         # InitContainer to fix permissions
         initContainers:
-          - name: fix-permissions
+          fix-permissions:
             image:
               repository: docker.io/library/busybox
               tag: latest
