@@ -82,6 +82,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /.cache/uv
+          - path: /app/.venv
       options-secret:
         type: secret
         name: emhass-secret
