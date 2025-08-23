@@ -31,7 +31,6 @@ spec:
               UV_CACHE_DIR: /emhass/.cache/uv
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
