@@ -31,10 +31,10 @@ spec:
               - sh
               - -c
               - |
-                mkdir -p /app/.cache/uv /share && \
-                chown -R 568:568 /app/.cache/uv /share
+               mkdir -p /app/.cache/uv /share
             securityContext:
-              runAsUser: 0
+             runAsUser: 568
+             runAsGroup: 568
         containers:
           app:
             image:
