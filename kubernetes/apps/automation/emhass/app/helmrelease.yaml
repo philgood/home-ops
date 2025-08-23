@@ -72,7 +72,7 @@ spec:
         name: emhass-secret
         globalMounts:
           - path: /emhass/config.yaml
-            subPath: config.yaml
+            subPath: config.json
       data:
         enabled: true
         existingClaim: emhass-data
