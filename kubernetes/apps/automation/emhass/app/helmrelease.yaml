@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: emhass
+  name: &app emhass
 spec:
   interval: 1h
   chartRef:
@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     controllers:
-      hassactron:
+      emhass:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
