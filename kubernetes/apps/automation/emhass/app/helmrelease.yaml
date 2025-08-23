@@ -21,20 +21,6 @@ spec:
       emhass:
         annotations:
           reloader.stakater.com/auto: "true"
-        # InitContainer to fix permissions
-        initContainers:
-          fix-permissions:
-            image:
-              repository: docker.io/library/busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-               mkdir -p /app/.cache/uv /share
-            securityContext:
-             runAsUser: 568
-             runAsGroup: 568
         containers:
           app:
             image:
@@ -52,12 +38,6 @@ spec:
               limits:
                 memory: 1Gi
 
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
     service:
       app:
         controller: emhass
