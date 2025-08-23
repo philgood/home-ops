@@ -79,6 +79,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /emhass/share
+      config-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /emhass/.cache
       options-secret:
         type: secret
         name: emhass-secret
