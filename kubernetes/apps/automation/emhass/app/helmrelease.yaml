@@ -28,7 +28,7 @@ spec:
               tag: "v0.13.3"
             env:
               TZ: Australia/Sydney
-              UV_CACHE_DIR: /emhass/.cache/uv
+              UV_CACHE_DIR: /app/.cache/uv
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
