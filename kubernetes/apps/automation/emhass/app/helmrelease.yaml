@@ -58,22 +58,15 @@ spec:
                 port: *port
 
     persistence:
-      config-cache:
-        type: emptyDir
+      emhass:
+        enabled: true
+        existingClaim: emhass-data
         globalMounts:
-          - path: /.cache/uv
-      config-share:
-        type: emptyDir
-        globalMounts:
-          - path: /share
+          - path: /
       config-secret:
         type: secret
         name: emhass-secret
         globalMounts:
           - path: /share/config.json
             subPath: config.json
-      data:
-        enabled: true
-        existingClaim: emhass-data
-        globalMounts:
-          - path: /data
+      
