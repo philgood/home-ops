@@ -70,7 +70,7 @@ spec:
         type: secret
         name: emhass-secret
         globalMounts:
-          - path: /app/config.json
+          - path: /emhass/config.json
             subPath: config.json
       data:
         enabled: true
