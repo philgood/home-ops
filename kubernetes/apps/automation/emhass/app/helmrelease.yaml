@@ -24,7 +24,9 @@ spec:
         # InitContainer to fix permissions
         initContainers:
           - name: fix-permissions
-            image: busybox
+            image:
+              repository: docker.io/library/busybox
+              tag: latest
             command:
               - sh
               - -c
