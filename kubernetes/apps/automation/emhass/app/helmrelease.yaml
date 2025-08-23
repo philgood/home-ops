@@ -62,7 +62,7 @@ spec:
         enabled: true
         existingClaim: emhass-data
         globalMounts:
-          - path: /
+          - path: /data
       config-secret:
         type: secret
         name: emhass-secret
