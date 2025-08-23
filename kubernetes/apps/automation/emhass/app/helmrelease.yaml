@@ -28,6 +28,7 @@ spec:
               tag: "v0.13.3"
             env:
               TZ: Australia/Sydney
+              UV_CACHE_DIR: /emhass/.cache/uv
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -82,7 +83,7 @@ spec:
       config-cache:
         type: emptyDir
         globalMounts:
-          - path: /emhass/.cache/uv
+          - path: /.cache/uv
       options-secret:
         type: secret
         name: emhass-secret
