@@ -82,7 +82,7 @@ spec:
       config-cache:
         type: emptyDir
         globalMounts:
-          - path: /.cache/uv
+          - path: /emhass/.cache/uv
       options-secret:
         type: secret
         name: emhass-secret
