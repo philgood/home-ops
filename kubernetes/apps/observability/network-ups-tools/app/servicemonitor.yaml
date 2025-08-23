@@ -45,3 +45,8 @@ spec:
           regex: ups_battery_runtime
           targetLabel: __name__
           replacement: ups_battery_runtime_seconds
+          
+        - sourceLabels: [__name__]
+          regex: ups_output_frequency
+          targetLabel: __name__
+          replacement: ups_output_frequency_hz
