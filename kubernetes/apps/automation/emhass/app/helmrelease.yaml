@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: emhass
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      hassactron:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/davidusb-geek/emhass
+              tag: 0.13.3
+            env:
+              TZ: Australia/Sydney
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: emhass
+        ports:
+          http:
+            port: &port 5000
+    
+    route:
+      app:
+        hostnames:
+          - emhass.narden.au
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: emhass-data
+        globalMounts:
+          - path: /emhass
+      config-data:
+        type: emptyDir
+        globalMounts:
+          - path: /emhass/data
+      config-share:
+        type: emptyDir
+        globalMounts:
+          - path: /emhass/share
+      options-secret:
+        type: secret
+        name: emhass-secret
+        globalMounts:
+          - path: /emhass/secrets_emhass.json
+            subPath: secrets_emhass.json
