@@ -85,27 +85,22 @@ spec:
                 port: *port
 
     persistence:
+      config-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /app/.cache/uv
+      config-share:
+        type: emptyDir
+        globalMounts:
+          - path: /share
+      options-secret:
+        type: secret
+        name: emhass-secret
+        globalMounts:
+          - path: /app/secrets_emhass.yaml
+            subPath: secrets_emhass.yaml
       data:
         enabled: true
         existingClaim: emhass-data
         globalMounts:
           - path: /emhass
-      config-data:
-        type: emptyDir
-        globalMounts:
-          - path: /emhass/data
-      config-share:
-        type: emptyDir
-        globalMounts:
-          - path: /emhass/share
-      config-cache:
-        type: emptyDir
-        globalMounts:
-          - path: /.cache/uv
-          - path: /app/.venv
-      options-secret:
-        type: secret
-        name: emhass-secret
-        globalMounts:
-          - path: /emhass/secrets_emhass.json
-            subPath: secrets_emhass.json
