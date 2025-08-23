@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app nut-exporter
+  name: nut-exporter
+  namespace: observability
 spec:
   chartRef:
     kind: OCIRepository
@@ -29,8 +29,8 @@ spec:
             env:
               NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
             args:
-             - --log.level=debug
-             - --nut.vars_enable=battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status
+              - --log.level=debug
+              - --nut.vars_enable=battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status,ups.status
             ports:
               - name: http
                 containerPort: 9199
@@ -48,32 +48,40 @@ spec:
 
     service:
       app:
-        controller: *app
+        controller: nut-exporter
         ports:
           http:
             port: 9199
+
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: nut-exporter
         endpoints:
           - port: http
             scheme: http
-            interval: 60s
+            interval: 15s
             scrapeTimeout: 10s
             path: /ups_metrics
             metricRelabelings:
-             - sourceLabels: [__name__]
-               regex: network_ups_tools_(.*)
-               targetLabel: __name__
-               replacement: ups_${1}
-             - sourceLabels: [ups]
-               targetLabel: ups
-               replacement: cyberpower
-             - sourceLabels: [__name__]
-               regex: ups_load
-               targetLabel: __name__
-               replacement: ups_output_percent_load
-             - sourceLabels: [__name__]
-               regex: ups_battery_runtime
-               targetLabel: __name__
-               replacement: ups_battery_runtime_seconds
+              # Generic rename: network_ups_tools_* → ups_*
+              - sourceLabels: [__name__]
+                regex: network_ups_tools_(.*)
+                targetLabel: __name__
+                replacement: ups_${1}
+
+              # Keep ups label consistent
+              - sourceLabels: [ups]
+                targetLabel: ups
+                replacement: cyberpower
+
+              # Remap the UPS load metric
+              - sourceLabels: [__name__]
+                regex: ups_ups_load
+                targetLabel: __name__
+                replacement: ups_output_percent_load
+
+              # Remap battery runtime for Grafana dashboard
+              - sourceLabels: [__name__]
+                regex: ups_battery_runtime
+                targetLabel: __name__
+                replacement: ups_battery_runtime_seconds
