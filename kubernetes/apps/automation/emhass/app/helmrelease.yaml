@@ -44,7 +44,6 @@ spec:
             runAsGroup: 568
             runAsNonRoot: true
             fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: emhass
@@ -82,7 +81,7 @@ spec:
       config-cache:
         type: emptyDir
         globalMounts:
-          - path: /emhass/.cache/uv
+          - path: /.cache/uv
       options-secret:
         type: secret
         name: emhass-secret
