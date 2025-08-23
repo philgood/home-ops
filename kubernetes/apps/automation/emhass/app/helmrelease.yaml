@@ -61,11 +61,7 @@ spec:
       config-cache:
         type: emptyDir
         globalMounts:
-          - path: /emhass/.cache/uv
-      config-data:
-        type: emptyDir
-        globalMounts:
-          - path: /emhass/data
+          - path: /.cache/uv
       config-share:
         type: emptyDir
         globalMounts:
@@ -74,10 +70,10 @@ spec:
         type: secret
         name: emhass-secret
         globalMounts:
-          - path: /emhass/config.json
+          - path: /app/config.json
             subPath: config.json
       data:
         enabled: true
         existingClaim: emhass-data
         globalMounts:
-          - path: /emhass
+          - path: /data
