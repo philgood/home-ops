@@ -71,7 +71,7 @@ spec:
         type: secret
         name: emhass-secret
         globalMounts:
-          - path: /app/config.yaml
+          - path: /emhass/config.yaml
             subPath: config.yaml
       data:
         enabled: true
