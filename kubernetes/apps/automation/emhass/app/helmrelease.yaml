@@ -67,7 +67,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /share
-      options-secret:
+      config-secret:
         type: secret
         name: emhass-secret
         globalMounts:
