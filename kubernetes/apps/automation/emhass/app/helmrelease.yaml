@@ -21,6 +21,24 @@ spec:
       emhass:
         annotations:
           reloader.stakater.com/auto: "true"
+        # InitContainer to fix permissions
+        initContainers:
+          - name: fix-permissions
+            image: busybox
+            command:
+              - sh
+              - -c
+              - |
+                mkdir -p /emhass/.cache/uv /app/.venv && \
+                chown -R 568:568 /emhass/.cache/uv /app/.venv
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+            volumeMounts:
+              - name: config-cache
+                mountPath: /emhass/.cache/uv
+              - name: config-cache
+                mountPath: /app/.venv
         containers:
           app:
             image:
