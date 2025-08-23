@@ -28,7 +28,6 @@ spec:
               tag: "v0.13.3"
             env:
               TZ: Australia/Sydney
-              UV_CACHE_DIR: /emhass/.cache/uv
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
@@ -77,4 +76,4 @@ spec:
         enabled: true
         existingClaim: emhass-data
         globalMounts:
-          - path: /emhass
+          - path: /data
