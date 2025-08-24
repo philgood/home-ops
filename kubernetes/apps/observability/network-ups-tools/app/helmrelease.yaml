@@ -70,9 +70,9 @@ spec:
       ups:
         type: hostPath
         #hostPath: /dev/bus/usb/002/001
-        hostPath: /dev/bus/usb
+        hostPath: /dev/bus/usb/003/002
         globalMounts:
-          - path: /dev/bus/usb
+          - path: /dev/bus/usb/003/002
             readOnly: false
 
     configMaps:
@@ -82,7 +82,7 @@ spec:
           nut.conf: |-
             MODE=netserver
           upsd.conf: |-
-            MAXAGE 45
+            MAXAGE 90
             LISTEN 0.0.0.0
           upsd.users: |-
             [upsmon]
@@ -94,8 +94,10 @@ spec:
             [kubernetes]
               driver = usbhid-ups
               port = auto
-              desc = "Cyber Power System, Inc. UPS"
+              vendorid = 0764
+              productid = 0501
               pollinterval = 15
+              desc = "CyberPower CP1500 AVR UPS"
           upsmon.conf: |-
             MONITOR kubernetes@localhost:3493 1 upsmon "nNpkeox7$upSQeKfekKQ" master
             SHUTDOWNCMD "/sbin/shutdown -h +0"
