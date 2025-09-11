@@ -124,24 +124,6 @@ spec:
           - name: external
             namespace: kube-system
             sectionName: https
-        rules:
-          # Match both /code and /code/
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /code
-              - path:
-                  type: PathPrefix
-                  value: /code/
-            filters:
-              - type: URLRewrite
-                urlRewrite:
-                  path:
-                    type: ReplacePrefixMatch
-                    replacePrefixMatch: /
-            backendRefs:
-              - identifier: code-server
-                port: 12321
 
           - backendRefs:
               - identifier: app
