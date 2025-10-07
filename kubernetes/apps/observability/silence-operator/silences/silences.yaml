@@ -68,11 +68,10 @@ spec:
           value: UDMUploadBandwidthLow
           isRegex: false
 ---
-apiVersion: observability.giantswarm.io/v1alpha1
+apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
   name: nas-memory-high-utilization
-  namespace: monitoring
 spec:
   matchers:
     - name: alertname
