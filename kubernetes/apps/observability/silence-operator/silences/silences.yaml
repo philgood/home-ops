@@ -71,7 +71,7 @@ spec:
 apiVersion: observability.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
-  name: nas-instance-down
+  name: nas-memory-high-utilization
   namespace: monitoring
 spec:
   matchers:
