@@ -67,12 +67,18 @@ spec:
             port: &port 9200
     persistence:
       data:
-        existingClaim: nfs-opencloud
+        existingClaim: opencloud-data
         globalMounts:
           - path: /var/lib/opencloud
             subPath: data
           - path: /etc/opencloud
             subPath: config
+      
+      nas:
+        type: nfs
+        server: nas.internal
+        path: /mnt/DataPool/apps/opencloud
+          
       tmpfs:
         type: emptyDir
         globalMounts:
