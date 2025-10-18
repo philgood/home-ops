@@ -18,7 +18,7 @@ spec:
   capacity:
     storage: 2000Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   nfs:
     server: nas.internal
     path: /mnt/DataPool/apps/opencloud
@@ -30,7 +30,7 @@ metadata:
   name: nfs-opencloud-storage-users-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 2000Gi
