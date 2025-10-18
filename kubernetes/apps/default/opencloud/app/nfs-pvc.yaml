@@ -15,6 +15,7 @@ kind: PersistentVolume
 metadata:
   name: nfs-opencloud-storage-users-pv
 spec:
+  storageClassName: ""
   capacity:
     storage: 2000Gi
   accessModes:
@@ -35,4 +36,3 @@ spec:
     requests:
       storage: 2000Gi
   volumeName: nfs-opencloud-storage-users-pv
-  storageClassName: ""
