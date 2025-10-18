@@ -71,7 +71,7 @@ spec:
       app:
         hostnames: ["sonarr.narden.au"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
