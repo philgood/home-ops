@@ -92,6 +92,6 @@ spec:
       app:
         hostnames: ["files.narden.au"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
