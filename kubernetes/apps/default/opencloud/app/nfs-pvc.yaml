@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: opencloud-datas
+  name: opencloud-data
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
