@@ -35,3 +35,4 @@ spec:
     requests:
       storage: 2000Gi
   volumeName: nfs-opencloud-storage-users-pv
+  storageClassName: ""
