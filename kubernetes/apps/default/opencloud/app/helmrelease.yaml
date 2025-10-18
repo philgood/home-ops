@@ -65,6 +65,7 @@ spec:
         ports:
           http:
             port: &port 9200
+    
     persistence:
       config:
         existingClaim: opencloud-data
