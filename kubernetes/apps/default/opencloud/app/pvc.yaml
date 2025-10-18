@@ -9,3 +9,35 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ceph-block
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-opencloud-storage-users-pv
+  namespace: default
+spec:
+  capacity:
+    storage: 2000Gi
+  accessModes:
+    - ReadWriteOnce
+  mountOptions:
+    - nfsvers=4
+    - port=2049
+  nfs:
+    server: nas.internal
+    path: /mnt/DataPool/apps/opencloud
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-opencloud-storage-users-pvc
+  namespace: default
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2000Gi
+  volumeName: nfs-opencloud-storage-users-pv
