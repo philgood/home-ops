@@ -69,8 +69,6 @@ spec:
       data:
         existingClaim: opencloud-data
         globalMounts:
-          - path: /var/lib/opencloud
-            subPath: data
           - path: /etc/opencloud
             subPath: config
       
@@ -78,6 +76,9 @@ spec:
         type: nfs
         server: nas.internal
         path: /mnt/DataPool/apps/opencloud
+        globalMounts:
+          - path: /var/lib/opencloud
+            subPath: data
           
       tmpfs:
         type: emptyDir
