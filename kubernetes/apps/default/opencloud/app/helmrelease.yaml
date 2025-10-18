@@ -68,7 +68,7 @@ spec:
     
     persistence:
       data:
-        existingClaim: opencloud-data
+        existingClaim: opencloud-datas
         globalMounts:
           - path: /etc/opencloud
             subPath: config
