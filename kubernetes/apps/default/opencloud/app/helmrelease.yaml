@@ -48,11 +48,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-                tcpSocket:
-                  port: 9200
-                initialDelaySeconds: 30
-                periodSeconds: 10
-                failureThreshold: 6
             resources:
               requests:
                 cpu: 50m
