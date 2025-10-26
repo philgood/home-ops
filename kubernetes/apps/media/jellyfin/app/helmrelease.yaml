@@ -28,6 +28,7 @@ spec:
               tag: 10.11.0@sha256:519b02989eafcc4bdb558bdc7014c2395c19608e5c2d7ed99a5f3edd0c75f7ef
             env:
               TZ: Australia/Sydney
+              JELLYFIN_PublishedServerUrl: https://jellyfin.narden.au
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
