@@ -58,11 +58,11 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        existingClaim: jellyseerr
         globalMounts:
           - path: /app/config
       config-cache:
-        existingClaim: "{{ .Release.Name }}-cache"
+        existingClaim: jellyseerr-cache
         globalMounts:
           - path: /app/config/cache
       tmpfs:
