@@ -79,7 +79,7 @@ spec:
         hostnames:
           - requests.narden.au
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
     service:
