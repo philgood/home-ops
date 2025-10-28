@@ -19,6 +19,8 @@ spec:
   values:
     controllers:
       jellyseerr:
+        annotations:
+          reloader.stakater.com/auto: "true"  
         containers:
           app:
             image:
@@ -54,6 +56,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
+      hostUsers: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
