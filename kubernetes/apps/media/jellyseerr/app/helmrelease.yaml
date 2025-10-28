@@ -89,8 +89,13 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
     service:
       app:
+        controller: jellyseerr
         ports:
           http:
             port: *port
