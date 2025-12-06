@@ -86,12 +86,12 @@ spec:
         existingClaim: opencloud-data
         globalMounts:
           - path: /etc/opencloud
-            subPath: config
+            #subPath: config
       
       storage-users:
         existingClaim: nfs-opencloud-storage-users-pvc
         globalMounts:
-          - path: /var/lib/opencloud
+          - path: /var/lib/opencloud/data
           
       tmpfs:
         type: emptyDir
