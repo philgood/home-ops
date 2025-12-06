@@ -16,20 +16,35 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            fsGroup: 1000
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
-            runAsGroup: 1000
             runAsNonRoot: true
-            runAsUser: 1000
+        initContainers:
+          init-config:
+            image:
+              repository: docker.io/opencloudeu/opencloud-rolling
+              tag: 4.0.0@sha256:1cbce735bfdde97d38422a52b92104dfd2fd320e2e3febc05314b00d6d115d7e
+            command:
+              - /bin/sh
+              - -c
+              - test -f /etc/opencloud/opencloud.yaml || opencloud init --insecure=true
+            envFrom:
+              - secretRef:
+                  name: opencloud-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
         containers:
           opencloud:
             image:
               repository: docker.io/opencloudeu/opencloud-rolling
               tag: 4.0.0@sha256:1cbce735bfdde97d38422a52b92104dfd2fd320e2e3febc05314b00d6d115d7e
             command:
-              - "/bin/sh"
-              - "-c"
-              - "opencloud init || true; opencloud server"
+              - opencloud
+              - server
             env:
               IDM_CREATE_DEMO_USERS: false
               IDM_ADMIN_PASSWORD:
@@ -41,13 +56,12 @@ spec:
               OC_INSECURE: false
               OC_LOG_LEVEL: info
               OC_URL: https://files.narden.au
-              PROXY_HTTP_ADDR: 0.0.0.0:9200
               PROXY_TLS: false
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -60,6 +74,7 @@ spec:
               capabilities:
                 drop:
                   - ALL
+    
     service:
       app:
         ports:
