@@ -16,37 +16,20 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            runAsNonRoot: true
-            runAsUser: 568
-            runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-        initContainers:
-          init-config:
-            image:
-              repository: docker.io/opencloudeu/opencloud-rolling
-              tag: 4.0.0@sha256:1cbce735bfdde97d38422a52b92104dfd2fd320e2e3febc05314b00d6d115d7e
-            command:
-              - /bin/sh
-              - -c
-              - test -f /etc/opencloud/opencloud.yaml || opencloud init --insecure=true
-            envFrom:
-              - secretRef:
-                  name: opencloud-secret
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 568
         containers:
           opencloud:
             image:
               repository: docker.io/opencloudeu/opencloud-rolling
-              tag: 4.0.0@sha256:1cbce735bfdde97d38422a52b92104dfd2fd320e2e3febc05314b00d6d115d7e
+              tag: 3.5.0@sha256:15963603ee31edf92317dea6ccd420afd9c40caf95d5ebc9901e42eb339789ef
             command:
-              - opencloud
-              - server
+              - "/bin/sh"
+              - "-c"
+              - "opencloud init || true; opencloud server"
             env:
               IDM_CREATE_DEMO_USERS: false
               IDM_ADMIN_PASSWORD:
@@ -58,6 +41,7 @@ spec:
               OC_INSECURE: false
               OC_LOG_LEVEL: info
               OC_URL: https://files.narden.au
+              PROXY_HTTP_ADDR: 0.0.0.0:9200
               PROXY_TLS: false
             probes:
               liveness:
@@ -71,11 +55,6 @@ spec:
               limits:
                 memory: 1024Mi
             securityContext:
-              runAsNonRoot: true
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
