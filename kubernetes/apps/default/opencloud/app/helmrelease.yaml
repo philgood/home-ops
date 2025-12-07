@@ -55,7 +55,7 @@ spec:
               limits:
                 memory: 1024Mi
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
