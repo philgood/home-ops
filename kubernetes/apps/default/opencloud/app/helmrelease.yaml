@@ -77,7 +77,7 @@ spec:
       storage-users:
         existingClaim: nfs-opencloud-storage-users-pvc
         globalMounts:
-          - path: /var/lib/opencloud/data
+          - path: /var/lib/opencloud
           
       tmpfs:
         type: emptyDir
