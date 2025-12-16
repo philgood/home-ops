@@ -12,4 +12,4 @@ resources:
   - ./paperless/ks.yaml
   - ./obsidian-couchdb/ks.yaml
   - ./mealie/ks.yaml
-  #- ./opencloud/ks.yaml
+  #- ./opencloud/ks.yaml 
