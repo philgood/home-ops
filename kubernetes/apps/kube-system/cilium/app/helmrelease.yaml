@@ -28,6 +28,7 @@ spec:
       enabled: true
       bbr: true
     bpf:
+      hostLegacyRouting: true
       datapathMode: netkit
       masquerade: true
       preallocateMaps: true
