@@ -1,9 +1,16 @@
 ---
 autoDirectNodeRoutes: true
 bpf:
-  masquerade: true
+  #masquerade: true
   # Ref: https://github.com/siderolabs/talos/issues/10002
-  hostLegacyRouting: true
+  #hostLegacyRouting: true
+  datapathMode: netkit
+  masquerade: true
+  preallocateMaps: true
+  tproxy: true
+bpfClockProbe: true
+bgpControlPlane:
+    enabled: true
 cni:
   # Required for pairing with Multus CNI
   exclusive: false
@@ -33,8 +40,8 @@ k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-l2announcements:
-  enabled: true
+#l2announcements:
+#  enabled: true
 loadBalancer:
   algorithm: maglev
   mode: "dsr"
@@ -76,4 +83,5 @@ securityContext:
       - SYS_ADMIN
       - SYS_RESOURCE
 socketLB:
+  enabled: true
   hostNamespaceOnly: true
