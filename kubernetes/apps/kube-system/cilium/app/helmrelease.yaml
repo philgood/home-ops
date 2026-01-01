@@ -26,11 +26,7 @@ spec:
     autoDirectNodeRoutes: true
     bpf:
       hostLegacyRouting: true
-      datapathMode: netkit
       masquerade: true
-      preallocateMaps: true
-      tproxy: true
-    bpfClockProbe: true
     bgpControlPlane:
       enabled: true
     cni:
@@ -105,5 +101,4 @@ spec:
           - SYS_ADMIN
           - SYS_RESOURCE
     socketLB:
-      enabled: true
       hostNamespaceOnly: true
