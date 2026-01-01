@@ -24,9 +24,6 @@ spec:
   interval: 1h
   values:
     autoDirectNodeRoutes: true
-    bandwidthManager:
-      enabled: true
-      bbr: true
     bpf:
       hostLegacyRouting: true
       datapathMode: netkit
