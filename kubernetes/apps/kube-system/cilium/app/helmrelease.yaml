@@ -38,7 +38,7 @@ spec:
       # Ref: https://github.com/siderolabs/talos/issues/10002
       hostLegacyRouting: true
     bgpControlPlane:
-        enabled: true
+      enabled: true
     cni:
       # Required for pairing with Multus CNI
       exclusive: false
