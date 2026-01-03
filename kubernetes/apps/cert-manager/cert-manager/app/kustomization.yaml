@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: cert-manager
 resources:
   - ./helmrelease.yaml
+  - ./prometheusrule.yaml
 configMapGenerator:
   - name: cert-manager-values
     files:
       - values.yaml=./helm/values.yaml
 configurations:
   - ./helm/kustomizeconfig.yaml
-  - ./prometheusrule.yaml
