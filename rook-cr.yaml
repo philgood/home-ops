@@ -1,0 +1,42 @@
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: rook-ceph
+  namespace: rook-ceph
+spec:
+  cephVersion:
+    image: quay.io/ceph/ceph:v19.2.3
+  dataDirHostPath: /var/lib/rook
+  mon:
+    count: 3
+  mgr:
+    modules:
+      - name: diskprediction_local
+        enabled: true
+      - name: insights
+        enabled: true
+      - name: pg_autoscaler
+        enabled: true
+      - name: rook
+        enabled: true
+  network:
+    provider: host
+    addressRanges:
+      public: ["172.20.24.0/24"]
+      cluster: ["169.254.255.0/24"]
+    connections:
+      requireMsgr2: true
+  storage:
+    useAllNodes: true
+    useAllDevices: false
+    devicePathFilter: /dev/nvme1n*
+    config:
+      osdsPerDevice: "1"
+  crashCollector:
+    disable: false
+  dashboard:
+    enabled: true
+    urlPrefix: /
+    ssl: false
+    prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+
