@@ -47,7 +47,6 @@ spec:
       crashCollector:
         disable: false
       csi:
-        enableRBD: true
         readAffinity:
           enabled: true
       dashboard:
