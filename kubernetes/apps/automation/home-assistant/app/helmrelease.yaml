@@ -98,9 +98,3 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /config
-      backups:
-        type: emptyDir
-        existingClaim: *app
-        globalMounts:
-          - path: /config/backups
-     
