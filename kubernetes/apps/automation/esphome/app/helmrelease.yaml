@@ -1,9 +1,23 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: esphome
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 4.5.0
+  url: oci://ghcr.io/bjw-s-labs/helm/app-template
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: esphomes
+  name: &app esphome
 spec:
   interval: 1h
   chartRef:
@@ -11,53 +25,63 @@ spec:
     name: app-template
   install:
     remediation:
-      retries: -1
+      retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
       esphome:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/esphome/esphome
-              tag: 2025.12.4
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
-            resources:
-              requests:
-                cpu: 20m
-                memory: 3072M
-              limits:
-                memory: 3072M
-
-    defaultPodOptions:
-      annotations:
-            k8s.v1.cni.cncf.io/networks: |
+        annotations:
+          secret.reloader.stakater.com/reload: esphome-secrets,esphome-deploykey
+        pod:
+          annotations:
+              k8s.v1.cni.cncf.io/networks: |
               [{
                 "name":"multus-iot",
                 "namespace": "network",
                 "ips": ["172.20.21.201/24"],
                 "mac": "3e:59:e4:f7:43:38"
               }]
-
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/esphome
+              tag: 2025.12.4@sha256:17c370487f667a26197752779ec06e0667258dc9c7447ad7338229bb5fda327b
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 5m
+                memory: 512Mi
+              limits:
+                memory: 4Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: esphome
+        controller: *app
         ports:
           http:
             port: &port 6052
-
     route:
       app:
         hostnames:
@@ -66,14 +90,30 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
-
     persistence:
       config:
-        enabled: true
-        existingClaim: esphomes
-        globalMounts:
-          - path: /config
-      esphome-cache:
+        existingClaim: *app
+        advancedMounts:
+          esphome:
+            app:
+              - path: /config
+      buildcache:
+        suffix: buildcache
+        size: 50Gi
+        accessMode: ReadWriteOnce
+        advancedMounts:
+          esphome:
+            app:
+              - path: /cache
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /config/.esphome
+        advancedMounts:
+          esphome:
+            app:
+              - path: /tmp
+                subPath: esphome-tmp
+            code-server:
+              - path: /tmp
+                subPath: code-server-tmp
+              - path: /nonexistent
+                subPath: nonexistent
