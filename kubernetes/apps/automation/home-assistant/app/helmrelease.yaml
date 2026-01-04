@@ -93,9 +93,9 @@ spec:
         hostnames:
           - hass.narden.au
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-external
+            namespace: network
+            #sectionName: https
         rules:
           - backendRefs:
               - identifier: app
