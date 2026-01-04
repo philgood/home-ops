@@ -7,7 +7,7 @@ spec:
   jobLabel: envoy-proxy
   namespaceSelector:
     matchNames:
-      - networking
+      - network
   podMetricsEndpoints:
     - port: metrics
       path: /stats/prometheus
