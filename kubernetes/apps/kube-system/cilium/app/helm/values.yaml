@@ -32,7 +32,7 @@ envoy:
      serviceMonitor:
        enabled: true
 gatewayAPI:
-  enabled: true
+  enabled: false
 hubble:
   enabled: false
 ipam:
