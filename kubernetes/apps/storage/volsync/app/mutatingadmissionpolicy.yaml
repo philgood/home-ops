@@ -114,16 +114,3 @@ spec:
               }
             }
           ]
----
-apiVersion: admissionregistration.k8s.io/v1alpha1
-kind: MutatingAdmissionPolicyBinding
-metadata:
-  name: volsync-nfs-inject
-spec:
-  policyName: volsync-nfs-inject
-  matchResources:
-    namespaceSelector:
-      matchExpressions:
-        - key: volsync.backube/nfs
-          operator: In
-          values: ["true"]

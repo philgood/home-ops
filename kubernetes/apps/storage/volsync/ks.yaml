@@ -20,6 +20,7 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/storage/volsync/app
   prune: true
+  wait: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
