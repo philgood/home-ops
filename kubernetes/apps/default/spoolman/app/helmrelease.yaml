@@ -61,9 +61,9 @@ spec:
         hostnames:
           - spoolman.narden.au
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-internal
+            namespace: network
+            #sectionName: https
         rules:
           - backendRefs:
               - identifier: app
