@@ -92,23 +92,11 @@ spec:
       app:
         hostnames:
           - hass.narden.au
-        external:
-            hostnames:
-                - hass.narden.au
-            parentRefs:
-                - name: envoy-external
-                  namespace: network
-                  sectionName: https
-
-                # Route for internal access (from LAN)
-        internal:
-            hostnames:
-                - hass.narden.au
-            parentRefs:
-                - name: envoy-internal
-                  namespace: network
-                  sectionName: https
-
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+                  
     persistence:
       config:
         enabled: true
