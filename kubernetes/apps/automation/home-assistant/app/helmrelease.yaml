@@ -67,7 +67,7 @@ spec:
         primary: true
         ports:
           http:
-            port: &port 8123
+            port: 8123
           mdns-tcp:
             enabled: true
             port: 5353
