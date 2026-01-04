@@ -5,6 +5,7 @@ metadata:
   name: &app spoolman
   namespace: &namespace default
 spec:
+  targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -13,17 +14,16 @@ spec:
       namespace: rook-ceph
   path: ./kubernetes/apps/default/spoolman/app
   prune: true
+  wait: false
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  components:
-    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_CAPACITY: 1Gi
+      GATUS_SUBDOMAIN: esphome

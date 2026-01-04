@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: spoolman
+  name: &app spoolman
 spec:
   interval: 1h
   chartRef:
@@ -11,67 +11,73 @@ spec:
     name: app-template
   install:
     remediation:
-      retries: -1
+      retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
       spoolman:
-        initContainers:
-         config-permission-fix:
-            image:
-              repository: docker.io/library/busybox
-              tag: latest
-            command: [ "/bin/chown", "-R", "1000:1000", "/home/app/.local/share/spoolman/" ]
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
               repository: ghcr.io/donkie/spoolman
-              tag: 0.22.1
+              tag: 0.22.1@sha256:238ea5bfb2eeda4436c39f54e73df5fef4ee904fb7c291617588b856786fe0ef
+            command:
+              - uvicorn
+              - spoolman.main:app
+              - --host
+              - 0.0.0.0
             env:
               TZ: Australia/Sydney
+              SPOOLMAN_PORT: &port 8000
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
+                custom: true
                 spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
+                  httpGet:
+                    path: /api/v1/health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
-                cpu: 14m
-                memory: 431M
+                cpu: 12m
+                memory: 128M
               limits:
-                memory: 431M
-
+                memory: 512M
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 100
+        fsGroup: 100
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: spoolman
+        controller: *app
         ports:
           http:
-            port: &port 8000
-
+            port: *port
     route:
       app:
-        hostnames:
-          - spoolman.narden.au
+        hostnames: ["{{ .Release.Name }}.${SECRET_EXTERNAL_DOMAIN}"]
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
-
     persistence:
       config:
         enabled: true
-        existingClaim: spoolman-data
-        globalMounts:
-          - path: /home/app/.local/share/spoolman/
+        existingClaim: *app
+        advancedMounts:
+          spoolman:
+            app:
+              - path: /home/app/.local/share/spoolman
