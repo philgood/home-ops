@@ -28,7 +28,6 @@ spec:
               tag: 2025.12.5@sha256:6be0843b06ad82233639e56f261b2377f78df140e3d16d2d08b2c29c8889b697
             env:
               TZ: Australia/Sydney
-              HOME_ASSISTANT_EXTERNAL_URL: https://hass.narden.au
               HASS_HTTP_TRUSTED_PROXY_1: 172.20.20.0/20
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
             envFrom:
@@ -93,7 +92,7 @@ spec:
         hostnames:
           - hass.narden.au  
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
                   
     persistence:
@@ -103,8 +102,6 @@ spec:
         advancedMounts:
           home-assistant:
             app:
-              - path: /config
-            code-server:
               - path: /config
 
       config-cache:
