@@ -60,6 +60,8 @@ spec:
 
     route:
       app:
+        annotations:
+          internal-dns.alpha.kubernetes.io/target: internal.narden.au  
         hostnames:
           - esphome.narden.au
         parentRefs:
