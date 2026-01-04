@@ -29,7 +29,7 @@ spec:
                   set -e
                   echo "Connecting to source repository..."
                   kopia repository connect filesystem --path=/repository --password="${KOPIA_PASSWORD}"
-                  echo "Syncing to Backblaze B2..."
+                  echo "Syncing to Garage..."
                   kopia repository sync-to s3 \
                     --bucket="${BUCKET}" \
                     --endpoint="${ENDPOINT}" \
