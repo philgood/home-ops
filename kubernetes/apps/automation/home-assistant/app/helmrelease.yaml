@@ -98,3 +98,14 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /config
+      
+      backups:
+        enabled: true
+        type: nfs
+        server: nas.internal
+        path: /mnt/DataPool/apps/homeassistant
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/backups
+                readOnly: false
