@@ -61,13 +61,9 @@ spec:
       app:
         hostnames: ["s3.narden.au"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+          - name: envoy-internal
+            namespace: network
+
     persistence:
       config:
         enabled: true
