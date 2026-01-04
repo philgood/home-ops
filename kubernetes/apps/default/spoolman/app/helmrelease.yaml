@@ -69,7 +69,8 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${SECRET_EXTERNAL_DOMAIN}"]
+        hostnames:
+          - spoolman.narden.au
         parentRefs:
           - name: envoy-internal
             namespace: network
