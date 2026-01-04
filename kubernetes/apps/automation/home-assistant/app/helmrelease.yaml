@@ -93,7 +93,7 @@ spec:
         hostnames:
           - hass.narden.au
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
             sectionName: https
 
