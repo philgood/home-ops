@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -9,24 +9,51 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/volsync
   dependsOn:
-    - name: mosquitto
-      namespace: automation
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: external-secrets-stores
+      namespace: external-secrets
+    - name: volsync
+      namespace: storage
+  interval: 1h
   path: ./kubernetes/apps/automation/home-assistant/app
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
+      GATUS_SUBDOMAIN: hass
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
+  wait: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: home-assistant-code
+  namespace: &namespace automation
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app home-assistant
+  dependsOn:
+    - name: home-assistant
+  interval: 1h
+  path: ./kubernetes/apps/automation/home-assistant/code
+  postBuild:
+    substitute:
+      APP: *app
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false

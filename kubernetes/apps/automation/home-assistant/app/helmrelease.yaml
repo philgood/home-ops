@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -11,16 +11,46 @@ spec:
     name: app-template
   install:
     remediation:
-      retries: -1
+      retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        runAsNonRoot: true
+        fsGroupChangePolicy: OnRootMismatch
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - home-assistant-code
+              topologyKey: kubernetes.io/hostname
     controllers:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: home-assistant-db-secret
+        pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name":"multus-iot",
+                "namespace": "network",
+                "ips": ["172.20.21.200/24"],
+                "mac": "3e:59:e4:f7:43:18"
+              }]
         containers:
           app:
             image:
@@ -39,82 +69,32 @@ spec:
                 enabled: false
               readiness:
                 enabled: false
+              startup:
+                enabled: false
             resources:
               requests:
-                cpu: 50m
-                memory: 4000Mi
+                cpu: 10m
+                memory: 128Mi
               limits:
-                memory: 7000Mi
-
-    defaultPodOptions:
-      annotations:
-        k8s.v1.cni.cncf.io/networks: |
-          [{
-            "name":"multus-iot",
-            "namespace": "network",
-            "ips": ["172.20.21.200/24"],
-            "mac": "3e:59:e4:f7:43:18"
-          }]
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-
+                memory: 2Gi
+            securityContext:
+              privileged: false
     service:
       app:
-        controller: home-assistant
+        controller: *app
         ports:
           http:
-            port: 8123
-
+            port: &port 8123
     route:
       app:
-        hostnames:
-          - hass.narden.au  
+        hostnames: 
+          - hass.narden.au
         parentRefs:
           - name: envoy-internal
             namespace: network
-                  
     persistence:
       config:
         enabled: true
-        existingClaim: home-assistant-config
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config
-
-      config-cache:
-        type: emptyDir
+        existingClaim: *app
         globalMounts:
-          - path: /config/.venv
-      config-logs:
-        type: emptyDir
-        globalMounts:
-          - path: /config/logs
-      config-tts:
-        type: emptyDir
-        globalMounts:
-          - path: /config/tts
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
-    
-      media:
-        type: nfs
-        server: nas.internal
-        path: /mnt/DataPool/apps/homeassistant
-
-      backups:
-        enabled: true
-        type: nfs
-        server: nas.internal
-        path: /mnt/DataPool/apps/homeassistant
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config/backups
-                readOnly: false
+          - path: /config
