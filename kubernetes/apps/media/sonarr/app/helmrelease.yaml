@@ -71,13 +71,9 @@ spec:
       app:
         hostnames: ["sonarr.narden.au"]
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+          - name: envoy-external
+            namespace: network
+
     persistence:
       config:
         enabled: true

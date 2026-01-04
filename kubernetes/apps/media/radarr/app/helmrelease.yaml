@@ -89,9 +89,9 @@ spec:
         hostnames:
           - "radarr.narden.au"
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-external
+            namespace: network
+
     service:
       app:
         ports:
