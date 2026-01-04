@@ -93,10 +93,8 @@ spec:
         hostnames:
           - hass.narden.au
         external:
-            annotations:
-                external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
             hostnames:
-                - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+                - hass.narden.au
             parentRefs:
                 - name: envoy-external
                   namespace: network
@@ -104,10 +102,8 @@ spec:
 
                 # Route for internal access (from LAN)
         internal:
-            annotations:
-                internal-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
             hostnames:
-                - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+                - hass.narden.au
             parentRefs:
                 - name: envoy-internal
                   namespace: network
