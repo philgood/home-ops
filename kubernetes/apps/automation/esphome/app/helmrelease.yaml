@@ -70,7 +70,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: esphomes
+        existingClaim: esphome
         globalMounts:
           - path: /config
       esphome-cache:
