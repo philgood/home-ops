@@ -87,14 +87,11 @@ spec:
             port: *port
     route:
       app:
-        annotations:
-          internal-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hostnames:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
         parentRefs:
-          - name: internal
+          - name: envoy-internal
             namespace: network
-            sectionName: https
     configMaps:
       config:
         data:
