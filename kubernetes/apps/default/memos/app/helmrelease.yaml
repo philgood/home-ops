@@ -65,16 +65,14 @@ spec:
         ports:
           http:
             port: 5230
-            appProtocol: http
-      grpc:
-        controller: memos
-        ports:
-          http:
-            port: 5231
-            targetPort: 5230
-            appProtocol: kubernetes.io/h2c
 
-    route: {}
+    route:
+      app:
+        hostnames:
+          - memos.narden.au
+        parentRefs:
+          - name: envoy-external
+            namespace: network
                 
     persistence:
       data:
