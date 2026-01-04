@@ -62,13 +62,9 @@ spec:
         hostnames:
           - mealie.narden.au
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
                 
     persistence:
       data:
