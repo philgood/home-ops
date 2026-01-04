@@ -19,7 +19,7 @@ spec:
       retries: 3
   dependsOn:
     - name: home-assistant
-      namespace: default
+      namespace: automation
   values:
     defaultPodOptions:
       affinity:
