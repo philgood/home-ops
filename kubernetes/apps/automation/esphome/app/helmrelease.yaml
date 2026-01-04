@@ -60,18 +60,12 @@ spec:
 
     route:
       app:
-        annotations:
-          internal-dns.alpha.kubernetes.io/target: internal.narden.au  
         hostnames:
           - esphome.narden.au
         parentRefs:
           - name: envoy-internal
             namespace: network
             sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
 
     persistence:
       config:
