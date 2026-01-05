@@ -39,7 +39,7 @@ spec:
               MEMOS_DRIVER: postgres
               MEMOS_MODE: prod
               MEMOS_PORT: "5230"
-              MEMOS_PUBLIC: false
+              MEMOS_PUBLIC: "false"
               MEMOS_DSN:
                 valueFrom:
                   secretKeyRef:
