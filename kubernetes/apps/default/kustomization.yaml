@@ -13,3 +13,4 @@ resources:
   - ./obsidian-couchdb/ks.yaml
   - ./mealie/ks.yaml
   - ./memos/ks.yaml
+  - ./vikunja/ks.yaml
