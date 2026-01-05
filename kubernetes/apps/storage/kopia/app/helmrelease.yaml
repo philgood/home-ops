@@ -88,7 +88,7 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - kopia.narden.au
         parentRefs:
           - name: envoy-internal
             namespace: network
