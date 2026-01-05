@@ -44,8 +44,8 @@ spec:
               - --without-password
             probes:
               liveness: &probes
-                enabled: true
-                custom: true
+                enabled: false
+                custom: false
                 spec:
                   httpGet:
                     path: /
