@@ -5,3 +5,5 @@ kind: Kustomization
 namespace: automation
 resources:
   - ./helmrelease.yaml
+components:
+  - ../../../../components/volsync

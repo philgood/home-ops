@@ -5,3 +5,5 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./podmonitor.yaml
+components:
+  - ../../../../components/volsync
