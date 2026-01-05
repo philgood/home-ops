@@ -114,8 +114,9 @@ spec:
             filters:
               - type: URLRewrite
                 urlRewrite:
-                   path:
-                     replaceFullPath: /local/.well-known/appspecific/com.tesla.3p.public-key.pem
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: "/local/.well-known/appspecific/com.tesla.3p.public-key.pem"
             backendRefs:
               - identifier: app
                 port: *httpPort
