@@ -93,6 +93,8 @@ spec:
           - name: envoy-external
             namespace: network
       tesla-key:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.narden.au
         hostnames:
           - hass.narden.au
         parentRefs:
