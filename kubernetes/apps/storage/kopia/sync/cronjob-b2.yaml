@@ -30,7 +30,7 @@ spec:
                   echo "Connecting to source repository..."
                   kopia repository connect filesystem --path=/repository --password="${KOPIA_PASSWORD}"
                   echo "Syncing to Garage..."
-                  kopia repository sync-to s3 \
+                  kopia repository connect s3 \
                     --bucket="${BUCKET}" \
                     --endpoint="${ENDPOINT}" \
                     --access-key="${ACCESS_KEY}" \
