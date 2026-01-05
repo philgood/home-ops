@@ -117,6 +117,6 @@ spec:
         type: configMap
         name: home-assistant-tesla-key
         globalMounts:
-          - path: /config/www/.well-known/appspecific/com.tesla.3p.public-key.pem
+          - path: /www/.well-known/appspecific/com.tesla.3p.public-key.pem
             subPath: com.tesla.3p.public-key.pem
             readOnly: true
