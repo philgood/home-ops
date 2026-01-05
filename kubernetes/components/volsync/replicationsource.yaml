@@ -3,17 +3,17 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: ${APP}-b2
+  name: ${APP}
 spec:
   sourcePVC: ${VOLSYNC_CLAIM:=${APP}}
   trigger:
-    schedule: "0 0 * * *"
+    schedule: "0 * * * *"
   kopia:
     accessModes:
       - ${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}
     cacheAccessModes:
       - ${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}
-    cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=8Gi}
+    cacheCapacity: ${VOLSYNC_CAPACITY:=5Gi}
     cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}
     compression: zstd-fastest
     copyMethod: Snapshot
@@ -22,8 +22,9 @@ spec:
       runAsGroup: ${VOLSYNC_GID:=568}
       fsGroup: ${VOLSYNC_GID:=568}
     parallelism: 2
-    repository: ${APP}-volsync-b2-secret
+    repository: ${APP}-volsync-secret
     retain:
-      daily: 14
+      hourly: 24
+      daily: 7
     storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
-    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-block}
+    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}
