@@ -10,3 +10,4 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
   - ./kopia/ks.yaml
+  - ./syncthing/ks.yaml
