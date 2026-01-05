@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: 2025.12.4@sha256:6be0843b06ad82233639e56f261b2377f78df140e3d16d2d08b2c29c8889b697
+              tag: 2025.12.5@sha256:6be0843b06ad82233639e56f261b2377f78df140e3d16d2d08b2c29c8889b697
             env:
               TZ: Australia/Sydney
               HOME_ASSISTANT_EXTERNAL_URL: hass.narden.au
@@ -115,8 +115,8 @@ spec:
               - type: URLRewrite
                 urlRewrite:
                   path:
-                    type: ReplacePrefixMatch
-                    replacePrefixMatch: "/local/.well-known/appspecific/com.tesla.3p.public-key.pem"
+                    type: ReplaceFullPath
+                    replaceFullPath: /local/.well-known/appspecific/com.tesla.3p.public-key.pem
             backendRefs:
               - identifier: app
                 port: *httpPort
