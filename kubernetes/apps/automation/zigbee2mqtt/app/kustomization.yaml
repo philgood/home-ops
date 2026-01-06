@@ -5,7 +5,8 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./scaledobject.yaml
-  - ./pvc.yaml
+components:
+  - ../../../../components/volsync
 configMapGenerator:
   - name: zigbee2mqtt-loki-rules
     files:
