@@ -37,7 +37,7 @@ spec:
               SPOOLMAN_PORT: &port 8000
             probes:
               liveness: &probes
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   httpGet:
