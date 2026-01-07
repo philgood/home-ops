@@ -68,13 +68,8 @@ spec:
         hostnames:
           - qb.narden.au
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
+          - name: envoy-internal
+            namespace: network
     persistence:
       config:
         existingClaim: qbittorrent-config
