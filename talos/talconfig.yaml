@@ -255,6 +255,11 @@ controlPlane:
   patches:
     - |-
       cluster:
+        apiServer:
+          admissionControl:
+            $$patch: delete
+    - |-
+      cluster:
         allowSchedulingOnControlPlanes: true
         apiServer:
           extraArgs:
@@ -262,7 +267,6 @@ controlPlane:
             enable-aggregator-routing: true
             feature-gates: MutatingAdmissionPolicy=true
             runtime-config: admissionregistration.k8s.io/v1beta1=true
-          admissionControl: {}
         controllerManager:
             extraArgs:
                 bind-address: 0.0.0.0
