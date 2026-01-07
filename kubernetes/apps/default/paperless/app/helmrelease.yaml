@@ -128,13 +128,9 @@ spec:
       app:
         hostnames: ["paperless.narden.au"]
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+          - name: envoy-external
+            namespace: network
+
     persistence:
       data:
         existingClaim: paperless-data
