@@ -286,8 +286,7 @@ controlPlane:
         scheduler:
             extraArgs:
                 bind-address: 0.0.0.0
-      - op: remove
-        path: /cluster/apiServer/admissionControl  
+
 
     #- "@./patches/controller/admission-controller-patch.yaml"
     #- "@./patches/controller/cluster.yaml"
