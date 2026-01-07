@@ -171,15 +171,6 @@ nodes:
 patches:
   - |-
     machine:
-      install:
-        extraKernelArgs:
-          - intel_iommu=on
-          - iommu=pt
-          - mitigations=off
-          - net.ifnames=0
-          - pcie_ports=native
-  - |-
-    machine:
       features:
         kubernetesTalosAPIAccess:
           enabled: true
@@ -307,6 +298,8 @@ controlPlane:
         - mitigations=off                     # Less security, faster puter
         - security=none                       # Less security, faster puter
         - talos.auditd.disabled=1             # Less security, faster puter
+        - net.ifnames=0
+        - pcie_ports=native
       systemExtensions:
         officialExtensions:
           - siderolabs/i915
