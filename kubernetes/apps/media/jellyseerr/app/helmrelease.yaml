@@ -86,7 +86,7 @@ spec:
         hostnames:
           - requests.narden.au
         parentRefs:
-          - name: internal
+          - name: envoy-internal
             namespace: network
     service:
       app:
