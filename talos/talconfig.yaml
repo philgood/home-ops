@@ -254,6 +254,9 @@ patches:
 controlPlane:
   patches:
     - |-
+      - op: remove
+        path: /cluster/apiServer/admissionControl
+    - |-
       cluster:
         allowSchedulingOnControlPlanes: true
         apiServer:
