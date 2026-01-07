@@ -74,6 +74,8 @@ spec:
     persistence:
       config:
         existingClaim: zigbee2mqtt-data
+        globalMounts:
+          - path: /config
       config-logs:
         type: emptyDir
         globalMounts:

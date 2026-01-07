@@ -7,12 +7,5 @@ resources:
   - ./scaledobject.yaml
 components:
   - ../../../../components/volsync
-configMapGenerator:
-  - name: zigbee2mqtt-loki-rules
-    files:
-      - ./resources/lokirule.yaml
-    options:
-      labels:
-        loki_rule: "true"
 generatorOptions:
   disableNameSuffixHash: true
