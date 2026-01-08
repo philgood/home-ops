@@ -85,6 +85,9 @@ spec:
         ports:
           http:
             port: &httpPort 8123
+          sonos:
+            enabled: true
+            port: 1400
     route:
       app:
         hostnames: 
