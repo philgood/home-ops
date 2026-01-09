@@ -1,26 +1,34 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: kube-prometheus-stack-additional
+  name: miscellaneous-rules
 spec:
   groups:
-    - name: kube-prometheus-stack-additional.rules
+    - name: dockerhub
       rules:
-        - alert: DockerhubRateLimitRisk
-          expr: |
-            count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+        - alert: BootstrapRateLimitRisk
           annotations:
-            summary: >-
-              Kubernetes cluster Dockerhub rate limit risk
+            summary: Kubernetes cluster at risk of being rate limited by dockerhub on bootstrap
+          expr: count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+          for: 15m
           labels:
             severity: critical
-
-        - alert: OomKilled
-          expr: |
-            (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1
+    - name: oom
+      rules:
+        - alert: OOMKilled
           annotations:
-            summary: >-
-              Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.
+            summary: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.
+          expr: (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1
+          labels:
+            severity: critical
+    - name: zfs
+      rules:
+        - alert: ZfsUnexpectedPoolState
+          annotations:
+            summary: ZFS pool {{$labels.zpool}} on {{$labels.instance}} is in a unexpected state {{$labels.state}}
+          expr: node_zfs_zpool_state{state!="online"} > 0
+          for: 15m
           labels:
             severity: critical
