@@ -68,7 +68,7 @@ spec:
               targetLabel: kubernetes_node
 
     grafana:
-      enabled: false
+      enabled: true
       forceDeployDashboards: true
 
     prometheus-node-exporter:
