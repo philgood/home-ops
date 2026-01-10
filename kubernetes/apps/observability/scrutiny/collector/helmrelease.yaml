@@ -22,8 +22,6 @@ spec:
   values:
     defaultPodOptions:
       automountServiceAccountToken: false
-        # capabilities:
-        #   add: ["SYS_RAWIO"] # allow access to smartctl
     controllers:
       scrutiny-collector:
         type: daemonset
@@ -34,13 +32,19 @@ spec:
               tag: master-collector@sha256:ea3989639fc43234c0315a7cdfaa21b750da140896a74a4cfd71965ef748cb3c
             env:
               COLLECTOR_API_ENDPOINT: http://scrutiny.observability.svc.cluster.local:8080
+              COLLECTOR_CRON_SCHEDULE: "*/15 * * * *"   # every 15 minutes
               COLLECTOR_HOST_ID:
                 valueFrom:
                   fieldRef:
                     fieldPath: spec.nodeName
               TZ: Australia/Sydney
             securityContext:
-              privileged: true
+              privileged: false
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                  - SYS_RAWIO  # for ATA/SATA via SG_IO
+                  - SYS_ADMIN  # for NVMe admin passthrough
             resources:
               requests:
                 cpu: 100m
@@ -66,12 +70,12 @@ spec:
       nvme0n1:
         enabled: true
         type: hostPath
-        hostPath: /dev/nvme0n1
+        hostPath: /dev/nvme0
         globalMounts:
-          - path: /dev/nvme0n1
+          - path: /dev/nvme0
       nvme1n1:
         enabled: true
         type: hostPath
-        hostPath: /dev/nvme1n1
+        hostPath: /dev/nvme1
         globalMounts:
-          - path: /dev/nvme1n1
+          - path: /dev/nvme1
