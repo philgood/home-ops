@@ -30,7 +30,7 @@ spec:
               repository: ghcr.io/analogj/scrutiny
               tag: master-web@sha256:36d8522b89583e3e0b44f9920c8c1cced28628d25c84ae3bb0b8108b9031b394
             env:
-              TZ: ${TIMEZONE}
+              TZ: Australia/Sydney
               SCRUTINY_WEB_INFLUXDB_HOST: influx.database.svc.cluster.local
             envFrom:
               - secretRef:
@@ -53,11 +53,7 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+
     probes:
       liveness:
         enabled: true
