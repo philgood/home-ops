@@ -53,6 +53,13 @@ spec:
               - --port
               - "8888"
               - /config
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
