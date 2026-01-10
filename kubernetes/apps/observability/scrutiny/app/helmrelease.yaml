@@ -32,7 +32,7 @@ spec:
             env:
               TZ: Australia/Sydney
               SCRUTINY_WEB_INFLUXDB_HOST: influx.database.svc.cluster.local
-              SCRUTINY_NOTIFY_URLS: "pushover://shoutrrr:{{ .SCRUTINY_PUSHOVER_TOKEN }}@{{ .PUSHOVER_USER_KEY }}"
+              #SCRUTINY_NOTIFY_URLS: "pushover://shoutrrr:{{ .SCRUTINY_PUSHOVER_TOKEN }}@{{ .PUSHOVER_USER_KEY }}"
             envFrom:
               - secretRef:
                   name: scrutiny-secret
