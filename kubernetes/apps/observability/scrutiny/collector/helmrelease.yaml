@@ -39,12 +39,8 @@ spec:
                     fieldPath: spec.nodeName
               TZ: Australia/Sydney
             securityContext:
-              privileged: false
-              allowPrivilegeEscalation: false
-              capabilities:
-                add:
-                  - SYS_RAWIO  # for ATA/SATA via SG_IO
-                  - SYS_ADMIN  # for NVMe admin passthrough
+              privileged: true
+              allowPrivilegeEscalation: true
             resources:
               requests:
                 cpu: 100m
