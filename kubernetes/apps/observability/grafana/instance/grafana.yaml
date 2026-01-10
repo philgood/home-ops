@@ -61,7 +61,7 @@ spec:
   httpRoute:
     spec:
       hostnames:
-        - "grafana.narden.au"
+        - grafana.narden.au
       parentRefs:
         - name: envoy-internal
           namespace: network
