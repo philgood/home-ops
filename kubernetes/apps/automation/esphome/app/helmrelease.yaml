@@ -37,12 +37,18 @@ spec:
               repository: ghcr.io/home-operations/esphome
               tag: 2025.12.5@sha256:b78fb6cc59f18ea874807618c7b37819f85eb0dc4c0d3cf93adc19e4b9c3b280
             probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
                 cpu: 5m
