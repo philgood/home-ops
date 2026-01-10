@@ -13,4 +13,4 @@ resources:
   - ./keda/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./pushgateway/ks.yaml
-  #- ./scrutiny/ks.yaml
+  - ./scrutiny/ks.yaml
