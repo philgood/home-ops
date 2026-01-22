@@ -65,8 +65,14 @@ spec:
       parentRefs:
         - name: envoy-internal
           namespace: network
+          sectionName: https
+      rules:
+        - backendRefs:
+            - name: grafana-service
+              port: 3000
 
   persistentVolumeClaim:
+    name: grafana-pvc
     spec:
       accessModes:
         - ReadWriteOnce
