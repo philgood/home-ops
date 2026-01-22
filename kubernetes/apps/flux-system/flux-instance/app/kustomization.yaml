@@ -13,3 +13,10 @@ configMapGenerator:
       - values.yaml=./helm/values.yaml
 configurations:
   - ./helm/kustomizeconfig.yaml
+postBuild:
+  substitute:
+    APP: "flux-instance"
+  substituteFrom:
+    - kind: Secret
+      name: cluster-secrets
+      optional: false
