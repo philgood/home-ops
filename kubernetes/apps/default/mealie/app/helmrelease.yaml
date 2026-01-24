@@ -39,7 +39,7 @@ spec:
             envFrom: *envFrom
             env:
               TZ: Australia/Sydney
-
+              ALLOW_SIGNUP: true
             probes:
               liveness:
                 enabled: true
