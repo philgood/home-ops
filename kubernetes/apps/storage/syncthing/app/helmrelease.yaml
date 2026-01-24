@@ -63,28 +63,29 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 172.20.24.60
         ports:
           http:
             port: 8384
+            primary: true
       discovery:
         enabled: true
         controller: *app
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 172.20.24.75
+          lbipam.cilium.io/ips: 172.20.24.61
         ports:
+          listen:
+            port: 22000
+            protocol: TCP
+            targetPort: 22000
           discovery:
             enabled: true
             port: 21027
             protocol: UDP
-          listen:
-            enabled: true
-            port: 22000
-            protocol: TCP
-          listen-udp:
-            enabled: true
-            port: 22000
-            protocol: UDP
+            targetPort: 21027   
     route:
       app:
         hostnames:
