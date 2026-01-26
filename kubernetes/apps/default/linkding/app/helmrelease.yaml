@@ -69,7 +69,7 @@ spec:
         hostnames:
           - bookmarks.narden.au
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
