@@ -42,7 +42,7 @@ spec:
         maxParallel: 4
       destinationPath: s3://cnpg/
       endpointURL: http://garage.storage.svc.cluster.local:3900
-      serverName: &currentCluster postgres-010
+      serverName: &currentCluster postgres17
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
