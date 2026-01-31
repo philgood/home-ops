@@ -126,10 +126,11 @@ spec:
             port: &port 8000
     route:
       app:
-        hostnames: ["paperless.narden.au"]
+        hostnames: 
+          - paperless.narden.au
         parentRefs:
-          - name: envoy-internal
-            namespace: network
+          - name: envoy-external
+            namespace: network 
 
     persistence:
       data:
