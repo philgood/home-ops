@@ -17,7 +17,7 @@ spec:
           name: cloudnative-pg-secret
           key: AWS_SECRET_ACCESS_KEY
     - name: AWS_DEFAULT_REGION
-      value: eu-east-1
+      value: eu-west-1
     - name: AWS_EC2_METADATA_DISABLED
       value: "true"
 

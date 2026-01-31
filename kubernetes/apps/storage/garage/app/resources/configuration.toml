@@ -8,7 +8,7 @@ rpc_bind_addr = "[::]:3901"
 rpc_public_addr = "garage.storage.svc.cluster.local:3901"
 
 [s3_api]
-s3_region = "eu-east-1"
+s3_region = "eu-west-1"
 api_bind_addr = "[::]:3900"
 #root_domain = ".s3.narden.au"
 
