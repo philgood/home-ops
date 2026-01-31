@@ -41,7 +41,7 @@ spec:
         compression: bzip2
         maxParallel: 4
       destinationPath: s3://cnpg/
-      endpointURL: https://s3.narden.au
+      endpointURL: http://garage.storage.svc.cluster.local:3900
       serverName: &currentCluster postgres-010
       s3Credentials:
         accessKeyId:
