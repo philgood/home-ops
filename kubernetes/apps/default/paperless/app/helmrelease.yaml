@@ -134,7 +134,7 @@ spec:
 
     persistence:
       data:
-        existingClaim: paperless
+        existingClaim: paperless-data
         advancedMounts:
           paperless:
             app:
