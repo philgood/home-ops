@@ -5,6 +5,22 @@ kind: Cluster
 metadata:
   name: postgres17
 spec:
+  env:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: cloudnative-pg-secret
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: cloudnative-pg-secret
+          key: AWS_SECRET_ACCESS_KEY
+    - name: AWS_DEFAULT_REGION
+      value: eu-east-1
+    - name: AWS_EC2_METADATA_DISABLED
+      value: "true"
+
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:17.5@sha256:a584c18aa3d292b5bec7d0bce76b26edcd0a53555adbf607d14b145191a7b7fd
   primaryUpdateStrategy: unsupervised
