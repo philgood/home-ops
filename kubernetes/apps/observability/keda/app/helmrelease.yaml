@@ -1,36 +1,34 @@
 ---
-# Keep your OCIRepository definition (wherever it is)
-# Then update the HelmRelease:
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: keda
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 2.18.3
+  url: oci://ghcr.io/home-operations/charts-mirror/keda
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: keda
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: keda
-  interval: 1h
   install:
-    crds: CreateReplace  # Add this
+    crds: CreateReplace
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
-    crds: CreateReplace  # Add this
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       retries: 3
   values:
     enableServiceLinks: false
-    prometheus:
-      metricServer:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      operator:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      webhooks:
-        enabled: true
-        serviceMonitor:
-          enabled: true

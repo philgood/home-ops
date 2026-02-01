@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -9,6 +8,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: app-template
+    namespace: flux-system
   install:
     remediation:
       retries: -1
@@ -22,10 +22,18 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          init-config:
+          init-db:
             image:
-              repository: ghcr.io/home-operations/k8s-sidecar
-              tag: 2.5.0@sha256:ae958215a6124c6d09dbf6cf568dc72176791bfba8630f4300d4eaaf1caa5b10
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18
+            envFrom: &envFrom
+              - secretRef:
+                  name: gatus-secret
+          init-config:
+            dependsOn: init-db
+            image:
+              repository: ghcr.io/kiwigrid/k8s-sidecar
+              tag: 2.2.3@sha256:35a92d087d3063b7376a832b58e8f0818afd9e5e7489e7a83275d761a3c1cf0f
             env:
               FOLDER: /config
               LABEL: gatus.io/enabled
@@ -33,28 +41,26 @@ spec:
               RESOURCE: both
               UNIQUE_FILENAMES: true
               METHOD: WATCH
-            restartPolicy: Always
-            resources:
+            resources: &resources
               requests:
                 cpu: 10m
               limits:
-                memory: 512Mi
+                memory: 128Mi
+            restartPolicy: Always
         containers:
           app:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.34.0@sha256:3fff895e77d35ee62e898860f4613755bc2344127d93e3f326429d40270e2115
             env:
-              TZ: Australia/Sydney
+              GATUS_WEB_PORT: &port 80
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
-              GATUS_WEB_PORT: &port 8090
-            envFrom:
-              - secretRef:
-                  name: gatus-secret
+              TZ: Australia/Sydney
+            envFrom: *envFrom
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -65,72 +71,47 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            resources: *resources
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: [ALL] }
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 256Mi
+              capabilities: { drop: ["ALL"] }
+        serviceAccount:
+          name: *app
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1022
-        runAsGroup: 1022
-        fsGroup: 1022
-        fsGroupChangePolicy: OnRootMismatch
-        sysctls:
-          - name: net.ipv4.ping_group_range
-            value: 0 2147483647
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: *port
-    serviceAccount:
-      gatus: {}
-    serviceMonitor:
-      app:
-        serviceName: *app
-        enabled: true
-        endpoints:
-          - port: http
-    route:
-      app:
-        hostnames: ["status.narden.au"]
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-    rbac:
-      roles:
-        gatus:
-          type: ClusterRole
-          rules:
-            - apiGroups: [""]
-              resources: ["configmaps", "secrets"]
-              verbs: ["get", "watch", "list"]
-      bindings:
-        gatus:
-          type: ClusterRoleBinding
-          roleRef:
-            identifier: *app
-          subjects:
-            - identifier: gatus
+        runAsUser: 568
+        runAsGroup: 568
     persistence:
       config:
-        existingClaim: *app
+        type: emptyDir
       config-file:
         type: configMap
-        name: "{{ .Release.Name }}-configmap"
+        name: gatus-configmap
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
             readOnly: true
+    route:
+      app:
+        hostnames:
+          - status.narden.au
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
