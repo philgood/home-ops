@@ -60,8 +60,7 @@ spec:
               PAPERLESS_OCR_LANGUAGES: por eng
               PAPERLESS_OCR_LANGUAGE: por
               PAPERLESS_OCR_MODE: "redo"
-              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
-              # Enable TIKA
+              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true, "tesseract_max_image_mpixels": 500}'              # Enable TIKA
               PAPERLESS_TIKA_ENABLED: true
               PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
               PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://127.0.0.1:3000
