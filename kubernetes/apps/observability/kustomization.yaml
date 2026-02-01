@@ -16,7 +16,6 @@ resources:
   - ./scrutiny/ks.yaml
   - ./karma/ks.yaml
   - ./kromgo/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./network-ups-tools/ks.yaml
   - ./nut-exporter/ks.yaml
