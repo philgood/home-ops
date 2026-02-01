@@ -72,9 +72,8 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.narden.au"
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-internal
+            namespace: network
         rules:
           - backendRefs:
               - identifier: app
