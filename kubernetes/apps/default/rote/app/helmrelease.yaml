@@ -101,15 +101,19 @@ spec:
     
     route:
       backend:
+        enabled: true
         hostnames:
           - rote-api.narden.au
         parentRefs:
           - name: envoy-external
             namespace: network
+        serviceName: backend
       
       frontend:
+        enabled: true
         hostnames:
           - rote.narden.au
         parentRefs:
           - name: envoy-external
             namespace: network
+        serviceName: frontend
