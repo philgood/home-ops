@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app rote
+  name: &app rote-backend
   namespace: &namespace default
 spec:
   commonMetadata:
@@ -30,7 +30,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app rote
+  name: &app rote-frontend
   namespace: &namespace default
 spec:
   commonMetadata:
