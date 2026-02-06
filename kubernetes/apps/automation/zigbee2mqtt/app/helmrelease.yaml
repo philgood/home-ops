@@ -57,11 +57,11 @@ spec:
                   name: zigbee2mqtt-secret
             probes:
               liveness:
-                enabled: true
+                enabled: false
               readiness:
-                enabled: true
+                enabled: false
               startup:
-                enabled: true
+                enabled: false
             resources:
               requests:
                 cpu: 10m
