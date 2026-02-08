@@ -79,7 +79,7 @@ spec:
     route:
       app:
         hostnames:
-          - oo
+          - "{{ .Release.Name }}.${SECRET_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -109,7 +109,7 @@ spec:
       repository:
         type: nfs
         server: nas.internal
-        path: /mnt/DataPool/apps/volsync
+        path: /mnt/DataPool/apps/volsyncKopia
         globalMounts:
           - path: /repository
       tmpfs:
