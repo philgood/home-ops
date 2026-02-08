@@ -24,8 +24,6 @@ spec:
         kind: Secret
   prune: true
   retryInterval: 2m
-  components:
-    - ../../../../components/gatus/external
   sourceRef:
     kind: GitRepository
     name: flux-system
