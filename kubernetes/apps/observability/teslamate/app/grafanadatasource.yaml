@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: teslamate-postgres
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  valuesFrom:
+    - targetPath: "url"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate-secret
+          key: DATABASE_HOST
+    - targetPath: "database"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate-secret
+          key: DATABASE_NAME
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate-secret
+          key: DATABASE_USER
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate-secret
+          key: DATABASE_PASS
+  datasource:
+    name: TeslaMate
+    type: postgres
+    access: proxy
+    url: ${DATABASE_HOST}:5432
+    database: ${DATABASE_NAME}
+    user: ${DATABASE_USER}
+    secureJsonData:
+      password: ${DATABASE_PASS}
+    jsonData:
+      postgresVersion: 1000
+      sslmode: disable
+

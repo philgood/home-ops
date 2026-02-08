@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
@@ -12,6 +13,7 @@ spec:
       value: /etc/nfsmount.conf
       isRegex: false
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
@@ -25,6 +27,32 @@ spec:
       value: /dev/nvme.*
       isRegex: true
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: nas-memory-high-utilization
+spec:
+  matchers:
+    - name: alertname
+      value: NodeMemoryHighUtilization
+      isRegex: false
+    - name: instance
+      value: aionios.internal:9100
+      isRegex: false
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: ceph-node-network-packet-errors
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeNetworkPacketErrors
+      isRegex: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
 apiVersion: monitoring.giantswarm.io/v1alpha1
 kind: Silence
 metadata:
@@ -37,44 +65,3 @@ spec:
     - name: horizontalpodautoscaler
       value: keda-hpa-.*
       isRegex: true
----
-apiVersion: monitoring.giantswarm.io/v1alpha1
-kind: Silence
-metadata:
-    name: ceph-node-packet-drop
-spec:
-    matchers:
-      - name: alertname
-        value: CephNodeNetworkPacketDrops
-        isRegex: false
----
-apiVersion: monitoring.giantswarm.io/v1alpha1
-kind: Silence
-metadata:
-    name: ceph-node-packet-error
-spec:
-    matchers:
-        - name: alertname
-          value: CephNodeNetworkPacketErrors
-          isRegex: false
----
-apiVersion: monitoring.giantswarm.io/v1alpha1
-kind: Silence
-metadata:
-    name: udm-upload-bandwith-low
-spec:
-    matchers:
-        - name: alertname
-          value: UDMUploadBandwidthLow
-          isRegex: false
----
-apiVersion: monitoring.giantswarm.io/v1alpha1
-kind: Silence
-metadata:
-  name: nas-memory-high-utilization
-spec:
-  matchers:
-    - name: alertname
-      value: BlackboxInstanceDown
-    - name: instance
-      value: nas.internal

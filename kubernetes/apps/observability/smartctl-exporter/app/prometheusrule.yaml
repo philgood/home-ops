@@ -1,19 +1,20 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: smartctl-exporter
+  name: smartctl-exporter-rules
 spec:
   groups:
     - name: smartctl-exporter.rules
       rules:
         - alert: SmartDeviceHighTemperature
           expr: |
-            smartctl_device_temperature > 65
+            smartctl_device_temperature{temperature_type="current"} > 68
           for: 5m
           annotations:
             summary: >-
-              Mounted drive {{ $labels.device }} on device {{ $labels.instance }} has a temperature higher than {{ $value }}°C
+              Mounted drive {{ $labels.device }} on device {{ $labels.instance }} has a temperature higher than 68°C
           labels:
             severity: critical
 

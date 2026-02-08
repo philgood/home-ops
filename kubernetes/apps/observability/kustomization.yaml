@@ -7,21 +7,16 @@ components:
   - ../../components/common
 resources:
   - ./apprise/ks.yaml
-  - ./blackbox-exporter/ks.yaml
-  #- ./gatus/ks.yaml
-  - ./grafana/ks.yaml
-  - ./keda/ks.yaml
+  - ./gatus/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./pushgateway/ks.yaml
-  - ./scrutiny/ks.yaml
-  - ./karma/ks.yaml
-  - ./kromgo/ks.yaml
-  - ./loki/ks.yaml
-  - ./network-ups-tools/ks.yaml
+  - ./victoria-logs/ks.yaml
+  - ./fluent-bit/ks.yaml
+  - ./blackbox-exporter/ks.yaml
+  - ./grafana/ks.yaml
   - ./nut-exporter/ks.yaml
-  - ./prometheus-operator/ks.yaml
-  - ./promtail/ks.yaml
-  - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
-  - ./snmp-exporter/ks.yaml
-  - ./unpoller/ks.yaml
+  - ./teslamate/ks.yaml
+  - ./silence-operator/ks.yaml
+  - ./keda/ks.yaml
+  - ./kromgo/ks.yaml
+  - ./scrutiny/ks.yaml
