@@ -7,7 +7,6 @@ resources:
   - ./podmonitor.yaml
 components:
   - ../../../../components/volsync
-  - ../../../../components/gatus/external
 generatorOptions:
   disableNameSuffixHash: true
 configMapGenerator:

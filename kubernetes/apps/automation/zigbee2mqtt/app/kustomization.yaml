@@ -6,6 +6,5 @@ resources:
   - ./helmrelease.yaml
 components:
   - ../../../../components/volsync
-  - ../../../../components/gatus/guarded
 generatorOptions:
   disableNameSuffixHash: true
