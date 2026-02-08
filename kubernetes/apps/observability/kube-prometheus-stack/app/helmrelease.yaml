@@ -23,6 +23,15 @@ spec:
     kind: OCIRepository
     name: kube-prometheus-stack
   interval: 1h
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
