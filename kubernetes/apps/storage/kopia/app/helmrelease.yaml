@@ -79,7 +79,7 @@ spec:
     route:
       app:
         hostnames:
-          - kopia.narden.au
+          - oo
         parentRefs:
           - name: envoy-internal
             namespace: network
