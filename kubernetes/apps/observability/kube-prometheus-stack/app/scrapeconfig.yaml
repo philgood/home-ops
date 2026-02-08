@@ -23,7 +23,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - aionios.internal:9633
+        - nas.internal:9633
   metricsPath: /metrics
   relabelings:
     - action: replace

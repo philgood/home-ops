@@ -3,13 +3,24 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: smartctl-exporter
+  name: &app smartctl-exporter
+  namespace: &namespace observability
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/observability/smartctl-exporter/app
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 1Gi
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
   wait: false
