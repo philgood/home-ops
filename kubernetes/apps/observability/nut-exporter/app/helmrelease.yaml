@@ -1,74 +1,87 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nut-exporter
+  namespace: observability
 spec:
   chartRef:
     kind: OCIRepository
     name: app-template
-  interval: 1h
+  interval: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
       nut-exporter:
-        replicas: 1
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
+        strategy: Recreate
         containers:
           app:
-            env:
-              NUT_EXPORTER_SERVER: aionios.internal
-              NUT_EXPORTER_SERVERPORT: 3493
-            envFrom:
-              - secretRef:
-                  name: nut-exporter-secret
-            args:
-              # the first time I set this, the first and last entries were ignored, so I have doubled them.
-              - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status,ups.status"
             image:
               repository: ghcr.io/druggeri/nut_exporter
               tag: 3.2.3
-            probes:
-              liveness: &probes
-                enabled: false
-              readiness: *probes
-              startup:
-                enabled: false
+            env:
+              NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
+            args:
+              - --log.level=debug
+              - --nut.vars_enable=battery.charge,battery.runtime,battery.voltage,input.voltage,output.voltage,ups.load,ups.status
+            ports:
+              - name: http
+                containerPort: 9199
+                protocol: TCP
+            resources:
+              requests:
+                cpu: 15m
+                memory: 105Mi
+              limits:
+                memory: 105Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              limits: &resources
-                memory: 100Mi
-              requests:
-                <<: *resources
-                cpu: 10m
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: nut-exporter
+              capabilities: { drop: [ALL] }
+
     service:
       app:
+        controller: nut-exporter
         ports:
           http:
             port: 9199
+
     serviceMonitor:
       app:
+        serviceName: nut-exporter
         endpoints:
           - port: http
             scheme: http
-            path: /ups_metrics
-            interval: 1m
+            interval: 15s
             scrapeTimeout: 10s
+            path: /ups_metrics
+            metricRelabelings:
+              # Generic rename: network_ups_tools_* → ups_*
+              - sourceLabels: [__name__]
+                regex: network_ups_tools_(.*)
+                targetLabel: __name__
+                replacement: ups_${1}
+
+              # Keep ups label consistent
+              - sourceLabels: [ups]
+                targetLabel: ups
+                replacement: cyberpower
+
+              # Remap the UPS load metric
+              - sourceLabels: [__name__]
+                regex: ups_ups_load
+                targetLabel: __name__
+                replacement: ups_output_percent_load
+
+              # Remap battery runtime for Grafana dashboard
+              - sourceLabels: [__name__]
+                regex: ups_battery_runtime
+                targetLabel: __name__
+                replacement: ups_battery_runtime_seconds
