@@ -1,54 +1,71 @@
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: ups-alerts
+  name: nut-exporter
   namespace: observability
 spec:
   groups:
-  - name: ups.rules
-    rules:
-    - alert: UPSOnBattery
-      expr: network_ups_tools_ups_status{flag="OB"} == 1
-      for: 1m
-      labels:
-        severity: warning
-      annotations:
-        summary: "UPS on battery"
-        description: "The UPS is running on battery."
-
-    - alert: UPSLowBattery
-      expr: network_ups_tools_ups_status{flag="LB"} == 1
-      for: 1m
-      labels:
-        severity: critical
-      annotations:
-        summary: "UPS low battery"
-        description: "The UPS battery is low."
-
-    - alert: UPSBatteryDischarging
-      expr: network_ups_tools_ups_status{flag="DISCHRG"} == 1
-      for: 2m
-      labels:
-        severity: warning
-      annotations:
-        summary: "UPS discharging"
-        description: "The UPS battery is discharging."
-
-    - alert: UPSBatteryRuntimeLow
-      expr: network_ups_tools_battery_runtime < 300
-      for: 1m
-      labels:
-        severity: critical
-      annotations:
-        summary: "UPS runtime low"
-        description: "UPS battery runtime is less than 5 minutes."
-
-    - alert: UPSHighLoad
-      expr: network_ups_tools_ups_load > 80
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        summary: "UPS load high"
-        description: "UPS load is above 80%."
+    - name: nut-exporter
+      rules:
+        - alert: NutExporterAbsent
+          annotations:
+            description: NUT Exporter has disappeared from Prometheus target discovery.
+            summary: NUT Exporter is down.
+          expr: |
+            absent(up{job=~".*nut-exporter.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: UpsOnBattery
+          annotations:
+            description: UPS {{ $labels.ups }} has lost power and is running on battery.
+            summary: UPS is running on battery.
+          expr: |
+            network_ups_tools_ups_status{flag="OB"} == 1
+          for: 10s
+          labels:
+            severity: critical
+        - alert: UpsLowRuntime
+          annotations:
+            description:
+              UPS {{ $labels.instance }} battery is low and the system is getting
+              ready to shutdown.
+            summary: UPS battery is low.
+          expr: |
+            (
+              network_ups_tools_ups_status{flag="OB"} == 1
+            and
+              network_ups_tools_battery_runtime < 600
+            )
+          for: 1m
+          labels:
+            severity: critical
+        - alert: UpsShuttingDown
+          annotations:
+            description:
+              UPS {{ $labels.ups }} battery is low and the system is getting
+              ready to shutdown.
+            summary: UPS battery is low.
+          expr: |
+            network_ups_tools_ups_status{flag="OB"} == 1
+          for: 5s
+          labels:
+            severity: critical
+        - alert: UpsLowBattery
+          expr: network_ups_tools_battery_charge < 50
+          labels:
+            severity: warning
+          annotations:
+            description: UPS {{ $labels.instance }} battery charge is {{ $value }} which is below 50%.
+            summary: UPS battery low
+        - alert: UpsBatteryReplace
+          annotations:
+            description: UPS {{ $labels.ups }} battery needs to be replaced.
+            summary: Replace UPS battery.
+          expr: |
+            network_ups_tools_ups_status{flag="RB"} == 1
+          for: 10s
+          labels:
+            severity: critical
