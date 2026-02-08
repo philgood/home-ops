@@ -60,12 +60,12 @@ metadata:
   name: volsync-mover-nfs
 spec:
   policyName: volsync-mover-nfs
-  matchResources:
-    namespaceSelector:
-      matchExpressions:
-        - key: volsync.backube/nfs
-          operator: In
-          values: ["true"]
+  #matchResources:
+  #  namespaceSelector:
+  #    matchExpressions:
+  #      - key: volsync.backube/nfs
+  #        operator: In
+  #        values: ["true"]
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicy-admissionregistration-v1alpha1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
