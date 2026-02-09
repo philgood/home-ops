@@ -37,6 +37,15 @@ spec:
       createPrometheusRules: true
     toolbox:
       enabled: true
+    route:
+      dashboard:
+        host:
+          name: rook.narden.au
+          path: /
+          pathType: PathPrefix
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     cephClusterSpec:
       cephConfig:
         global:
