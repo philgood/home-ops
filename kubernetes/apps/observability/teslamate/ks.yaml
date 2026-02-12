@@ -26,7 +26,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: teslamate
+  name: teslamateapi
   namespace: observability
 spec:
   dependsOn:
