@@ -37,7 +37,7 @@ spec:
       app:
         ports:
           http:
-            port: 8080
+            port: 8008
       app:
         hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
         parentRefs:
