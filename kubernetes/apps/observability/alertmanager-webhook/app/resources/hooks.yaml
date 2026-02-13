@@ -4,27 +4,18 @@
   execute-command: "/bin/sh"
   command-working-directory: "/tmp"
   pass-arguments-to-command:
-    - source: "string"
-      name: "payload"
     - source: "entire-payload"
   inline-script: |
     #!/bin/sh
-    # Parse AlertManager webhook and forward to Home Assistant
-    
-    PAYLOAD="$2"
+    # Read the AlertManager payload from stdin (first argument)
+    PAYLOAD="$1"
     HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
     
-    # Extract fields using basic shell (no jq needed)
-    # Send the payload directly to HA - it will parse what it needs
-    
-    # For debugging, you can echo the payload
-    # echo "Received: $PAYLOAD" >&2
-    
-    # Forward to Home Assistant using wget (available in alpine)
-    wget -q -O- \
+    # Forward to Home Assistant using wget
+    echo "$PAYLOAD" | wget -q -O- \
       --header="Content-Type: application/json" \
       --post-data="$PAYLOAD" \
-      "$HA_URL" || echo "Failed to forward to HA" >&2
+      "$HA_URL" 2>&1 || echo "Failed to forward to HA" >&2
     
     echo "Forwarded to Home Assistant"
   response-message: "Alert forwarded to Home Assistant"
