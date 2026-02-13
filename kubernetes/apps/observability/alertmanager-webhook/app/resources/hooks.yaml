@@ -4,18 +4,13 @@
   execute-command: "/bin/sh"
   command-working-directory: "/tmp"
   pass-arguments-to-command:
+    - source: "string"
+      name: "-c"
+    - source: "string"
+      name: |
+        PAYLOAD="$1"
+        HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
+        echo "$PAYLOAD" | wget -q -O- --header="Content-Type: application/json" --post-data="$PAYLOAD" "$HA_URL" 2>&1 || echo "Failed" >&2
+        echo "Forwarded to HA"
     - source: "entire-payload"
-  inline-script: |
-    #!/bin/sh
-    # Read the AlertManager payload from stdin (first argument)
-    PAYLOAD="$1"
-    HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
-    
-    # Forward to Home Assistant using wget
-    echo "$PAYLOAD" | wget -q -O- \
-      --header="Content-Type: application/json" \
-      --post-data="$PAYLOAD" \
-      "$HA_URL" 2>&1 || echo "Failed to forward to HA" >&2
-    
-    echo "Forwarded to Home Assistant"
   response-message: "Alert forwarded to Home Assistant"
