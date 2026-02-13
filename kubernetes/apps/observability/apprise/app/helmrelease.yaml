@@ -20,46 +20,19 @@ spec:
   values:
     controllers:
       apprise:
-        initContainers:
-          config-builder:
-            image:
-              repository: docker.io/library/busybox
-              tag: 1.36.1
-            command:
-              - /bin/sh
-              - -c
-              - |
-                # Create config file with actual values
-                cat > /config/apprise.yml << EOF
-                version: 1
-                urls:
-                  - mqtt://${MQTT_USERNAME}:${MQTT_PASSWORD}@mosquitto.automation.svc.cluster.local:1883/homeassistant/k8s/temperature_alert
-                EOF
-                
-                echo "Config file created:"
-                cat /config/apprise.yml
-            envFrom:
-              - secretRef:
-                  name: apprise-mqtt-secret
         containers:
           app:
             image:
+              # https://hub.docker.com/r/caronc/apprise
               repository: docker.io/caronc/apprise
               tag: v1.3.1@sha256:6b112f8f174244f4a73b8e1254c9bde1fa562a6a428010aeaff1c18bc98d2713
             env:
               TZ: Australia/Sydney
-              APPRISE_CONFIG_DIR: /config
             probes:
               liveness:
                 enabled: false
               readiness:
                 enabled: true
-    
-    persistence:
-      config:
-        type: emptyDir
-        globalMounts:
-          - path: /config
     
     service:
       app:
@@ -72,5 +45,5 @@ spec:
       app:
         hostnames: ["{{ .Release.Name }}.narden.au"]
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-internal    
             namespace: network
