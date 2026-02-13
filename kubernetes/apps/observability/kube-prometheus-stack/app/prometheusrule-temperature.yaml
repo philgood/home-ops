@@ -13,54 +13,27 @@ spec:
     - name: temperature-monitoring
       interval: 30s
       rules:
-        # High temperature warning
-        - alert: NodeHighTemperature
+        # K8s Nodes - NVMe Drive Temperature Alerts Only
+        - alert: NodeHighNVMeTemperature
           expr: |
-            node_hwmon_temp_celsius > 75
-          for: 2m
-          labels:
-            severity: warning
-            component: hardware
-            notification_type: mqtt
-          annotations:
-            summary: "High temperature detected on {{ $labels.instance }}"
-            description: "Node {{ $labels.instance }} sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 75°C)"
-            
-        # Critical temperature alert
-        - alert: NodeCriticalTemperature
-          expr: |
-            node_hwmon_temp_celsius > 85
-          for: 1m
-          labels:
-            severity: critical
-            component: hardware
-            notification_type: mqtt
-          annotations:
-            summary: "CRITICAL temperature on {{ $labels.instance }}"
-            description: "Node {{ $labels.instance }} sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 85°C) - immediate attention required!"
-        
-        # Very high temperature on NAS (since you're monitoring nas.internal)
-        - alert: NASHighTemperature
-          expr: |
-            node_hwmon_temp_celsius{instance="nas.internal:9100"} > 70
+            node_hwmon_temp_celsius{instance=~"172\\.20\\.24\\.(10|11|12):9100", chip=~"nvme_nvme.*"} > 75
           for: 3m
           labels:
             severity: warning
-            component: nas
+            component: nvme
             notification_type: mqtt
           annotations:
-            summary: "NAS temperature elevated"
-            description: "NAS sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 70°C)"
-        
-        # NAS critical temperature
-        - alert: NASCriticalTemperature
+            summary: "Node NVMe drive temperature elevated"
+            description: "Node {{ $labels.instance }} NVMe drive {{ $labels.chip }} sensor {{ $labels.sensor }} is at {{ $value | humanize }}°C (threshold: 75°C)"
+            
+        - alert: NodeCriticalNVMeTemperature
           expr: |
-            node_hwmon_temp_celsius{instance="nas.internal:9100"} > 80
+            node_hwmon_temp_celsius{instance=~"172\\.20\\.24\\.(10|11|12):9100", chip=~"nvme_nvme.*"} > 85
           for: 1m
           labels:
             severity: critical
-            component: nas
+            component: nvme
             notification_type: mqtt
           annotations:
-            summary: "CRITICAL NAS temperature"
-            description: "NAS sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 80°C) - immediate attention required!"
+            summary: "CRITICAL Node NVMe drive temperature"
+            description: "Node {{ $labels.instance }} NVMe drive {{ $labels.chip }} sensor {{ $labels.sensor }} is at {{ $value | humanize }}°C (threshold: 85°C) - immediate attention required!"
