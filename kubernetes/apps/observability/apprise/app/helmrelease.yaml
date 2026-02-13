@@ -30,7 +30,7 @@ spec:
               TZ: Australia/Sydney
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
                 enabled: true
     
