@@ -1,29 +1,30 @@
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: alertmanager-webhook-configmap
-  namespace: observability
-data:
-  config.yaml: |
-    # Webhook forwarder configuration
-    listen: ":8080"
+# Webhook hooks configuration for AlertManager → Home Assistant
+- id: "alertmanager"
+  execute-command: "/bin/sh"
+  command-working-directory: "/tmp"
+  pass-arguments-to-command:
+    - source: "string"
+      name: "payload"
+    - source: "entire-payload"
+  inline-script: |
+    #!/bin/sh
+    # Parse AlertManager webhook and forward to Home Assistant
     
-    routes:
-      - path: "/alertmanager"
-        method: "POST"
-        forward:
-          url: "https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
-          method: "POST"
-          headers:
-            Content-Type: "application/json"
-          # Transform AlertManager webhook to Home Assistant format
-          body: |
-            {
-              "title": "{{ (index .alerts 0).labels.alertname }}",
-              "body": "{{ (index .alerts 0).annotations.description }}",
-              "status": "{{ .status }}",
-              "severity": "{{ (index .alerts 0).labels.severity }}",
-              "instance": "{{ (index .alerts 0).labels.instance }}",
-              "sensor": "{{ (index .alerts 0).labels.sensor }}"
-            }
+    PAYLOAD="$2"
+    HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
+    
+    # Extract fields using basic shell (no jq needed)
+    # Send the payload directly to HA - it will parse what it needs
+    
+    # For debugging, you can echo the payload
+    # echo "Received: $PAYLOAD" >&2
+    
+    # Forward to Home Assistant using wget (available in alpine)
+    wget -q -O- \
+      --header="Content-Type: application/json" \
+      --post-data="$PAYLOAD" \
+      "$HA_URL" || echo "Failed to forward to HA" >&2
+    
+    echo "Forwarded to Home Assistant"
+  response-message: "Alert forwarded to Home Assistant"
