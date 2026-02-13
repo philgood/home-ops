@@ -20,19 +20,33 @@ spec:
   values:
     controllers:
       apprise:
+        initContainers:
+          config-builder:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.36.1
+            command:
+              - /bin/sh
+              - -c
+              - |
+                # Substitute environment variables into config template
+                cat /tmp/template/apprise-template.yml | \
+                  sed "s/\${MQTT_USERNAME}/$MQTT_USERNAME/g" | \
+                  sed "s/\${MQTT_PASSWORD}/$MQTT_PASSWORD/g" \
+                  > /config/apprise.yml
+                echo "Config file created:"
+                cat /config/apprise.yml
+            envFrom:
+              - secretRef:
+                  name: apprise-mqtt-secret
         containers:
           app:
             image:
-              # https://hub.docker.com/r/caronc/apprise
               repository: docker.io/caronc/apprise
               tag: v1.3.1@sha256:6b112f8f174244f4a73b8e1254c9bde1fa562a6a428010aeaff1c18bc98d2713
             env:
               TZ: Australia/Sydney
-              # Point to config directory
-              APPRISE_CONFIG_DIR: /etc/apprise
-            envFrom:
-              - secretRef:
-                  name: apprise-mqtt-secret
+              APPRISE_CONFIG_DIR: /config
             probes:
               liveness:
                 enabled: false
@@ -41,13 +55,16 @@ spec:
     
     persistence:
       config:
-        type: secret
-        name: apprise-mqtt-secret
+        type: emptyDir
+        globalMounts:
+          - path: /config
+      config-template:
+        type: configMap
+        name: apprise-config-template
         advancedMounts:
           apprise:
-            app:
-              - path: /etc/apprise/apprise.yml
-                subPath: apprise-config
+            config-builder:
+              - path: /tmp/template
                 readOnly: true
     
     service:

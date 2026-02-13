@@ -1,0 +1,12 @@
+---
+# Simple approach: Create ConfigMap with template, use envsubst to fill in credentials
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apprise-config-template
+  namespace: observability
+data:
+  apprise-template.yml: |
+    version: 1
+    urls:
+      - mqtt://${MQTT_USERNAME}:${MQTT_PASSWORD}@mosquitto.automation.svc.cluster.local:1883/homeassistant/k8s/temperature_alert
