@@ -36,6 +36,8 @@ spec:
             env:
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 8080
+              KOPIA_MAINTENANCE_OWNER: "true"
+              KOPIA_MAINTENANCE_ENABLED: "true"
               TZ: ${TIMEZONE}
             envFrom:
               - secretRef:
