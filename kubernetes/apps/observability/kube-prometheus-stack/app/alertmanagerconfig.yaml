@@ -25,6 +25,18 @@ spec:
           - name: alertname
             value: Watchdog
             matchType: =
+      # NEW: Route temperature alerts to both Apprise (MQTT) and Pushover
+      - receiver: temperature-alerts
+        continue: true  # This allows the alert to continue to other routes
+        matchers:
+          - name: notification_type
+            value: mqtt
+            matchType: =
+        groupBy: ["alertname", "instance", "sensor"]
+        groupWait: 30s
+        groupInterval: 5m
+        repeatInterval: 1h
+      # Existing critical alerts to Pushover
       - receiver: pushover
         matchers:
           - name: severity
@@ -47,6 +59,14 @@ spec:
         - urlSecret:
             name: &secret alertmanager-secret
             key: ALERTMANAGER_HEARTBEAT_URL
+    # NEW: Temperature alerts receiver - sends to Apprise MQTT
+    - name: temperature-alerts
+      webhookConfigs:
+        - url: http://apprise.observability.svc.cluster.local:8000/notify/mqtt
+          sendResolved: true
+          httpConfig:
+            followRedirects: true
+    # Existing Pushover receiver
     - name: pushover
       pushoverConfigs:
         - html: true

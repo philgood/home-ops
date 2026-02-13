@@ -1,0 +1,66 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/jsonschema/prometheusrule.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: temperature-alerts
+  namespace: observability
+  labels:
+    prometheus: kube-prometheus
+    role: alert-rules
+spec:
+  groups:
+    - name: temperature-monitoring
+      interval: 30s
+      rules:
+        # High temperature warning
+        - alert: NodeHighTemperature
+          expr: |
+            node_hwmon_temp_celsius > 75
+          for: 2m
+          labels:
+            severity: warning
+            component: hardware
+            notification_type: mqtt
+          annotations:
+            summary: "High temperature detected on {{ $labels.instance }}"
+            description: "Node {{ $labels.instance }} sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 75°C)"
+            
+        # Critical temperature alert
+        - alert: NodeCriticalTemperature
+          expr: |
+            node_hwmon_temp_celsius > 85
+          for: 1m
+          labels:
+            severity: critical
+            component: hardware
+            notification_type: mqtt
+          annotations:
+            summary: "CRITICAL temperature on {{ $labels.instance }}"
+            description: "Node {{ $labels.instance }} sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 85°C) - immediate attention required!"
+        
+        # Very high temperature on NAS (since you're monitoring nas.internal)
+        - alert: NASHighTemperature
+          expr: |
+            node_hwmon_temp_celsius{instance="nas.internal:9100"} > 70
+          for: 3m
+          labels:
+            severity: warning
+            component: nas
+            notification_type: mqtt
+          annotations:
+            summary: "NAS temperature elevated"
+            description: "NAS sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 70°C)"
+        
+        # NAS critical temperature
+        - alert: NASCriticalTemperature
+          expr: |
+            node_hwmon_temp_celsius{instance="nas.internal:9100"} > 80
+          for: 1m
+          labels:
+            severity: critical
+            component: nas
+            notification_type: mqtt
+          annotations:
+            summary: "CRITICAL NAS temperature"
+            description: "NAS sensor {{ $labels.sensor }} ({{ $labels.chip }}) is at {{ $value | humanize }}°C (threshold: 80°C) - immediate attention required!"
