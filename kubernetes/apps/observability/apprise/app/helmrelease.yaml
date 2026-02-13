@@ -31,8 +31,8 @@ spec:
               - |
                 # Substitute environment variables into config template
                 cat /tmp/template/apprise-template.yml | \
-                  sed "s/\${MQTT_USERNAME}/$MQTT_USERNAME/g" | \
-                  sed "s/\${MQTT_PASSWORD}/$MQTT_PASSWORD/g" \
+                  sed "s|\${MQTT_USERNAME}|$MQTT_USERNAME|g" | \
+                  sed "s|\${MQTT_PASSWORD}|$MQTT_PASSWORD|g" \
                   > /config/apprise.yml
                 echo "Config file created:"
                 cat /config/apprise.yml
