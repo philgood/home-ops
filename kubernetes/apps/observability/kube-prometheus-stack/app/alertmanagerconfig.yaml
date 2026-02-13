@@ -25,9 +25,9 @@ spec:
           - name: alertname
             value: Watchdog
             matchType: =
-      # NEW: Route temperature alerts to both Apprise (MQTT) and Pushover
-      - receiver: temperature-alerts
-        continue: true  # This allows the alert to continue to other routes
+      # NEW: Route temperature alerts to Home Assistant webhook
+      - receiver: home-assistant-webhook
+        continue: true  # Also send to Pushover
         matchers:
           - name: notification_type
             value: mqtt
@@ -59,11 +59,12 @@ spec:
         - urlSecret:
             name: &secret alertmanager-secret
             key: ALERTMANAGER_HEARTBEAT_URL
-    # NEW: Temperature alerts receiver - sends to Apprise MQTT
-    - name: temperature-alerts
+    # NEW: Home Assistant webhook receiver
+    - name: home-assistant-webhook
       webhookConfigs:
         - url: http://alertmanager-webhook.observability.svc.cluster.local:8080/hooks/alertmanager
           sendResolved: true
+          maxAlerts: 0
           httpConfig:
             followRedirects: true
     # Existing Pushover receiver
