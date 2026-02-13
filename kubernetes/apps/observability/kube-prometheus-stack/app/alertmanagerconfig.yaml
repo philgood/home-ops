@@ -62,7 +62,7 @@ spec:
     # NEW: Temperature alerts receiver - sends to Apprise MQTT
     - name: temperature-alerts
       webhookConfigs:
-        - url: http://apprise.observability.svc.cluster.local:8000/notify/df7cf00bedd463812d65f7396c0323a7d5cd2766aebf6f204974f29fdf8d4bca
+        - url: http://alertmanager-webhook.observability.svc.cluster.local:8080/hooks/alertmanager
           sendResolved: true
           httpConfig:
             followRedirects: true
