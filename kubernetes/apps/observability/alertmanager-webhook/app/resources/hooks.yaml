@@ -10,7 +10,26 @@
       name: |
         PAYLOAD="$1"
         HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
-        echo "$PAYLOAD" | wget -q -O- --header="Content-Type: application/json" --post-data="$PAYLOAD" "$HA_URL" 2>&1 || echo "Failed" >&2
-        echo "Forwarded to HA"
+        
+        # Extract fields from AlertManager payload using basic shell tools
+        # Get status (firing/resolved)
+        STATUS=$(echo "$PAYLOAD" | grep -o '"status":"[^"]*"' | head -1 | cut -d'"' -f4)
+        
+        # Get alertname
+        ALERTNAME=$(echo "$PAYLOAD" | grep -o '"alertname":"[^"]*"' | head -1 | cut -d'"' -f4)
+        
+        # Get description
+        DESCRIPTION=$(echo "$PAYLOAD" | grep -o '"description":"[^"]*"' | head -1 | cut -d'"' -f4)
+        
+        # Build simplified payload for Home Assistant
+        HA_PAYLOAD="{\"title\":\"${ALERTNAME:-K8s Alert}\",\"body\":\"${DESCRIPTION:-Temperature alert}\",\"status\":\"${STATUS:-unknown}\"}"
+        
+        # Send to Home Assistant
+        echo "$HA_PAYLOAD" | wget -q -O- \
+          --header="Content-Type: application/json" \
+          --post-data="$HA_PAYLOAD" \
+          "$HA_URL" 2>&1 || echo "Failed to send to HA" >&2
+        
+        echo "Forwarded: $ALERTNAME ($STATUS)"
     - source: "entire-payload"
   response-message: "Alert forwarded to Home Assistant"
