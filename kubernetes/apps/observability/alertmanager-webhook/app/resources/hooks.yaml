@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-webhook-configmap
+  namespace: observability
+data:
+  config.yaml: |
+    # Webhook forwarder configuration
+    listen: ":8080"
+    
+    routes:
+      - path: "/alertmanager"
+        method: "POST"
+        forward:
+          url: "https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
+          method: "POST"
+          headers:
+            Content-Type: "application/json"
+          # Transform AlertManager webhook to Home Assistant format
+          body: |
+            {
+              "title": "{{ (index .alerts 0).labels.alertname }}",
+              "body": "{{ (index .alerts 0).annotations.description }}",
+              "status": "{{ .status }}",
+              "severity": "{{ (index .alerts 0).labels.severity }}",
+              "instance": "{{ (index .alerts 0).labels.instance }}",
+              "sensor": "{{ (index .alerts 0).labels.sensor }}"
+            }
