@@ -29,11 +29,13 @@ spec:
               - /bin/sh
               - -c
               - |
-                # Substitute environment variables into config template
-                cat /tmp/template/apprise-template.yml | \
-                  sed "s|\${MQTT_USERNAME}|$MQTT_USERNAME|g" | \
-                  sed "s|\${MQTT_PASSWORD}|$MQTT_PASSWORD|g" \
-                  > /config/apprise.yml
+                # Create config file with actual values
+                cat > /config/apprise.yml << EOF
+                version: 1
+                urls:
+                  - mqtt://${MQTT_USERNAME}:${MQTT_PASSWORD}@mosquitto.automation.svc.cluster.local:1883/homeassistant/k8s/temperature_alert
+                EOF
+                
                 echo "Config file created:"
                 cat /config/apprise.yml
             envFrom:
@@ -58,14 +60,6 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /config
-      config-template:
-        type: configMap
-        name: apprise-config-template
-        advancedMounts:
-          apprise:
-            config-builder:
-              - path: /tmp/template
-                readOnly: true
     
     service:
       app:
@@ -80,8 +74,3 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
