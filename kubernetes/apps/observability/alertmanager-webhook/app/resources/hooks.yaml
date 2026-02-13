@@ -11,22 +11,25 @@
         PAYLOAD="$1"
         HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
         
-        # Extract fields using sed (more reliable than grep in busybox)
+        # Extract fields using sed
         STATUS=$(echo "$PAYLOAD" | sed -n 's/.*"status":"\([^"]*\)".*/\1/p' | head -1)
         ALERTNAME=$(echo "$PAYLOAD" | sed -n 's/.*"alertname":"\([^"]*\)".*/\1/p' | head -1)
         DESCRIPTION=$(echo "$PAYLOAD" | sed -n 's/.*"description":"\([^"]*\)".*/\1/p' | head -1)
         
-        # Build simplified payload for Home Assistant
+        # Build simplified payload
         cat > /tmp/ha_payload.json <<EOF
         {"title":"${ALERTNAME:-K8s Alert}","body":"${DESCRIPTION:-Temperature alert}","status":"${STATUS:-firing}"}
         EOF
         
-        # Send to Home Assistant
-        wget -q -O- \
-          --header="Content-Type: application/json" \
-          --post-file=/tmp/ha_payload.json \
-          "$HA_URL" 2>&1 || echo "Failed" >&2
+        # Debug: show what we're sending
+        echo "Sending to HA: $(cat /tmp/ha_payload.json)"
         
-        echo "Sent: ${ALERTNAME:-Unknown} (${STATUS:-unknown})"
+        # Send to Home Assistant with curl (more reliable than wget)
+        curl -X POST -m 3 -s \
+          -H "Content-Type: application/json" \
+          -d @/tmp/ha_payload.json \
+          "$HA_URL" || echo "curl failed" >&2
+        
+        echo "Done: ${ALERTNAME:-Unknown} (${STATUS:-unknown})"
     - source: "entire-payload"
-  response-message: "Alert forwarded to Home Assistant"
+  response-message: "Alert forwarded"
