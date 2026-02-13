@@ -16,7 +16,7 @@ spec:
         # K8s Nodes - NVMe Drive Temperature Alerts Only
         - alert: NodeHighNVMeTemperature
           expr: |
-            node_hwmon_temp_celsius{instance=~"172\\.20\\.24\\.(10|11|12):9100", chip=~"nvme_nvme.*"} > 75
+            node_hwmon_temp_celsius{instance=~"172\\.20\\.24\\.(10|11|12):9100", chip=~"nvme_nvme.*"} > 65
           for: 3m
           labels:
             severity: warning
