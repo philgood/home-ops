@@ -16,18 +16,16 @@
         ALERTNAME=$(echo "$PAYLOAD" | sed -n 's/.*"alertname":"\([^"]*\)".*/\1/p' | head -1)
         DESCRIPTION=$(echo "$PAYLOAD" | sed -n 's/.*"description":"\([^"]*\)".*/\1/p' | head -1)
         
-        # Build simplified payload
-        cat > /tmp/ha_payload.json <<EOF
-        {"title":"${ALERTNAME:-K8s Alert}","body":"${DESCRIPTION:-Temperature alert}","status":"${STATUS:-firing}"}
-        EOF
+        # Build JSON inline
+        HA_PAYLOAD="{\"title\":\"${ALERTNAME:-K8s Alert}\",\"body\":\"${DESCRIPTION:-Temperature alert}\",\"status\":\"${STATUS:-firing}\"}"
         
-        # Debug: show what we're sending
-        echo "Sending to HA: $(cat /tmp/ha_payload.json)"
+        # Debug
+        echo "Sending: $HA_PAYLOAD"
         
-        # Send to Home Assistant with curl (more reliable than wget)
-        curl -X POST -m 3 -s \
+        # Send to Home Assistant with curl (pass data inline, not from file)
+        echo "$HA_PAYLOAD" | curl -X POST -m 3 -s \
           -H "Content-Type: application/json" \
-          -d @/tmp/ha_payload.json \
+          -d @- \
           "$HA_URL" || echo "curl failed" >&2
         
         echo "Done: ${ALERTNAME:-Unknown} (${STATUS:-unknown})"
