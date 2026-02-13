@@ -1,18 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.nerdz.cloud/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: kopia
-spec:
-  interval: 15m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 4.6.2
-  url: oci://ghcr.io/bjw-s-labs/helm/app-template
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -21,7 +7,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: kopia
+    name: app-template
   interval: 1h
   values:
     controllers:
@@ -35,10 +21,8 @@ spec:
               tag: 0.22.3@sha256:17ab64542280197a5368247deaefadc3e3bbe15714ab666c2455a06824e86efd
             env:
               KOPIA_WEB_ENABLED: true
-              KOPIA_WEB_PORT: &port 8080
-              KOPIA_MAINTENANCE_OWNER: "true"
-              KOPIA_MAINTENANCE_ENABLED: "true"
-              TZ: ${TIMEZONE}
+              KOPIA_WEB_PORT: &port 80
+              TZ: Australia/Sydney
             envFrom:
               - secretRef:
                   name: kopia-secret
@@ -46,8 +30,8 @@ spec:
               - --without-password
             probes:
               liveness: &probes
-                enabled: false
-                custom: false
+                enabled: true
+                custom: true
                 spec:
                   httpGet:
                     path: /
@@ -60,7 +44,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: [ALL]}
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
