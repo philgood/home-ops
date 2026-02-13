@@ -11,23 +11,28 @@
         PAYLOAD="$1"
         HA_URL="https://hass.narden.au/api/webhook/k8s_temp_a7f3c9e2b4d1a"
         
-        # Extract fields using sed
-        STATUS=$(echo "$PAYLOAD" | sed -n 's/.*"status":"\([^"]*\)".*/\1/p' | head -1)
-        ALERTNAME=$(echo "$PAYLOAD" | sed -n 's/.*"alertname":"\([^"]*\)".*/\1/p' | head -1)
-        DESCRIPTION=$(echo "$PAYLOAD" | sed -n 's/.*"description":"\([^"]*\)".*/\1/p' | head -1)
+        # Simple extraction without complex regex - just get the first occurrence
+        STATUS=$(echo "$PAYLOAD" | grep -o '"status":"[^"]*"' | head -1 | cut -d'"' -f4)
+        ALERTNAME=$(echo "$PAYLOAD" | grep -o '"alertname":"[^"]*"' | head -1 | cut -d'"' -f4)
+        DESCRIPTION=$(echo "$PAYLOAD" | grep -o '"description":"[^"]*"' | head -1 | cut -d'"' -f4)
         
-        # Build JSON inline
-        HA_PAYLOAD="{\"title\":\"${ALERTNAME:-K8s Alert}\",\"body\":\"${DESCRIPTION:-Temperature alert}\",\"status\":\"${STATUS:-firing}\"}"
+        # Fallback values if extraction failed
+        STATUS="${STATUS:-firing}"
+        ALERTNAME="${ALERTNAME:-K8s Alert}"
+        DESCRIPTION="${DESCRIPTION:-Temperature alert}"
+        
+        # Build JSON
+        HA_PAYLOAD="{\"title\":\"$ALERTNAME\",\"body\":\"$DESCRIPTION\",\"status\":\"$STATUS\"}"
         
         # Debug
-        echo "Sending: $HA_PAYLOAD"
+        echo "Alert: $ALERTNAME | Status: $STATUS"
         
-        # Send to Home Assistant with curl (pass data inline, not from file)
+        # Send to Home Assistant
         echo "$HA_PAYLOAD" | curl -X POST -m 3 -s \
           -H "Content-Type: application/json" \
           -d @- \
           "$HA_URL" || echo "curl failed" >&2
         
-        echo "Done: ${ALERTNAME:-Unknown} (${STATUS:-unknown})"
+        echo "Sent to HA"
     - source: "entire-payload"
   response-message: "Alert forwarded"
