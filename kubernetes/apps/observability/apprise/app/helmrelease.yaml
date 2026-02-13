@@ -28,8 +28,8 @@ spec:
               tag: v1.3.1@sha256:6b112f8f174244f4a73b8e1254c9bde1fa562a6a428010aeaff1c18bc98d2713
             env:
               TZ: Australia/Sydney
-              # Enable configuration file
-              APPRISE_CONFIG_DIR: /config
+              # Point to config directory
+              APPRISE_CONFIG_DIR: /etc/apprise
             envFrom:
               - secretRef:
                   name: apprise-mqtt-secret
@@ -43,10 +43,12 @@ spec:
       config:
         type: secret
         name: apprise-mqtt-secret
-        globalMounts:
-          - path: /config/apprise.yml
-            subPath: apprise-config
-            readOnly: true
+        advancedMounts:
+          apprise:
+            app:
+              - path: /etc/apprise/apprise.yml
+                subPath: apprise-config
+                readOnly: true
     
     service:
       app:
@@ -61,3 +63,8 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
