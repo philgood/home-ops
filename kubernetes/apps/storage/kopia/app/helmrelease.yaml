@@ -49,6 +49,8 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+        # Add supplementalGroups if your NFS requires it
+        # supplementalGroups: [1000]
     service:
       app:
         ports:
@@ -82,22 +84,37 @@ spec:
         type: configMap
         identifier: config
         globalMounts:
-          - path: /config/repository.config
+          - path: /app/config/repository.config
             subPath: repository.config
+            readOnly: true
       repository:
         type: nfs
         server: nas.internal
         path: /mnt/DataPool/apps/volsyncKopia
         globalMounts:
           - path: /repository
-      tmpfs:
+        # Add NFS mount options if needed
+        # advancedMounts:
+        #   kopia:
+        #     app:
+        #       - path: /repository
+        #         mountOptions:
+        #           - nfsvers=4.2
+        #           - nolock
+      # Create writable directories using emptyDir
+      config:
         type: emptyDir
-        advancedMounts:
-          kopia:
-            app:
-              - path: /config/cache
-                subPath: cache
-              - path: /config/logs
-                subPath: logs
-              - path: /tmp
-                subPath: tmp
+        globalMounts:
+          - path: /app/config
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /app/cache
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/logs
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
