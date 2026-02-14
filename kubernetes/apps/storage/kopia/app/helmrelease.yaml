@@ -87,7 +87,7 @@ spec:
       repository:
         type: nfs
         server: nas.internal
-        path: /mnt/DataPool/apps/volsyncKopia
+        path: /mnt/DataPool/apps/volsync
         globalMounts:
           - path: /repository
       tmpfs:
