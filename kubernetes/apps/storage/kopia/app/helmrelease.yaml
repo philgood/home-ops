@@ -22,7 +22,7 @@ spec:
             env:
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 80
-              TZ: Australia/Sydney
+              TZ: Europe/London
             envFrom:
               - secretRef:
                   name: kopia-secret
@@ -33,6 +33,11 @@ spec:
                 enabled: false
               readiness:
                 enabled: false
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -46,8 +51,8 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 0
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsGroup: 100
+        fsGroup: 100
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -57,7 +62,7 @@ spec:
     route:
       app:
         hostnames:
-          - kopia.narden.au
+          - "{{ .Release.Name }}.${SECRET_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

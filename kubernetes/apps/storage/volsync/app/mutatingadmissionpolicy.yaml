@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicybinding-admissionregistration-v1alpha1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicyBinding
 metadata:
@@ -7,7 +7,7 @@ metadata:
 spec:
   policyName: volsync-mover-jitter
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicy-admissionregistration-v1alpha1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicy
 metadata:
@@ -48,26 +48,20 @@ spec:
                 name: "jitter",
                 image: "ghcr.io/home-operations/busybox:1.37.0@sha256:026ed7273270ec08f6902b4ae8334c23b473e5394bec3bbbdbfe580c710d50bc",
                 imagePullPolicy: "IfNotPresent",
-                command: ["sh", "-c", "sleep $(shuf -i 0-300 -n 1)"]
+                command: ["sh", "-c", "sleep $(shuf -i 0-30 -n 1)"]
               }
             }
           ]
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicybinding-admissionregistration-v1alpha1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicybinding-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicyBinding
 metadata:
   name: volsync-mover-nfs
 spec:
   policyName: volsync-mover-nfs
-  #matchResources:
-  #  namespaceSelector:
-  #    matchExpressions:
-  #      - key: volsync.backube/nfs
-  #        operator: In
-  #        values: ["true"]
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicy-admissionregistration-v1alpha1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.34.0/mutatingadmissionpolicy-admissionregistration-v1beta1.json
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingAdmissionPolicy
 metadata:
@@ -117,57 +111,6 @@ spec:
                   server: "nas.internal",
                   path: "/mnt/DataPool/apps/volsync"
                 }
-              }
-            }
-          ]
----
-# NEW: Security context policy to run Volsync jobs as UID 1000
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicybinding-admissionregistration-v1alpha1.json
-apiVersion: admissionregistration.k8s.io/v1beta1
-kind: MutatingAdmissionPolicyBinding
-metadata:
-  name: volsync-mover-security-context
-spec:
-  policyName: volsync-mover-security-context
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.33.0/mutatingadmissionpolicy-admissionregistration-v1alpha1.json
-apiVersion: admissionregistration.k8s.io/v1beta1
-kind: MutatingAdmissionPolicy
-metadata:
-  name: volsync-mover-security-context
-spec:
-  matchConstraints:
-    resourceRules:
-      - apiGroups:
-          - batch
-        apiVersions:
-          - v1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - jobs
-  matchConditions:
-    - name: has-volsync-job-name-prefix
-      expression: >-
-        object.metadata.name.startsWith("volsync-")
-    - name: has-volsync-created-by-labels
-      expression: >-
-        object.metadata.?labels["app.kubernetes.io/created-by"].orValue("") == "volsync"
-  failurePolicy: Fail
-  reinvocationPolicy: IfNeeded
-  mutations:
-    - patchType: JSONPatch
-      jsonPatch:
-        expression: >-
-          [
-            JSONPatch{
-              op: "add", path: "/spec/template/spec/securityContext",
-              value: Object.spec.template.spec.securityContext{
-                runAsUser: 0,
-                runAsGroup: 1000,
-                fsGroup: 1000,
-                runAsNonRoot: true
               }
             }
           ]
