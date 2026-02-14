@@ -53,9 +53,9 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -95,7 +95,7 @@ spec:
       repository:
         type: nfs
         server: nas.internal
-        path: /mnt/DataPool/apps/volsync
+        path: /mnt/DataPool/apps/volsyncKopia
         globalMounts:
           - path: /repository
       tmpfs:
