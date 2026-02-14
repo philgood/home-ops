@@ -164,7 +164,7 @@ spec:
             JSONPatch{
               op: "add", path: "/spec/template/spec/securityContext",
               value: Object.spec.template.spec.securityContext{
-                runAsUser: 1000,
+                runAsUser: 0,
                 runAsGroup: 1000,
                 fsGroup: 1000,
                 runAsNonRoot: true
