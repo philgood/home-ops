@@ -39,5 +39,5 @@ spec:
       disableAuth: true
     podSecurityContext:
       runAsNonRoot: true
-      runAsUser: 1005
-      runAsGroup: 1005
+      runAsUser: 568
+      runAsGroup: 568
