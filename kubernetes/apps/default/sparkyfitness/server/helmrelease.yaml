@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app sparkyfitness-server
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+
+  maxHistory: 3
+
+  install:
+    remediation:
+      retries: 3
+
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.1.0@sha256:866f15038ed5185a2b8118821f470bb7ca0df8c4231b8e277446e681ebb1ed84
+
+            envFrom:
+              - secretRef:
+                  name: sparkyfitness-secret
+
+        containers:
+          main:
+            image:
+              # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-server
+              repository: ghcr.io/codewithcj/sparkyfitness-server
+              tag: v0.16.3.2@sha256:c0f3c3133e027d0745512efe842a79b09db251ab41f6e733bd1a440817ddf272
+
+            env:
+              SPARKY_FITNESS_LOG_LEVEL: debug
+              SPARKY_FITNESS_DB_HOST: postgres17-rw.database.svc.cluster.local
+              SPARKY_FITNESS_DB_PORT: 5432
+              SPARKY_FITNESS_FRONTEND_URL: fitness.narden.au
+              SPARKY_FITNESS_DISABLE_SIGNUP: false
+            envFrom:
+              - secretRef:
+                  name: sparkyfitness-secret
+            resources:
+              requests:
+                cpu: 15m
+                memory: 128M
+              limits:
+                memory: 128M
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: &port 3010
+    persistence:
+      backup:
+        type: nfs
+        server: nas.internal
+        path: /mnt/DataPool/apps/sparkyfitness
+        globalMounts:
+          - path: /backup
+      config:
+        enabled: true
+        existingClaim: sparkyfitness-server
+        globalMounts:
+          - path: /uploads

@@ -22,13 +22,6 @@ spec:
       namespace: rook-ceph
     - name: volsync
       namespace: storage
-  driftDetection:
-    mode: enabled
-    ignore:
-      - paths:
-          - /spec/containers/resources/limits
-        target:
-          kind: Pod
   values:
     controllers:
       syncthing:
@@ -41,10 +34,6 @@ spec:
               PUID: "568"
               PGID: "568"
               UMASK: "002"
-            securityContext:
-              # allowPrivilegeEscalation: false
-              # readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 15m
@@ -66,6 +55,7 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 172.20.24.60
+        primary: true
         ports:
           http:
             port: 8384
@@ -76,6 +66,7 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 172.20.24.61
+        externalTrafficPolicy: Local
         ports:
           listen:
             port: 22000
@@ -95,7 +86,7 @@ spec:
         hostnames:
           - sync.narden.au
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: network
             sectionName: https
         rules:
