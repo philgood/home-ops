@@ -81,7 +81,7 @@ spec:
             port: 22000
             protocol: TCP
             targetPort: 22000
-          listen-udp:  # You removed this - add it back
+          listen-udp: 
             port: 22000
             protocol: UDP
             targetPort: 22000
