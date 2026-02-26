@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tobiasehlert/teslamateapi
-              tag: 1.24.1@sha256:7fad11de1cc4709430637ffbf6a6bdc0c483ce597e31399147d1a87c23c836bb
+              tag: 1.24.2@sha256:f90905fb964ae1347fcbcde45eab598466cd11779e1393ddb7f37a73bcf4cd53
             env:
               TZ: Australia/Sydney
             envFrom:
