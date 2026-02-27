@@ -39,7 +39,7 @@ spec:
             env:
               VIKUNJA_DATABASE_TYPE: sqlite
               VIKUNJA_DATABASE_PATH: /db/vikunja.db
-              VIKUNJA_SERVICE_PUBLICURL: &host vikunja.narden.au
+              VIKUNJA_SERVICE_PUBLICURL: https://vikunja.narden.au
             resources:
               requests:
                 cpu: 5m
