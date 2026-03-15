@@ -46,7 +46,7 @@ spec:
             image:
               # renovate: datasource=docker depName=ghcr.io/codewithcj/sparkyfitness-server
               repository: ghcr.io/codewithcj/sparkyfitness-server
-              tag: v0.16.4.6@sha256:2199b3ba177a017c013380f80301665e0a13c28280ceb6ba01cf7d9ff7645208
+              tag: v0.16.5.3@sha256:f9721d557fd05b22679a74f92cf61659c888a6d5e5ff6983d4e6a41d958aaaa8
 
             env:
               SPARKY_FITNESS_LOG_LEVEL: debug
