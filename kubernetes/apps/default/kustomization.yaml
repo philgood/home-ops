@@ -10,7 +10,7 @@ replacements:
 resources:
   - ./linkding/ks.yaml
   - ./spoolman/ks.yaml
-  - ./atuin/ks.yaml
+  #- ./atuin/ks.yaml
   - ./paperless/ks.yaml
   #- ./rote/ks.yaml
   - ./obsidian-couchdb/ks.yaml
