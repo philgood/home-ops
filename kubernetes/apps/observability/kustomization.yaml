@@ -16,6 +16,7 @@ resources:
   - ./fluent-bit/ks.yaml
   - ./blackbox-exporter/ks.yaml
   - ./grafana/ks.yaml
+  - ./network-ups-tools/ks.yaml
   - ./nut-exporter/ks.yaml
   - ./smartctl-exporter/ks.yaml
   - ./teslamate/ks.yaml
