@@ -1,43 +1,47 @@
+---
+# yaml-language-server: $schema=https://schemas.sstr.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
   name: teslamate-postgres
-  namespace: observability
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
-
+      dashboards: grafana
+  valuesFrom:
+    - targetPath: "url"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate
+          key: DATABASE_HOST
+    - targetPath: "database"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate
+          key: DATABASE_NAME
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate
+          key: DATABASE_USER
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate
+          key: DATABASE_PASS
   datasource:
-    name: teslamate
+    name: TeslaMate
     type: postgres
     access: proxy
-
-    # Non-secret fields
-    url: postgres17-rw.database.svc.cluster.local:5432
-    database: teslamate
-    user: dummy
-
+    url: ${DATABASE_HOST}:5432
+    database: ${DATABASE_NAME}
+    user: ${DATABASE_USER}
+    secureJsonData:
+      password: ${DATABASE_PASS}
     jsonData:
+      database: teslamate
       postgresVersion: 1700
       sslmode: disable
-
-    # MUST be a map, never empty or null
-    secureJsonData:
-      password: dummy
-
-    # Flux/Grafana-operator supported secret injection
-    valuesFrom:
-      - targetPath: user
-        valueFrom:
-          secretKeyRef:
-            name: teslamate-secret
-            key: DATABASE_USER
-
-      - targetPath: secureJsonData.password
-        valueFrom:
-          secretKeyRef:
-            name: teslamate-secret
-            key: DATABASE_PASS
