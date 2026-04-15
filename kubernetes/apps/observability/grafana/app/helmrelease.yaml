@@ -501,11 +501,11 @@ spec:
     route:
       main:
         enabled: true
-        hostnames: ["{{ .Release.Name }}.${SECRET_DOMAIN}"]
+        hostnames:
+          - grafana.narden.au
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
     persistence:
       enabled: false
     testFramework:
