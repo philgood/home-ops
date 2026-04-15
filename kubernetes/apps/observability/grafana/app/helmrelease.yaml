@@ -59,7 +59,7 @@ spec:
         oauth_auto_login: true
         disable_login_form: true
       auth.basic:
-        enabled: false
+        enabled: true
       auth.anonymous:
         enabled: false
         org_id: 1
