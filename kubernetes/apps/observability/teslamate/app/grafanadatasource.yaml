@@ -1,4 +1,3 @@
----
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
@@ -6,27 +5,39 @@ metadata:
   namespace: observability
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-
 spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
 
-  datasources:
-  - name: TeslaMate
+  datasource:
+    name: teslamate
     type: postgres
-    uid: teslamate
     access: proxy
+
+    # Non-secret fields
     url: postgres17-rw.database.svc.cluster.local:5432
-    user: {{ .TESLAM_POSTGRES_USER }}
+    database: teslamate
+    user: dummy
+
     jsonData:
-      database: teslamate
-      sslmode: "disable"
-      maxOpenConns: 100
-      maxIdleConns: 100
-      maxIdleConnsAuto: true
-      connMaxLifetime: 14400
-      postgresVersion: 1600
-      timescaledb: false
+      postgresVersion: 1700
+      sslmode: disable
+
+    # MUST be a map, never empty or null
     secureJsonData:
-      password: "{{ .TESLAM_POSTGRES_PASS }}" 
+      password: dummy
+
+    # Flux/Grafana-operator supported secret injection
+    valuesFrom:
+      - targetPath: user
+        valueFrom:
+          secretKeyRef:
+            name: teslamate-secret
+            key: DATABASE_USER
+
+      - targetPath: secureJsonData.password
+        valueFrom:
+          secretKeyRef:
+            name: teslamate-secret
+            key: DATABASE_PASS
