@@ -504,7 +504,7 @@ spec:
         hostnames:
           - grafana.narden.au
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
     persistence:
       enabled: false
