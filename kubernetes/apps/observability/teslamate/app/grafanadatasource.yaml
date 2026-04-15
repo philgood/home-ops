@@ -36,10 +36,10 @@ spec:
     type: postgres
     access: proxy
     url: postgres17-rw.database.svc.cluster.local
-    database: ${DATABASE_NAME}
-    user: ${DATABASE_USER}
+    database: teslamate
+    user: "{{ .TESLA_POSTGRES_USER }}"
     secureJsonData:
-      password: ${DATABASE_PASS}
+      password: "{{ .TESLA_POSTGRES_PASS }}"
     jsonData:
       postgresVersion: 1700
       sslmode: disable
