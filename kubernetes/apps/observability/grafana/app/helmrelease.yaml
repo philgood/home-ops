@@ -56,8 +56,8 @@ spec:
         check_for_plugin_updates: false
         reporting_enabled: false
       auth:
-        oauth_auto_login: true
-        disable_login_form: true
+        oauth_auto_login: false
+        disable_login_form: false
       auth.basic:
         enabled: true
       auth.anonymous:
