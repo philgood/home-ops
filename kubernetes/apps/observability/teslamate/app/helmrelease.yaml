@@ -30,6 +30,8 @@ spec:
               tag: 3.0.0@sha256:6569026b73bd657455bbec05965d07fa30b6d4d70eaab0bd5b343231c0429167
             env:
               TZ: Australia/Sydney
+              DISABLE_MQTT: "false"
+              MQTT_HOST: mosquitto.automation.svc.cluster.local
             envFrom:
               - secretRef:
                   name: teslamate-secret
