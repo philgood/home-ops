@@ -5,9 +5,5 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  #- ./grafanadatasource.yaml
+  - ./grafanadatasource.yaml
   - ./grafanadashboard.yaml
-configMapGenerator:
-  - name: teslamate-datasource-tpl
-    files:
-      - ./resources/datasource.yaml
