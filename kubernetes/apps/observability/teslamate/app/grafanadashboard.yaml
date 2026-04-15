@@ -22,7 +22,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/battery-health.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -38,7 +38,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charge-level.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -54,7 +54,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charges.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -70,7 +70,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/charging-stats.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -86,7 +86,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/drive-stats.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -102,7 +102,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/drives.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -118,7 +118,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/efficiency.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -134,7 +134,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/locations.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -150,7 +150,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/mileage.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -166,7 +166,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/overview.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -182,7 +182,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/projected-range.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -198,7 +198,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/states.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -214,7 +214,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/statistics.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -230,7 +230,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/timeline.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -246,7 +246,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/trip.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -262,7 +262,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/updates.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -278,7 +278,7 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/vampire-drain.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -294,5 +294,5 @@ spec:
       grafana.internal/instance: grafana
   datasources:
     - inputName: DS_TESLAMATE
-      datasourceName: TeslaMate
+      datasourceName: teslamate
   url: https://raw.githubusercontent.com/teslamate-org/teslamate/master/grafana/dashboards/visited.json
