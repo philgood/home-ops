@@ -6,17 +6,25 @@ metadata:
   name: teslamate-postgres
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-
+spec:
   datasource:
-    name: TeslaMate
+    name: teslamate
     type: postgres
     access: proxy
-    url: postgres17-rw.database.svc.cluster.local
+    url: postgres17-rw.database.svc.cluster.local:5432
     database: teslamate
-    user: "{{ .TESLA_POSTGRES_USER }}"
-    secureJsonData:
-      password: "{{ .TESLA_POSTGRES_PASS }}"
     jsonData:
       postgresVersion: 1700
-      sslmode: require
+      sslmode: disable
+  valuesFrom:
+    - targetPath: "user"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate-secret
+          key: DATABASE_USER
+    - targetPath: "secureJsonData.password"
+      valueFrom:
+        secretKeyRef:
+          name: teslamate-secret
+          key: DATABASE_PASS
 
