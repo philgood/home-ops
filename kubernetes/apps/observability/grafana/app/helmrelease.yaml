@@ -23,6 +23,17 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    readinessProbe:
+      initialDelaySeconds: 20
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+    startupProbe:
+      httpGet:
+        path: /api/health
+        port: 3000
+      failureThreshold: 60
+      periodSeconds: 2
     deploymentStrategy:
       type: Recreate
     admin:
