@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  #- ./grafanadatasource.yaml
+  - ./grafanadatasource.yaml
   - ./grafanadashboard.yaml
   generatorOptions:
     disableNameSuffixHash: true
