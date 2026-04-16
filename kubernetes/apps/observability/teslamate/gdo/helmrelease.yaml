@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: tesla-geogdo
+  name: &app tesla-geogdo
 spec:
   chartRef:
     kind: OCIRepository
@@ -35,7 +35,7 @@ spec:
             port: 8555 
     persistence:
       data:
-        existingClaim: tesla-geogdo-data
+        existingClaim: *app
         globalMounts:
           - path: /app
       options-secret:
