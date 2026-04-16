@@ -26,7 +26,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/tobiasehlert/teslamateapi
+              repository: ghcr.io/mytesla/teslamateapi
               tag: 1.24.2@sha256:f90905fb964ae1347fcbcde45eab598466cd11779e1393ddb7f37a73bcf4cd53
             env:
               TZ: Australia/Sydney
