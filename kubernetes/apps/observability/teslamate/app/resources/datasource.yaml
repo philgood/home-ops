@@ -16,7 +16,7 @@ datasources:
       maxIdleConns: 100
       maxIdleConnsAuto: true
       connMaxLifetime: 14400
-      postgresVersion: 1600
+      postgresVersion: 1700
       timescaledb: false
     secureJsonData:
       password: "{{ .TESLA_POSTGRES_PASS }}"
