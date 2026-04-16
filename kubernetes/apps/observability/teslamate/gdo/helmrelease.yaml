@@ -21,8 +21,9 @@ spec:
               tag: v2.3.1
             env:
               TZ: Australia/Sydney
-              TRACKER_MQTT_USER: "${MQTT_USERNAME}"
-              TRACKER_MQTT_PASS: "${MQTT_PASSWORD}"
+            envFrom:
+              - secretRef:
+                  name: teslagdo-secret
             resources:
               requests:
                 cpu: 10m
@@ -31,10 +32,15 @@ spec:
       app:
         ports:
           http:
-            port: 8555
+            port: 8555 
     persistence:
-      config:
-        type: configMap
-        name: tesla-geogdo-config
+      data:
+        existingClaim: tesla-geogdo-data
         globalMounts:
-          - path: /app/config
+          - path: /data
+      options-secret:
+        type: secret
+        name: teslagdo-secret
+        globalMounts:
+          - path: /app/config/config.yml
+            subPath: config.yml
