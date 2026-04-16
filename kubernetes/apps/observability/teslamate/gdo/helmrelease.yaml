@@ -37,7 +37,7 @@ spec:
       data:
         existingClaim: tesla-geogdo-data
         globalMounts:
-          - path: /data
+          - path: /app
       options-secret:
         type: secret
         name: teslagdo-secret
