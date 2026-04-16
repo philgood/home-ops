@@ -26,8 +26,8 @@ spec:
         containers:
           app:
             image:
-              repository: tobiasehlert/teslamateapi
-              tag: 1.24.2@sha256:f90905fb964ae1347fcbcde45eab598466cd11779e1393ddb7f37a73bcf4cd53
+              repository: mytesla/teslamateapi
+              tag: 2.3
             env:
               TZ: Australia/Sydney
             envFrom:
