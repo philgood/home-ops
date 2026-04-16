@@ -34,10 +34,6 @@ spec:
           http:
             port: 8555 
     persistence:
-      data:
-        existingClaim: *app
-        globalMounts:
-          - path: /app
       options-secret:
         type: secret
         name: teslagdo-secret
