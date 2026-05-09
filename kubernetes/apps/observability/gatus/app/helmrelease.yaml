@@ -67,6 +67,7 @@ spec:
               accessMode: ReadWriteOnce
               size: 5Gi
     defaultPodOptions:
+      automountServiceAccountToken: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -104,6 +105,10 @@ spec:
                 - get
                 - watch
                 - list
+                - create
+                - update
+                - patch     
+                - delete
             - apiGroups:
                 - gateway.networking.k8s.io
               resources:
@@ -113,6 +118,10 @@ spec:
                 - get
                 - watch
                 - list
+                - create
+                - update
+                - patch     
+                - delete
       bindings:
         gatus:
           type: ClusterRoleBinding
