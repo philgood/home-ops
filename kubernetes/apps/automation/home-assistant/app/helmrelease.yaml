@@ -64,34 +64,6 @@ spec:
             envFrom:
               - secretRef:
                   name: home-assistant-secret
-          everything-presence-mmwave-configurator:
-            dependsOn: app
-            image:
-              repository: docker.io/everythingsmarthome/everything-presence-mmwave-configurator
-              tag: 1.2.2@sha256:866f2fc495d42da2adfde079c31e5830bd69f5c574b6efaafc87a830412d9fd5
-            env:
-              TZ: Australia/Sydney
-              HA_URL: http://127.0.0.1:8123
-            envFrom:
-              - secretRef:
-                  name: home-assistant-secret  
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-              runAsNonRoot: false
-              privileged: false
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    port: 8099
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
             resources:
               requests:
                 cpu: 10m
@@ -110,9 +82,6 @@ spec:
             enabled: true
             port: 1400
             protocol: TCP
-          everything-presence-mmwave-configurator:
-            enabled: true
-            port: &everything-presence-mmwave-configurator 8099
     route:
       app:
         hostnames: 
@@ -125,17 +94,6 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *httpPort
-      everything-presence-mmwave-configurator:
-        hostnames: 
-          - hass-mmwave.narden.au
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *everything-presence-mmwave-configurator
       tesla-key:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.narden.au
