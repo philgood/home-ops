@@ -43,7 +43,7 @@ spec:
               tag: 1.2.2@sha256:866f2fc495d42da2adfde079c31e5830bd69f5c574b6efaafc87a830412d9fd5
             env:
               TZ: Australia/Sydney
-              HA_URL: http://127.0.0.1:8123
+              HA_URL: http://home-assistant.automation.svc.cluster.local:8123
             envFrom:
               - secretRef:
                   name: home-assistant-mmwave-secret  
@@ -62,9 +62,9 @@ spec:
                 memory: 1Gi
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
