@@ -75,6 +75,11 @@ spec:
             envFrom:
               - secretRef:
                   name: home-assistant-secret  
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              runAsNonRoot: false
+              privileged: false
             probes:
               liveness: &probes
                 enabled: true
