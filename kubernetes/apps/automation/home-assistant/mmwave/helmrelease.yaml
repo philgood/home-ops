@@ -43,7 +43,7 @@ spec:
               tag: 1.2.2@sha256:866f2fc495d42da2adfde079c31e5830bd69f5c574b6efaafc87a830412d9fd5
             env:
               TZ: Australia/Sydney
-              HA_URL: http://hass.narden.au
+              HA_URL: https://hass.narden.au
             envFrom:
               - secretRef:
                   name: home-assistant-mmwave-secret  
