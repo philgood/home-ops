@@ -46,7 +46,7 @@ spec:
               HA_URL: http://127.0.0.1:8123
             envFrom:
               - secretRef:
-                  name: home-assistant-secret  
+                  name: home-assistant-mmwave-secret  
             probes:
               liveness:
                 enabled: true
