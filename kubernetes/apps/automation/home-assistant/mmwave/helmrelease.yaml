@@ -43,7 +43,7 @@ spec:
               tag: 2.1.0@sha256:0a4dd58e648960fce46bfe742a60af7913570391237ae1a0e2dce7fcf42cd157
             env:
               TZ: Australia/Sydney
-              HA_URL: http://home-assistant.automation.svc.cluster.local:8123
+              HA_BASE_URL: http://home-assistant.automation.svc.cluster.local:8123
             envFrom:
               - secretRef:
                   name: home-assistant-mmwave-secret  
