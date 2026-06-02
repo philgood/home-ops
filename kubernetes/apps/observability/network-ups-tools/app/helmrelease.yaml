@@ -28,8 +28,7 @@ spec:
           annotations:
             configmap.reloader.stakater.com/reload: network-ups-tools-config
           nodeSelector:
-            node-role.kubernetes.io/control-plane: ""
-            cyberpower.feature.node.kubernetes.io/ups: "true"
+            ups.feature.node.kubernetes.io/eaton: "true"
 
         containers:
           network-ups-tools:
