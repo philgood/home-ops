@@ -81,7 +81,7 @@ spec:
           nut.conf: |-
             MODE=netserver
           upsd.conf: |-
-            MAXAGE 90
+            MAXAGE 20
             LISTEN 0.0.0.0
           upsd.users: |-
             [upsmon]
