@@ -83,7 +83,6 @@ spec:
           upsd.conf: |-
             MAXAGE 90
             LISTEN 0.0.0.0
-            LISTEN ::
           upsd.users: |-
             [upsmon]
               password  = "nNpkeox7$upSQeKfekKQ"
