@@ -37,6 +37,7 @@ spec:
               tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
             env:
               TZ: Australia/Sydney
+              NUT_EXPORTER_SERVER: network-ups-tools.observability.svc.cluster.local
             securityContext:
               privileged: true
             probes:
@@ -93,6 +94,7 @@ spec:
             [kubernetes]
               driver = usbhid-ups
               port = auto
+              productid = ffff
               pollinterval = 10
               desc = "Eaton5E UPS"
           upsmon.conf: |-
