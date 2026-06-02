@@ -10,7 +10,6 @@ spec:
     kind: OCIRepository
     name: app-template
     namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 5
@@ -67,6 +66,7 @@ spec:
         defaultMode: 0640
         globalMounts:
           - path: /etc/nut
+            readOnly: true
       ups:
         type: hostPath
         hostPath: /dev/bus/usb/003/002 #USB device path for UPS
