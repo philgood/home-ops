@@ -93,34 +93,6 @@ spec:
       port: metrics
       scheme: http
       scrapeTimeout: 30s
-    #########################################################
-    #########################################################
-    #########################################################
-    - interval: 30s
-      metricRelabelings:
-        - action: replace
-          replacement: server
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server
-          sourceLabels:
-            - server
-          targetLabel: server
-      params:
-        server: [10.90.1.69]
-        username:
-          - ${UPS_CITADEL_USERNAME}
-        password:
-          - ${UPS_CITADEL_PASSWORD}
-      relabelings:
-        - targetLabel: ups
-          replacement: Citadel-Server
-      path: /ups_metrics
-      port: metrics
-      scheme: http
-      scrapeTimeout: 30s
   jobLabel: nut-exporter
   namespaceSelector:
     matchNames:
