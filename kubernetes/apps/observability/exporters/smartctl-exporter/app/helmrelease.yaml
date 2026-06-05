@@ -25,6 +25,8 @@ spec:
   interval: 1h
   values:
     fullnameOverride: *app
+    config:
+        devices: []
     serviceMonitor:
       enabled: true
     prometheusRules:
