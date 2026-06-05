@@ -217,20 +217,20 @@ spec:
             - { name: DS_PROMETHEUS, value: Prometheus }
       cortex:
         cortex-searxng-metrics:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/cortex-searxng-metrics.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/cortex-searxng-metrics.json
           datasource: Prometheus
         cortex-overview:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/cortex-combined-overview.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/cortex-combined-overview.json
           datasource: Prometheus
         cortex-resource-overview:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/cortex-resource-overview.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/cortex-resource-overview.json
           datasource: Prometheus
         cortex-qdrant-overview:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/coretex-qdrant-metrics.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/coretex-qdrant-metrics.json
           datasource: Prometheus
       database:
         cloudnative-pg-cluster:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/cloudnative-pg-cluster.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/cloudnative-pg-cluster.json
           datasource: Prometheus
         dragonfly-cluster:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly-operator/v1.3.0/monitoring/grafana-dashboard.json
@@ -241,7 +241,7 @@ spec:
           revision: 5
           datasource: Prometheus
         mosquitto-overview:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/mosquitto-overview.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/mosquitto-overview.json
           datasource: Prometheus
       flux:
         flux-cluster:
@@ -252,7 +252,7 @@ spec:
           datasource: Prometheus
       infrastructure:
         unifi-network-combined:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/unifi-network-combined.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/unifi-network-combined.json
           datasource: Prometheus
       kubernetes:
         k8s-system-api-server:
@@ -480,7 +480,7 @@ spec:
           revision: 1
           datasource: Prometheus
         radarr-dynamic-exportarr:
-          url: https://raw.githubusercontent.com/gavinmcfall/home-ops/refs/heads/main/dashboards/grafana/dynamic-radarr.json
+          url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/dynamic-radarr.json
           datasource: Prometheus
 
     sidecar:
