@@ -22,6 +22,7 @@ resources:
   - ./unpoller/ks.yaml
   - ./scrutiny/ks.yaml
   - ./loki/ks.yaml
+  - ./prometheus-operator-crds/ks.yaml
   
   # Exporters
   - ./exporters
