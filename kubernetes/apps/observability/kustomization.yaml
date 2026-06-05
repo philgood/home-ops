@@ -21,6 +21,7 @@ resources:
   - ./kromgo/ks.yaml
   - ./unpoller/ks.yaml
   - ./scrutiny/ks.yaml
+  - ./loki/ks.yaml
   
   # Exporters
   - ./exporters
