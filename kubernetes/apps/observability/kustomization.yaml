@@ -22,6 +22,7 @@ resources:
   - ./silence-operator/ks.yaml
   - ./keda/ks.yaml
   - ./kromgo/ks.yaml
+  - ./unpoller/ks.yaml
   - ./scrutiny/ks.yaml
   
   # Exporters
