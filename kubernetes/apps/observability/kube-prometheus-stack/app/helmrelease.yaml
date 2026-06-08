@@ -44,6 +44,8 @@ spec:
             - name: envoy-internal
               namespace: network
       alertmanagerSpec:
+        nodeSelector:
+            kubernetes.io/hostname: alpha  
         alertmanagerConfiguration:
           name: alertmanager
           global:
