@@ -6,7 +6,7 @@ metadata:
   name: obico
 spec:
   hostnames:
-    - obico.${SECRET_DOMAIN}
+    - obico.narden.au
   parentRefs:
     - name: envoy-internal
       namespace: network
