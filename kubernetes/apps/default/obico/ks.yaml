@@ -8,8 +8,8 @@ metadata:
 spec:
   targetNamespace: *namespace
   dependsOn:
-    - name: dragonfly-cluster
-      namespace: database
+    - name: dragonfly
+      namespace: storage
   path: ./kubernetes/apps/default/obico/app
   prune: true
   sourceRef:
