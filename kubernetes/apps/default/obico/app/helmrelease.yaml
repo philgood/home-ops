@@ -24,6 +24,14 @@ spec:
         SITE_IS_PUBLIC: "True"
         SITE_USES_HTTPS: "True"
         SOCIAL_LOGIN: "False"
+        OCTOPRINT_TUNNEL_PORT_RANGE: "15853-15858"
+      ports:
+        - "15853:3334"
+        - "15854:3334"
+        - "15855:3334"
+        - "15856:3334"
+        - "15857:3334"
+        - "15858:3334"
       resources:
         requests:
           cpu: 100m
