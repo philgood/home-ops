@@ -32,6 +32,18 @@ spec:
           memory: 1Gi
       additionalContainers:
         tasks:
+          command:
+            - celery
+          args:
+            - --app=config
+            - worker
+            - --beat
+            - --loglevel=info
+            - --concurrency=2
+            - --queues=realtime,celery
+            - --schedule=/tmp/celerybeat-schedule
+            - --without-mingle
+            - --without-gossip
           resources:
             requests:
               cpu: 100m
