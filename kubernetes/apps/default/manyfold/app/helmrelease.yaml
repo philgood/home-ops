@@ -19,8 +19,6 @@ spec:
   dependsOn:
     - name: cloudnative-pg
       namespace: database
-    - name: dragonfly-operator
-      namespace: storage
   values:
     controllers:
       manyfold:
