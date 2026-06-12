@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  path: ./kubernetes/apps/media/jellyseerr/app
+  path: ./kubernetes/apps/media/seerr/app
   prune: true
   sourceRef:
     kind: GitRepository
