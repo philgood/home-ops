@@ -11,7 +11,7 @@ spec:
       scrapeTimeout: 30s
       bearerTokenSecret:
         name: home-assistant-secret
-        key: PROMETHEUS_TOKEN
+        key: HA_TOKEN
   selector:
     matchLabels:
       app.kubernetes.io/instance: home-assistant
