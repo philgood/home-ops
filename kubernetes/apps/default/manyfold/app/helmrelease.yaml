@@ -56,7 +56,7 @@ spec:
               DATABASE_ADAPTER: postgresql
               PORTS: &port 3214
               MULTIUSER: enabled
-              PUBLIC_HOSTNAME: 3d.${SECRET_DOMAIN}
+              PUBLIC_HOSTNAME: 3d.narden.au
               PUBLIC_PORT: "443"
               HTTPS_ONLY: enabled
               TZ: Australia/Sydney
@@ -101,7 +101,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hostnames:
-          - 3d.${SECRET_DOMAIN}
+          - 3d.narden.au
         parentRefs:
           - name: envoy-external
             namespace: network  
