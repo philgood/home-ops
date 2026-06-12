@@ -17,3 +17,4 @@ resources:
   - ./mealie/ks.yaml
   - ./memos/ks.yaml
   - ./vikunja/ks.yaml
+  - ./manyfold/ks.yaml
