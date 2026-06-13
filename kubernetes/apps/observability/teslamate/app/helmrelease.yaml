@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: teslamate/teslamate
-              tag: 3.0.0@sha256:b7b8b21869d789d043f62b404dd689f55c601ef7d02222e92c0f5d596d0b1044
+              tag: 3.1.0@sha256:b7b8b21869d789d043f62b404dd689f55c601ef7d02222e92c0f5d596d0b1044
             env:
               TZ: Australia/Sydney
               DISABLE_MQTT: "false"
