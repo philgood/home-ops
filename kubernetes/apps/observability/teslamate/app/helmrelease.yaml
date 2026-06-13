@@ -37,8 +37,8 @@ spec:
               TESLA_AUTH_HOST: https://auth.tesla.com
               TESLA_AUTH_PATH: /oauth2/v3
               # Reduce Tesla Fleet API polling to avoid EXCEEDED_LIMIT (default 15/21)
-              #SUSPEND_AFTER_IDLE_MIN: "5"
-              #SUSPEND_MIN: "60"
+              SUSPEND_AFTER_IDLE_MIN: "5"
+              SUSPEND_MIN: "60"
             envFrom:
               - secretRef:
                   name: teslamate-secret
