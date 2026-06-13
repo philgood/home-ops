@@ -35,10 +35,14 @@
   },
 
   kustomize: {
-    managerFilePatterns: ["/^kustomization\\.ya?ml(?:\\.j2)?$/"],
+    // Fixed: previously only matched root-level kustomization.yaml
+    managerFilePatterns: ["/(^|/)kustomization\\.ya?ml(?:\\.j2)?$/"],
   },
 
   packageRules: [
+    // -------------------------
+    // Grouping rules
+    // -------------------------
     {
       description: "Cert-Manager Group",
       groupName: "Cert-Manager",
@@ -75,15 +79,47 @@
         commitMessageTopic: "{{{groupName}}} group",
       },
     },
-
-    // Broad low-risk automerge rule
     {
+      // Group Rook operator + cluster chart so they upgrade together
+      description: "Rook-Ceph Group",
+      groupName: "Rook-Ceph",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/rook/"],
+      automerge: false,
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
+      // Group Talos installer + kubelet so they upgrade together
+      description: "Talos Group",
+      groupName: "Talos",
+      matchPackageNames: ["/siderolabs/"],
+      automerge: false,
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+
+    // -------------------------
+    // No-automerge rules (critical infrastructure)
+    // -------------------------
+    {
+      description: "CloudNative-PG - manual upgrade only",
+      matchPackageNames: ["/cloudnative-pg/"],
+      automerge: false,
+    },
+
+    // -------------------------
+    // Automerge rules
+    // -------------------------
+    {
+      // Low-risk updates with a short soak period to catch yanked releases
       description: "Auto-merge low-risk updates",
       matchUpdateTypes: ["patch", "digest", "pin"],
       automerge: true,
+      minimumReleaseAge: "3 days",
     },
-
-    // Keep GitHub Actions auto-merge, but use PR/platform automerge instead of branch automerge
     {
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
@@ -92,8 +128,6 @@
       minimumReleaseAge: "3 days",
       ignoreTests: true,
     },
-
-    // Keep Mise auto-merge, but use PR/platform automerge instead of branch automerge
     {
       description: "Auto-merge Mise Tools",
       matchManagers: ["mise"],
@@ -101,14 +135,15 @@
       matchUpdateTypes: ["minor", "patch"],
       ignoreTests: true,
     },
-
-    // Explicitly do not automerge majors
     {
       description: "Do not automerge major updates",
       matchUpdateTypes: ["major"],
       automerge: false,
     },
 
+    // -------------------------
+    // Semantic commit formatting
+    // -------------------------
     {
       matchUpdateTypes: ["major"],
       semanticCommitType: "feat",
@@ -156,6 +191,10 @@
       semanticCommitScope: "mise",
       commitMessageTopic: "tool {{depName}}",
     },
+
+    // -------------------------
+    // PR labels
+    // -------------------------
     {
       matchUpdateTypes: ["major"],
       labels: ["type/major"],
