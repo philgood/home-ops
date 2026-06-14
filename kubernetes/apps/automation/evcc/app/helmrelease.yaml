@@ -22,7 +22,6 @@ spec:
               TZ: Australia/Sydney
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
@@ -32,9 +31,9 @@ spec:
                 memory: 1Gi
     defaultPodOptions:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -66,7 +65,7 @@ spec:
       config:
         existingClaim: "evcc"
         globalMounts:
-          - path: /data
+          - path: /root/.evcc
       tmpfs:
         type: emptyDir
         advancedMounts:
@@ -74,3 +73,5 @@ spec:
             app:
               - path: /tmp
                 subPath: tmp
+              - path: /root
+                subPath: root
