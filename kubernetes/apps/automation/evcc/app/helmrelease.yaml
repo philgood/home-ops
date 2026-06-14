@@ -20,6 +20,7 @@ spec:
               tag: 0.309.0@sha256:da86bf68f1e5a9d00c4b118a660e7b0007e972c1fd2982a87a98943f1c2ed3c8
             env:
               TZ: Australia/Sydney
+              EVCC_NETWORK_URI: "https://evcc.narden.au"
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
