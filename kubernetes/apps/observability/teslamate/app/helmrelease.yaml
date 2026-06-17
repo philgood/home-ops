@@ -28,17 +28,18 @@ spec:
           app:
             image:
               repository: teslamate/teslamate
-              tag: 4.0.1@sha256:1c4f03e1c8a8e43269ac24c78a2f4a4a021637bbedf600d4b951ec1223889a4e
+              tag: 
+              4.0.1@sha256:e77ec65007aafb40d736ed2c89675112fe8d960886ea9d7de3255f2b5360269f
             env:
               TZ: Australia/Sydney
               DISABLE_MQTT: "false"
               MQTT_HOST: mosquitto.automation.svc.cluster.local
-              TESLA_API_HOST: https://fleet-api.prd.na.vn.cloud.tesla.com
-              TESLA_AUTH_HOST: https://auth.tesla.com
-              TESLA_AUTH_PATH: /oauth2/v3
+              #TESLA_API_HOST: https://fleet-api.prd.na.vn.cloud.tesla.com
+              #TESLA_AUTH_HOST: https://auth.tesla.com
+              #TESLA_AUTH_PATH: /oauth2/v3
               # Reduce Tesla Fleet API polling to avoid EXCEEDED_LIMIT (default 15/21)
-              SUSPEND_AFTER_IDLE_MIN: "5"
-              SUSPEND_MIN: "21"
+              #SUSPEND_AFTER_IDLE_MIN: "5"
+              #SUSPEND_MIN: "21"
             envFrom:
               - secretRef:
                   name: teslamate-secret
