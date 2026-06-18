@@ -20,11 +20,12 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
+        runAsNonRoot: true
         runAsUser: 568
         runAsGroup: 568
         fsGroup: 568
-        runAsNonRoot: true
         fsGroupChangePolicy: Always
+        seccompProfile: {type: RuntimeDefault}
       affinity:
         podAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -71,7 +72,8 @@ spec:
               limits:
                 memory: 2Gi
             securityContext:
-              privileged: false
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
     service:
       app:
         controller: *app
