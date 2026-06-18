@@ -55,19 +55,21 @@ spec:
           httpGet:
             path: /healthz
             port: http-webhook
-          initialDelaySeconds: 10
+          initialDelaySeconds: 2
           timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /readyz
             port: http-webhook
-          initialDelaySeconds: 10
+          initialDelaySeconds: 2
           timeoutSeconds: 5
     policy: sync
     sources: ["gateway-httproute", "service"]
     txtOwnerId: default
     txtPrefix: k8s.
     domainFilters: ["narden.au"]
+    extraArgs:
+      - --webhook-provider-read-timeout=60s
     serviceMonitor:
       enabled: true
     podAnnotations:
