@@ -20,12 +20,14 @@ spec:
   values:
     controllers:
       nut-exporter:
+        annotations:
+          reloader.stakater.com/auto: "true"
         strategy: Recreate
         containers:
           app:
             image:
               repository: ghcr.io/druggeri/nut_exporter
-              tag: 3.3.0
+              tag: 3.3.0@sha256:276460d141c732772f8b1fcd785a7de272473e6d39fd85c32b163efc2999cb9a
             env:
               TZ: Australia/Sydney
             args:
