@@ -33,12 +33,6 @@ spec:
             envFrom:
               - secretRef:
                   name: teslamateapi-secret
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities: {drop: ["ALL"]}
-    defaultPodOptions:
-      securityContext:
-        seccompProfile: {type: RuntimeDefault}
     service:
       app:
         ports:
