@@ -18,6 +18,8 @@
   schedule: ["before 5:00am"],
   ignorePaths: ["**/*.sops.*"],
 
+  suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
+
   flux: {
     managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$/"],
   },
@@ -83,9 +85,7 @@
       // Group Rook operator + cluster chart so they upgrade together
       description: "Rook-Ceph Group",
       groupName: "Rook-Ceph",
-      matchDatasources: ["docker"],
       matchPackageNames: ["/rook/"],
-      automerge: false,
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -95,19 +95,9 @@
       description: "Talos Group",
       groupName: "Talos",
       matchPackageNames: ["/siderolabs/"],
-      automerge: false,
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-    },
-
-    // -------------------------
-    // No-automerge rules (critical infrastructure)
-    // -------------------------
-    {
-      description: "CloudNative-PG - manual upgrade only",
-      matchPackageNames: ["/cloudnative-pg/"],
-      automerge: false,
     },
 
     // -------------------------
@@ -115,17 +105,17 @@
     // -------------------------
     {
       // Low-risk updates with a short soak period to catch yanked releases
-      description: "Auto-merge low-risk updates",
-      matchUpdateTypes: ["patch", "digest", "pin"],
+      description: "Auto-merge minor and patch updates",
+      matchUpdateTypes: ["minor", "patch", "digest", "pin"],
       automerge: true,
-      minimumReleaseAge: "3 days",
+      minimumReleaseAge: "1 day",
     },
     {
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
       matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "3 days",
+      minimumReleaseAge: "1 day",
       ignoreTests: true,
     },
     {
@@ -139,6 +129,43 @@
       description: "Do not automerge major updates",
       matchUpdateTypes: ["major"],
       automerge: false,
+    },
+
+    // -------------------------
+    // No-automerge rules — must come AFTER general automerge rules to override them
+    // -------------------------
+    {
+      description: "Rook-Ceph - manual upgrade only (storage layer)",
+      matchPackageNames: ["/rook/"],
+      automerge: false,
+    },
+    {
+      description: "Talos - manual upgrade only (OS layer)",
+      matchPackageNames: ["/siderolabs/"],
+      automerge: false,
+    },
+    {
+      description: "CloudNative-PG - manual upgrade only (database operator)",
+      matchPackageNames: ["/cloudnative-pg/"],
+      automerge: false,
+    },
+    {
+      description: "Cilium - manual upgrade only (CNI)",
+      matchPackageNames: ["/cilium/"],
+      automerge: false,
+    },
+    {
+      description: "Auto-merge Grafana dashboard revision bumps",
+      matchDatasources: ["custom.grafana-dashboards"],
+      matchUpdateTypes: ["major"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
+      addLabels: ["renovate/grafana-dashboard"],
+      semanticCommitType: "chore",
+      semanticCommitScope: "grafana-dashboards",
+      commitMessageTopic: "dashboard {{sourceDirectory}}",
+      commitMessageExtra: "( {{currentVersion}} → {{newVersion}} )",
     },
 
     // -------------------------
@@ -225,7 +252,26 @@
     },
   ],
 
+  customDatasources: {
+    "grafana-dashboards": {
+      defaultRegistryUrlTemplate: "https://grafana.com/api/dashboards/{{packageName}}",
+      format: "json",
+      transformTemplates: ['{"releases":[{"version": $string(revision)}], "sourceDirectory": name}'],
+    },
+  },
+
   customManagers: [
+    {
+      description: "Process Grafana dashboard revisions",
+      customType: "regex",
+      managerFilePatterns: ["/grafanadashboard\\.yaml(?:\\.j2)?$/"],
+      matchStrings: [
+        "dashboards\\/(?<depName>\\d+)\\/revisions\\/(?<currentValue>\\d+)\\/download",
+      ],
+      datasourceTemplate: "custom.grafana-dashboards",
+      versioningTemplate: "regex:^(?<major>\\d+)$",
+      autoReplaceStringTemplate: "dashboards/{{depName}}/revisions/{{newValue}}/download",
+    },
     {
       description: "Process annotated dependencies",
       customType: "regex",
