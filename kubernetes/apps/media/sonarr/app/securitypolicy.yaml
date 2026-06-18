@@ -16,6 +16,5 @@ spec:
     clientID: 78b3e218-f01b-4024-a00c-c065503592f0
     clientSecret:
       name: sonarr
-      key: OIDC_CLIENT_SECRET
     redirectURL: https://sonarr.${SECRET_DOMAIN}/oauth2/callback
     scopes: ["openid", "profile", "email"]
