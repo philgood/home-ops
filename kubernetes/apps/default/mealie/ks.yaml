@@ -9,6 +9,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
+    - name: cloudnative-pg
+      namespace: database
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/default/mealie/app
