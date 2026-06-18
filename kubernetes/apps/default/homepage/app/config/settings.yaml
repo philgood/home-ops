@@ -1,0 +1,37 @@
+---
+title: narden.au
+useEqualHeights: true
+statusStyle: dot
+theme: dark
+color: slate
+headerStyle: clean
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: true
+  showSearchSuggestions: true
+  hideVisitURL: true
+layout:
+  Media:
+    style: row
+    columns: 4
+    icon: mdi-play-circle
+  Downloads:
+    style: row
+    columns: 4
+    icon: mdi-download-circle
+  Home Automation:
+    style: row
+    columns: 4
+    icon: mdi-home-automation
+  Productivity:
+    style: row
+    columns: 4
+    icon: mdi-briefcase
+  Observability:
+    style: row
+    columns: 4
+    icon: mdi-chart-line
+  Infrastructure:
+    style: row
+    columns: 4
+    icon: mdi-server

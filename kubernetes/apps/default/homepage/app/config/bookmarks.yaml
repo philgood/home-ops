@@ -1,0 +1,28 @@
+---
+- Git:
+    - home-ops:
+        - icon: github.png
+          href: "https://github.com/philgood/home-ops"
+    - kubesearch:
+        - icon: kubernetes-dashboard.png
+          href: "https://kubesearch.dev/"
+    - artifact-hub:
+        - icon: mdi-ferry
+          href: "https://artifacthub.io/"
+- Infrastructure:
+    - Cloudflare:
+        - icon: cloudflare.png
+          href: "https://dash.cloudflare.com/"
+    - Akeyless:
+        - icon: mdi-key
+          href: "https://console.akeyless.io/"
+    - UniFi:
+        - icon: unifi.png
+          href: "https://unifi.ui.com/"
+- Media:
+    - YouTube:
+        - icon: youtube.png
+          href: "https://youtube.com/feed/subscriptions"
+    - Spotify:
+        - icon: spotify.png
+          href: "https://open.spotify.com"

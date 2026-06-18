@@ -1,0 +1,32 @@
+---
+- resources:
+    backend: kubernetes
+    cpu: true
+    memory: true
+    expanded: true
+- search:
+    provider: google
+    target: _blank
+- kubernetes:
+    cluster:
+      cpu: true
+      memory: true
+      show: true
+      showLabel: true
+    nodes:
+      cpu: true
+      memory: true
+      show: false
+      showLabel: true
+- openmeteo:
+    label: Sydney
+    latitude: -33.8688
+    longitude: 151.2093
+    units: metric
+    cache: 15
+- datetime:
+    text_size: l
+    format:
+      timeStyle: short
+      dateStyle: short
+      hourCycle: h23

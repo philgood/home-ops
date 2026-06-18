@@ -1,0 +1,141 @@
+---
+- Media:
+    - Jellyfin:
+        href: https://jellyfin.${SECRET_DOMAIN}
+        icon: jellyfin.png
+        description: Media streaming
+    - Sonarr:
+        href: https://sonarr.${SECRET_DOMAIN}
+        icon: sonarr.png
+        description: TV show management
+        widget:
+          type: sonarr
+          url: http://sonarr.media
+          key: "{{HOMEPAGE_VAR_SONARR_TOKEN}}"
+    - Radarr:
+        href: https://radarr.${SECRET_DOMAIN}
+        icon: radarr.png
+        description: Movie management
+        widget:
+          type: radarr
+          url: http://radarr.media
+          key: "{{HOMEPAGE_VAR_RADARR_TOKEN}}"
+    - Seerr:
+        href: https://requests.${SECRET_DOMAIN}
+        icon: jellyseerr.png
+        description: Media requests
+        widget:
+          type: jellyseerr
+          url: http://seerr.media
+          key: "{{HOMEPAGE_VAR_SEERR_TOKEN}}"
+
+- Downloads:
+    - Prowlarr:
+        href: https://prowlarr.${SECRET_DOMAIN}
+        icon: prowlarr.png
+        description: Indexer management
+        widget:
+          type: prowlarr
+          url: http://prowlarr.media
+          key: "{{HOMEPAGE_VAR_PROWLARR_TOKEN}}"
+    - qBittorrent:
+        href: https://qb.${SECRET_DOMAIN}
+        icon: qbittorrent.png
+        description: BitTorrent client
+
+- Home Automation:
+    - Home Assistant:
+        href: https://hass.${SECRET_DOMAIN}
+        icon: home-assistant.png
+        description: Home automation
+        widget:
+          type: homeassistant
+          url: http://home-assistant.automation:8123
+          key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
+    - ESPHome:
+        href: https://esphome.${SECRET_DOMAIN}
+        icon: esphome.png
+        description: ESP device management
+    - Zigbee2MQTT:
+        href: https://zigbee.${SECRET_DOMAIN}
+        icon: zigbee2mqtt.png
+        description: Zigbee coordinator
+    - EVCC:
+        href: https://evcc.${SECRET_DOMAIN}
+        icon: evcc.png
+        description: EV charging control
+
+- Productivity:
+    - Paperless:
+        href: https://paperless.${SECRET_DOMAIN}
+        icon: paperless-ngx.png
+        description: Document management
+    - Mealie:
+        href: https://mealie.${SECRET_DOMAIN}
+        icon: mealie.png
+        description: Recipe manager
+    - Vikunja:
+        href: https://vikunja.${SECRET_DOMAIN}
+        icon: vikunja.png
+        description: Task management
+    - Memos:
+        href: https://memos.${SECRET_DOMAIN}
+        icon: memos.png
+        description: Quick notes
+    - Linkding:
+        href: https://bookmarks.${SECRET_DOMAIN}
+        icon: linkding.png
+        description: Bookmark manager
+    - Manyfold:
+        href: https://3d.${SECRET_DOMAIN}
+        icon: mdi-printer-3d
+        description: 3D model library
+    - Spoolman:
+        href: https://spoolman.${SECRET_DOMAIN}
+        icon: spoolman.png
+        description: Filament spool tracker
+
+- Observability:
+    - Grafana:
+        href: https://grafana.${SECRET_DOMAIN}
+        icon: grafana.png
+        description: Dashboards and metrics
+        widget:
+          type: grafana
+          url: http://grafana.observability
+          username: "{{HOMEPAGE_VAR_GRAFANA_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
+    - Gatus:
+        href: https://status.${SECRET_DOMAIN}
+        icon: gatus.png
+        description: Uptime monitoring
+        widget:
+          type: gatus
+          url: http://gatus.observability:8080
+    - Scrutiny:
+        href: https://scrutiny.${SECRET_DOMAIN}
+        icon: scrutiny.png
+        description: Drive health monitoring
+    - Teslamate:
+        href: https://teslamate.${SECRET_DOMAIN}
+        icon: teslamate.png
+        description: Tesla data logger
+
+- Infrastructure:
+    - Pocket ID:
+        href: https://id.${SECRET_DOMAIN}
+        icon: pocket-id.png
+        description: OIDC identity provider
+    - Kopia:
+        href: https://kopia.${SECRET_DOMAIN}
+        icon: kopia.png
+        description: Backup repository
+        widget:
+          type: kopia
+          url: http://kopia.storage
+          username: admin
+          password: "{{HOMEPAGE_VAR_KOPIA_PASSWORD}}"
+    - Garage:
+        href: https://s3.${SECRET_DOMAIN}
+        icon: mdi-bucket
+        description: S3-compatible object storage
