@@ -100,6 +100,8 @@ spec:
       app:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames:
           - 3d.narden.au
         parentRefs:

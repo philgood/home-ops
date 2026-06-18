@@ -86,6 +86,9 @@ spec:
                 subPath: tmp
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames:
           - "radarr.narden.au"
         parentRefs:

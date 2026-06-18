@@ -512,6 +512,9 @@ spec:
     route:
       main:
         enabled: true
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames:
           - grafana.narden.au
         parentRefs:

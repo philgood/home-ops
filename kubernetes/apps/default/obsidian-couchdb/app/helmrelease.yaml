@@ -59,6 +59,9 @@ spec:
             port: &port 5984
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames:
           - obsidian-db.narden.au
         parentRefs:

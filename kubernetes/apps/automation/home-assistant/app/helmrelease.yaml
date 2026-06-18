@@ -84,7 +84,10 @@ spec:
             protocol: TCP
     route:
       app:
-        hostnames: 
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
+        hostnames:
           - hass.narden.au
         parentRefs:
           - name: envoy-external

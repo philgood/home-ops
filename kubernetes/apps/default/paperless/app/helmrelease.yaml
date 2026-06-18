@@ -125,7 +125,10 @@ spec:
             port: &port 8000
     route:
       app:
-        hostnames: 
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
+        hostnames:
           - paperless.narden.au
         parentRefs:
           - name: envoy-external

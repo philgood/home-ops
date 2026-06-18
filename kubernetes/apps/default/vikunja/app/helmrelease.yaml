@@ -54,6 +54,9 @@ spec:
             port: &port 3456
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames:
           - vikunja.narden.au
         parentRefs:
