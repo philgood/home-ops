@@ -40,6 +40,10 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -49,9 +53,10 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 3000
-        runAsGroup: 0
-        fsGroup: 0
+        runAsGroup: 3000
+        fsGroup: 3000
         fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
     service:
       app:
         ports:

@@ -30,6 +30,14 @@
           key: "{{HOMEPAGE_VAR_SEERR_TOKEN}}"
 
 - Downloads:
+    - Autobrr:
+        href: https://autobrr.${SECRET_DOMAIN}
+        icon: autobrr.png
+        description: Download automation
+    - Qui:
+        href: https://qui.${SECRET_DOMAIN}
+        icon: autobrr.png
+        description: Autobrr dashboard
     - Prowlarr:
         href: https://prowlarr.${SECRET_DOMAIN}
         icon: prowlarr.png
