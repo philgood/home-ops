@@ -147,3 +147,16 @@ spec:
                 expr: node_zfs_zpool_state{state!="online"} > 0
                 labels:
                   severity: critical
+      nas-rules:
+        groups:
+          - name: nas
+            rules:
+              - alert: TargetDown
+                annotations:
+                  summary: NAS exporter {{ $labels.job }} is temporarily unreachable (scheduled maintenance window).
+                expr: |
+                  100 * (count(up{job=~"node-exporter|smartctl-exporter", instance=~"nas.internal:.*"} == 0)
+                  / count(up{job=~"node-exporter|smartctl-exporter", instance=~"nas.internal:.*"})) > 0
+                for: 30m
+                labels:
+                  severity: warning
