@@ -92,7 +92,7 @@ spec:
         hostnames:
           - "radarr.narden.au"
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
     service:
       app:

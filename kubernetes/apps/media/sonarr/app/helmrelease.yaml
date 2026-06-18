@@ -74,7 +74,7 @@ spec:
             conditions: ["[STATUS] == 200"]
         hostnames: ["sonarr.narden.au"]
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
     persistence:
       config:
