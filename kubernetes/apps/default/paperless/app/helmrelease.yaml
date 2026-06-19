@@ -43,7 +43,7 @@ spec:
               PAPERLESS_PORT: "8000"
               PAPERLESS_TIME_ZONE: "Australia/Sydney"
               PAPERLESS_WEBSERVER_WORKERS: "2"
-              PAPERLESS_TASK_WORKERS: "2"
+              PAPERLESS_TASK_WORKERS: "1"
               # Configure Remote User auth
               PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
               PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "false"
@@ -59,7 +59,7 @@ spec:
               # Configure OCR
               PAPERLESS_OCR_LANGUAGES: por eng
               PAPERLESS_OCR_LANGUAGE: por
-              PAPERLESS_OCR_MODE: "redo"
+              PAPERLESS_OCR_MODE: "skip_noarchive"
               PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'              # Enable TIKA
               PAPERLESS_TIKA_ENABLED: true
               PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
