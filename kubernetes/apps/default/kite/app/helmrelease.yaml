@@ -37,7 +37,7 @@ spec:
                 memory: 512Mi
     serviceAccount:
       kite:
-        automountServiceAccountToken: true
+        automount: true
     service:
       app:
         ports:
