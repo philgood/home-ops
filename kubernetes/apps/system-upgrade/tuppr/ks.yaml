@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app tuppr
-  namespace: &namespace system-upgrade
+  namespace: system-upgrade
 spec:
   commonMetadata:
     labels:
@@ -17,7 +17,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: system-upgrade
   timeout: 5m
   wait: true
 ---
@@ -26,11 +26,11 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: tuppr-upgrades
-  namespace: *namespace
+  namespace: system-upgrade
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: tuppr
   dependsOn:
     - name: tuppr
   interval: 1h
@@ -41,6 +41,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: system-upgrade
   timeout: 5m
   wait: false
