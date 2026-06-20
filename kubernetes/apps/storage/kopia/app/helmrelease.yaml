@@ -22,17 +22,26 @@ spec:
             env:
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 80
-              TZ: Europe/London
+              TZ: Australia/Sydney
             envFrom:
               - secretRef:
                   name: kopia-secret
             args:
+              - --refresh-interval=5m
               - --without-password
             probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
