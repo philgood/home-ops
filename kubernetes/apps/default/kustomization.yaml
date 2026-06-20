@@ -18,3 +18,4 @@ resources:
   - ./memos/ks.yaml
   - ./vikunja/ks.yaml
   - ./manyfold/ks.yaml
+  - ./kite/ks.yaml
