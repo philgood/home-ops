@@ -17,3 +17,11 @@ spec:
       kind: CephCluster
       expr: |-
         status.ceph.health in ['HEALTH_OK']
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      expr: |-
+        status.conditions.filter(c, c.type == "Ready").all(c, c.status == "True")
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
+      kind: Kustomization
+      expr: |-
+        status.conditions.filter(c, c.type == "Ready").all(c, c.status == "True")
