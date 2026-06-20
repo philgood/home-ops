@@ -36,8 +36,9 @@ spec:
               limits:
                 memory: 512Mi
     serviceAccount:
-      kite:
-        automount: true
+      kite: {}
+    defaultPodOptions:
+      automountServiceAccountToken: true
     service:
       app:
         ports:
