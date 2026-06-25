@@ -8,18 +8,18 @@ _Powered by [Talos](https://talos.dev), [Flux](https://fluxcd.io), and [Kubernet
 
 <br />
 
-[![Talos](https://kromgo.narden.au/badges/talos_version)](https://talos.dev)
-[![Kubernetes](https://kromgo.narden.au/badges/kubernetes_version)](https://kubernetes.io)
-[![Flux](https://kromgo.narden.au/badges/flux_version)](https://fluxcd.io)
+[![Talos](https://kromgo.narden.au/talos_version)](https://talos.dev)
+[![Kubernetes](https://kromgo.narden.au/kubernetes_version)](https://kubernetes.io)
+[![Flux](https://kromgo.narden.au/flux_version)](https://fluxcd.io)
 
 <p align="center">
-  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/badges/cluster_age_days" alt="Age"></a>
-  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/badges/cluster_node_count" alt="Nodes"></a>
-  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/badges/cluster_pod_count" alt="Pods"></a>
-  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/badges/cluster_alert_count" alt="Alerts"></a>
+  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/cluster_age_days" alt="Age"></a>
+  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/cluster_node_count" alt="Nodes"></a>
+  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/cluster_pod_count" alt="Pods"></a>
+  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/cluster_alert_count" alt="Alerts"></a>
   <br />
-  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/badges/cluster_cpu_usage" alt="CPU"></a>
-  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/badges/cluster_memory_usage" alt="Memory"></a>
+  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/cluster_cpu_usage" alt="CPU"></a>
+  <a href="https://github.com/home-operations/kromgo/"><img src="https://kromgo.narden.au/cluster_memory_usage" alt="Memory"></a>
 </p>
 
 </div>
