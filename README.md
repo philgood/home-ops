@@ -2,7 +2,7 @@
 
 # home-ops
 
-### 🏠 A GitOps-managed Homelab
+### 🏠 A GitOps-managed homelab
 
 _Powered by [Talos](https://talos.dev), [Flux](https://fluxcd.io), and [Kubernetes](https://kubernetes.io)_
 
@@ -50,7 +50,7 @@ The cluster is built on **Talos Linux**, an immutable and minimal OS, and manage
 
 | Device | Count | Storage | RAM | OS | Purpose |
 |--------|-------|---------|-----|-----|---------|
-| Dell PowerEdge R730 | 1 | 4x Mirror vdevs (~18TB) + NVMe cache | 128GB | Proxmox/TrueNAS | NAS/Backup |
+| Topton N5105 | 1 | 5x 12tb (44tb)  + NVMe cache | 64GB | TrueNAS | NAS/Backup |
 | Unifi Dream Machine Pro | 1 | - | - | - | Router/Firewall |
 | Unifi US-24-250W | 1 | - | - | - | PoE Switch |
 | Unifi US-48 | 1 | - | - | - | Primary Switch |
