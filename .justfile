@@ -3,9 +3,8 @@
 set quiet
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
-export KUBECONFIG     := justfile_dir() / "kubeconfig"
-export SOPS_AGE_KEY_FILE := justfile_dir() / "age.key"
-export TALOSCONFIG    := justfile_dir() / "talos/clusterconfig/talosconfig"
+export KUBECONFIG  := justfile_dir() / "kubeconfig"
+export TALOSCONFIG := justfile_dir() / "talos/clusterconfig/talosconfig"
 
 [group: 'Bootstrap']
 mod bootstrap "bootstrap"

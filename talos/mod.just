@@ -10,7 +10,7 @@ default:
 
 [doc('Generate Talos machine configs via talhelper')]
 generate-config:
-    talhelper genconfig
+    doppler run -p talos -c prd -- talhelper genconfig
 
 [confirm('Apply Talos config to node? [y|N]')]
 [doc('Apply Talos config to a node [node=IP] [mode=auto]')]
