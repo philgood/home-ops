@@ -16,7 +16,7 @@ mod kube "kubernetes"
 mod talos "talos"
 
 [group: 'VolSync']
-mod volsync "volsync"
+mod volsync "kubernetes/apps/storage/volsync"
 
 [private]
 default:
