@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Flux Local"
+name: "Flate"
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   pre-job:
-    name: Flux Local Pre-Job
+    name: Pre-Job
     runs-on: ubuntu-latest
     outputs:
       any_changed: ${{ steps.changed-files.outputs.any_changed }}
@@ -27,7 +27,7 @@ jobs:
           files: kubernetes/**
 
   test:
-    name: Flux Local Test
+    name: Flate Test
     needs: pre-job
     runs-on: ubuntu-latest
     if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
@@ -35,23 +35,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      - name: Run flux-local test
-        uses: docker://ghcr.io/allenporter/flux-local:v8.0.1
+      - name: Setup flate
+        uses: home-operations/flate/action@v0.4.9
         with:
-          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/flux/cluster -v
+          version: "0.4.9"
+          cache: "true"
+
+      - name: Run flate test
+        run: flate test all --path kubernetes/flux/cluster --allow-missing-secrets
 
   diff:
-    name: Flux Local Diff
+    name: Flate Diff
     needs: pre-job
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-    strategy:
-      matrix:
-        resources: ["helmrelease", "kustomization"]
-      max-parallel: 4
-      fail-fast: false
     if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
     steps:
       - name: Checkout Pull Request Branch
@@ -65,34 +64,35 @@ jobs:
           ref: "${{ github.event.repository.default_branch }}"
           path: default
 
-      - name: Run flux-local diff
-        uses: docker://ghcr.io/allenporter/flux-local:v8.0.1
+      - name: Setup flate
+        uses: home-operations/flate/action@v0.4.9
         with:
-          args: >-
-            diff ${{ matrix.resources }}
-            --unified 6
-            --path /github/workspace/pull/kubernetes/flux/cluster
-            --path-orig /github/workspace/default/kubernetes/flux/cluster
-            --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
-            --limit-bytes 10000
-            --all-namespaces
-            --sources "flux-system"
-            --output-file diff.patch
+          version: "0.4.9"
+          cache: "true"
 
-      - name: Generate Diff
+      - name: Run flate diff
         id: diff
         run: |
-          cat diff.patch;
+          flate diff all \
+            --path pull/kubernetes/flux/cluster \
+            --path-orig default/kubernetes/flux/cluster \
+            --allow-missing-secrets \
+            --strip-attr helm.sh/chart \
+            --strip-attr checksum/config \
+            --strip-attr app.kubernetes.io/version \
+            --strip-attr chart \
+            > diff.patch 2>/dev/null || true
+          cat diff.patch
           {
-              echo 'diff<<EOF'
-              cat diff.patch
-              echo EOF
-          } >> "$GITHUB_OUTPUT";
+            echo 'diff<<EOF'
+            cat diff.patch
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
           {
-              echo "### Diff"
-              echo '```diff'
-              cat diff.patch
-              echo '```'
+            echo "### Diff"
+            echo '```diff'
+            cat diff.patch
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Add Comment
@@ -100,15 +100,15 @@ jobs:
         continue-on-error: true
         uses: mshick/add-pr-comment@ec328af66588ab8f77cdeb2c264f14aba45bbf59 # v3.12
         with:
-          message-id: "${{ github.event.pull_request.number }}/kubernetes/${{ matrix.resources }}"
+          message-id: "${{ github.event.pull_request.number }}/kubernetes/flate-diff"
           message-failure: Diff was not successful
           message: |
             ```diff
             ${{ steps.diff.outputs.diff }}
             ```
 
-  flux-local-status:
-    name: Flux Local Success
+  flate-status:
+    name: Flate Success
     needs: ["test", "diff"]
     runs-on: ubuntu-latest
     if: ${{ always() }}
