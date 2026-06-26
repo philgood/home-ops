@@ -6,9 +6,6 @@ metadata:
   name: grafana
   namespace: observability
 spec:
-  dependsOn:
-    - name: grafana-instance
-      namespace: observability
   interval: 1h
   path: ./kubernetes/apps/observability/grafana/app
   prune: true
