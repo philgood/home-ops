@@ -25,7 +25,7 @@ nodes:
       serial: "22323B87679D"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/8932fcd0ce59494ca459d7cc285c283d7eb797b66bad926b6f803bc168c62385
+    talosImageURL: factory.talos.dev/metal-installer/6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e
     controlPlane: true
     networkInterfaces:
       - interface: bond0
@@ -74,7 +74,7 @@ nodes:
       serial: "22323B87677A"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/8932fcd0ce59494ca459d7cc285c283d7eb797b66bad926b6f803bc168c62385
+    talosImageURL: factory.talos.dev/metal-installer/6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e
     controlPlane: true
     networkInterfaces:
       - interface: bond0
@@ -123,7 +123,7 @@ nodes:
       serial: "22323B876870"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/8932fcd0ce59494ca459d7cc285c283d7eb797b66bad926b6f803bc168c62385
+    talosImageURL: factory.talos.dev/metal-installer/6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e
     controlPlane: true
     networkInterfaces:
       - interface: bond0
@@ -226,11 +226,6 @@ patches:
        servers:
          - 162.159.200.1
          - 162.159.200.123
-  - |-
-    machine:
-      install:
-        extraKernelArgs:
-          - i915.enable_guc=3
   - |-
     machine:
      kernel:

@@ -24,8 +24,9 @@ spec:
     name: drm-exporter
   interval: 1h
   values:
-    devDri: /dev/dri
-    # devCpu intentionally omitted — MSR access not available on Talos
+    hostAccess:
+      devDri: /dev/dri
+      # devCpu intentionally omitted — MSR access not available on Talos
     monitoring:
       serviceMonitor:
         enabled: true
