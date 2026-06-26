@@ -58,13 +58,6 @@ spec:
             runAsGroup: 472
             fsGroup: 472
             fsGroupChangePolicy: OnRootMismatch
-  httpRoute:
-    spec:
-      hostnames:
-        - grafana.narden.au
-      parentRefs:
-        - name: envoy-external
-          namespace: network
   persistentVolumeClaim:
     spec:
       accessModes:
