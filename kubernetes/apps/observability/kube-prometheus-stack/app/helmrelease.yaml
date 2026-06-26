@@ -113,7 +113,7 @@ spec:
       forceDeployDashboards: true
       operator:
         dashboardsConfigMapRefEnabled: true
-        folder: observability
+        folder: Cluster
         matchLabels:
           grafana.internal/instance: grafana
     additionalPrometheusRulesMap:

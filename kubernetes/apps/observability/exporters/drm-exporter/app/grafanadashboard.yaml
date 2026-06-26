@@ -10,6 +10,7 @@ spec:
     matchLabels:
       grafana.internal/instance: grafana
   datasources:
-    - datasourceName: prometheus
+    - datasourceName: Prometheus
       inputName: DS_PROMETHEUS
+  folder: System
   url: https://raw.githubusercontent.com/home-operations/drm-exporter/main/charts/drm-exporter/files/dashboard.json
