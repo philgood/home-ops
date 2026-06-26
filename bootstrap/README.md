@@ -116,13 +116,13 @@ kubectl create secret generic doppler-token-secret \
   --namespace external-secrets
 ```
 
-Create a fresh service token at rebuild time:
+Create a fresh service token at rebuild time (use any name — it won't affect existing tokens):
 
 ```sh
-doppler configs tokens create eso-token --project kubernetes --config prd
+doppler configs tokens create eso-token-rebuild --project kubernetes --config prd
 ```
 
-Copy the printed value and use it in the command above. No need to store it — just create a new one each time you rebuild.
+Copy the printed value and use it in the command above. Clean up old tokens from the Doppler UI afterwards.
 
 > If the `external-secrets` namespace doesn't exist yet, step 4 creates it. If you hit a race, just retry after step 4 finishes.
 
