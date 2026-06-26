@@ -26,6 +26,7 @@ spec:
   values:
     securityContext:
       privileged: true
+      allowPrivilegeEscalation: true
     hostAccess:
       devDri: /dev/dri
       # devCpu intentionally omitted — MSR access not available on Talos
