@@ -79,7 +79,7 @@ spec:
   datasource:
     name: TeslaMate
     type: postgres
-    uid: teslamate
+    uid: TeslaMate
     access: proxy
     url: postgres17-rw.database.svc.cluster.local:5432
     user: ""
