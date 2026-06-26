@@ -80,7 +80,7 @@ spec:
           key: TESLA_POSTGRES_PASS
   datasource:
     name: TeslaMate
-    type: postgres
+    type: grafana-postgresql-datasource
     uid: TeslaMate
     access: proxy
     url: postgres17-rw.database.svc.cluster.local:5432
