@@ -1,0 +1,142 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: external-dns
+  annotations:
+    # renovate: depName="External-DNS"
+    grafana.integreatly.org/dashboard-revision: "1"
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  grafanaCom:
+    id: 23969
+    revision: 1
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: speedtest
+  annotations:
+    # renovate: depName="Speedtest Exporter"
+    grafana.integreatly.org/dashboard-revision: "4"
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  grafanaCom:
+    id: 13665
+    revision: 4
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: unifi-insights
+  annotations:
+    # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
+    grafana.integreatly.org/dashboard-revision: "9"
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  grafanaCom:
+    id: 11315
+    revision: 9
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: unifi-network-sites
+  annotations:
+    # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
+    grafana.integreatly.org/dashboard-revision: "5"
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  grafanaCom:
+    id: 11311
+    revision: 5
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: unifi-uap
+  annotations:
+    # renovate: depName="UniFi-Poller: UAP Insights - Prometheus"
+    grafana.integreatly.org/dashboard-revision: "10"
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  grafanaCom:
+    id: 11314
+    revision: 10
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: unifi-usw
+  annotations:
+    # renovate: depName="UniFi-Poller: USW Insights - Prometheus"
+    grafana.integreatly.org/dashboard-revision: "9"
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  grafanaCom:
+    id: 11312
+    revision: 9
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: unifi-network-combined
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  folder: Network
+  url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/unifi-network-combined.json
