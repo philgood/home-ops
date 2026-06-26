@@ -116,7 +116,13 @@ kubectl create secret generic doppler-token-secret \
   --namespace external-secrets
 ```
 
-Retrieve the token from Doppler — it is the `eso-token` service token under **kubernetes / prd**. The value is only shown once at creation time; store it in your password manager. If lost, create a new token with `doppler configs tokens create eso-token-new --project kubernetes --config prd` and update the secret above.
+Create a fresh service token at rebuild time:
+
+```sh
+doppler configs tokens create eso-token --project kubernetes --config prd
+```
+
+Copy the printed value and use it in the command above. No need to store it — just create a new one each time you rebuild.
 
 > If the `external-secrets` namespace doesn't exist yet, step 4 creates it. If you hit a race, just retry after step 4 finishes.
 
@@ -200,7 +206,7 @@ The repo is public HTTPS — no deploy key needed. If you see auth errors, check
 
 ## Doppler secrets
 
-All app secrets live in the **`kubernetes / prd`** Doppler config. The cluster will not fully converge until they are populated. The Doppler service token (`dp.st.prd.xxx`) is the only credential that lives outside Doppler — store it in your password manager.
+All app secrets live in the **`kubernetes / prd`** Doppler config. The cluster will not fully converge until they are populated. The Doppler service token is the only credential that lives outside Doppler — but you don't need to store it. Just create a new one at rebuild time as shown in Step 5.
 
 To update a secret:
 ```sh
