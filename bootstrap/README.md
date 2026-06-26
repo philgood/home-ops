@@ -116,7 +116,7 @@ kubectl create secret generic doppler-token-secret \
   --namespace external-secrets
 ```
 
-Retrieve the token from Doppler: **Settings → Service Tokens → kubernetes / prd**.
+Retrieve the token from Doppler — it is the `eso-token` service token under **kubernetes / prd**. The value is only shown once at creation time; store it in your password manager. If lost, create a new token with `doppler configs tokens create eso-token-new --project kubernetes --config prd` and update the secret above.
 
 > If the `external-secrets` namespace doesn't exist yet, step 4 creates it. If you hit a race, just retry after step 4 finishes.
 
