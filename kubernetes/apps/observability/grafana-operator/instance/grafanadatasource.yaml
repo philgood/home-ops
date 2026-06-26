@@ -69,13 +69,15 @@ spec:
       grafana.internal/instance: grafana
   valuesFrom:
     - targetPath: user
-      valueType: value
-      name: grafana-secret
-      key: TESLA_POSTGRES_USER
+      valueFrom:
+        secretKeyRef:
+          name: grafana-secret
+          key: TESLA_POSTGRES_USER
     - targetPath: secureJsonData.password
-      valueType: value
-      name: grafana-secret
-      key: TESLA_POSTGRES_PASS
+      valueFrom:
+        secretKeyRef:
+          name: grafana-secret
+          key: TESLA_POSTGRES_PASS
   datasource:
     name: TeslaMate
     type: postgres
