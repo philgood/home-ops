@@ -12,6 +12,7 @@ resources:
   - ./unifi-dns/ks.yaml
   - ./cloudflare-dns/ks.yaml
   - ./echo/ks.yaml
+  - ./konflate/ks.yaml
   - ./multus/ks.yaml
   - ./tailscale/ks.yaml
   - ./envoy-gateway/ks.yaml
