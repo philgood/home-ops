@@ -32,6 +32,10 @@ spec:
         type: Recreate
       template:
         spec:
+          volumes:
+            - name: teslamate-datasource
+              secret:
+                secretName: grafana-teslamate-datasource-secret
           containers:
             - name: grafana
               env:
@@ -47,6 +51,11 @@ spec:
                       key: admin-password
                 - name: GF_INSTALL_PLUGINS
                   value: gapit-htmlgraphics-panel,grafana-clock-panel,pr0ps-trackmap-panel,vonage-status-panel
+              volumeMounts:
+                - name: teslamate-datasource
+                  mountPath: /etc/grafana/provisioning/datasources/teslamate.yaml
+                  subPath: datasource.yaml
+                  readOnly: true
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
