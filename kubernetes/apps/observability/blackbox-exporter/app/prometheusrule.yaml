@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: blackbox-exporter
+spec:
+  groups:
+    - name: blackbox-exporter.rules
+      rules:
+        - alert: BlackboxInstanceDown
+          expr: probe_success == 0
+          for: 5m
+          annotations:
+            summary: Probe target {{ $labels.instance }} is down
+          labels:
+            severity: critical

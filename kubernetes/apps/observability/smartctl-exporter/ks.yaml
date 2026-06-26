@@ -3,20 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app loki
-  namespace: &namespace observability
+  name: smartctl-exporter
+  namespace: observability
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/observability/loki/app
+  interval: 1h
+  path: ./kubernetes/apps/observability/smartctl-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 15m
+  targetNamespace: observability
+  wait: true

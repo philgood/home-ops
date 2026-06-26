@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: snmp-exporter
+spec:
+  groups:
+    - name: snmp-exporter.rules
+      rules:
+        - alert: SNMPTargetDown
+          expr: up{job="snmp-exporter"} == 0
+          for: 5m
+          annotations:
+            summary: SNMP target {{ $labels.instance }} is unreachable
+          labels:
+            severity: critical
+        - alert: NetworkInterfaceDown
+          expr: ifOperStatus{ifAdminStatus="1"} != 1
+          for: 5m
+          annotations:
+            summary: Interface {{ $labels.ifDescr }} on {{ $labels.instance }} is down
+          labels:
+            severity: warning

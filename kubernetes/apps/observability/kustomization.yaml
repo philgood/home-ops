@@ -9,21 +9,23 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./apprise/ks.yaml
-  - ./gatus/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./victoria-logs/ks.yaml
+  - ./blackbox-exporter/ks.yaml
   - ./fluent-bit/ks.yaml
+  - ./gatus/ks.yaml
   - ./grafana-operator/ks.yaml
   - ./grafana/ks.yaml
-  - ./network-ups-tools/ks.yaml
-  - ./teslamate/ks.yaml
-  - ./silence-operator/ks.yaml
   - ./keda/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
   - ./kromgo/ks.yaml
-  - ./unpoller/ks.yaml
-  - ./scrutiny/ks.yaml
-  - ./loki/ks.yaml
+  - ./network-ups-tools/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
-  
+  - ./scrutiny/ks.yaml
+  - ./silence-operator/ks.yaml
+  - ./smartctl-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
+  - ./teslamate/ks.yaml
+  - ./unpoller/ks.yaml
+  - ./victoria-logs/ks.yaml
+
   # Exporters
   - ./exporters

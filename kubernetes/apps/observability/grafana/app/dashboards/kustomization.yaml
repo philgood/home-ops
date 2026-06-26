@@ -8,7 +8,6 @@ resources:
   - ./flux.yaml
   - ./kubernetes.yaml
   - ./network.yaml
-  - ./storage.yaml
   - ./teslamate.yaml
 
 configMapGenerator:

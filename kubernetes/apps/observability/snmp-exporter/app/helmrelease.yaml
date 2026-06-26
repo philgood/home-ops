@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app snmp-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: snmp-exporter
+  interval: 1h
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    fullnameOverride: *app
+    serviceMonitor:
+      enabled: true
+      params:
+        - name: unifi-gateway
+          module: [if_mib]
+          auth: [public_v2]
+          target: 172.20.24.1
+        - name: u7-hallway
+          module: [if_mib]
+          auth: [public_v2]
+          target: 172.20.20.5
+        - name: u7-office
+          module: [if_mib]
+          auth: [public_v2]
+          target: 172.20.20.4
+      relabelings:
+        - sourceLabels: [__param_target]
+          targetLabel: instance
