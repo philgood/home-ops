@@ -71,13 +71,13 @@ spec:
     - targetPath: user
       valueFrom:
         secretKeyRef:
-          name: grafana-secret
-          key: TESLA_POSTGRES_USER
+          name: teslamate-secret
+          key: DATABASE_USER
     - targetPath: secureJsonData.password
       valueFrom:
         secretKeyRef:
-          name: grafana-secret
-          key: TESLA_POSTGRES_PASS
+          name: teslamate-secret
+          key: DATABASE_PASS
   datasource:
     name: TeslaMate
     type: grafana-postgresql-datasource
