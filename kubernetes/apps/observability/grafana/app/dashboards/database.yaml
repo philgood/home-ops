@@ -13,7 +13,9 @@ spec:
     - datasourceName: Prometheus
       inputName: DS_PROMETHEUS
   folder: Database
-  url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/cloudnative-pg-cluster.json
+  configMapRef:
+    name: dashboard-cloudnative-pg-cluster
+    key: cloudnative-pg-cluster.json
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -66,4 +68,6 @@ spec:
     - datasourceName: Prometheus
       inputName: DS_PROMETHEUS
   folder: Database
-  url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/mosquitto-overview.json
+  configMapRef:
+    name: dashboard-mosquitto-overview
+    key: mosquitto-overview.json

@@ -10,3 +10,17 @@ resources:
   - ./network.yaml
   - ./storage.yaml
   - ./teslamate.yaml
+
+configMapGenerator:
+  - name: dashboard-cloudnative-pg-cluster
+    files:
+      - cloudnative-pg-cluster.json
+  - name: dashboard-mosquitto-overview
+    files:
+      - mosquitto-overview.json
+  - name: dashboard-unifi-network-combined
+    files:
+      - unifi-network-combined.json
+
+generatorOptions:
+  disableNameSuffixHash: true

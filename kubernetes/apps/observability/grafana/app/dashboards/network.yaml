@@ -139,4 +139,6 @@ spec:
     - datasourceName: Prometheus
       inputName: DS_PROMETHEUS
   folder: Network
-  url: https://raw.githubusercontent.com/philgood/home-ops/refs/heads/main/dashboards/grafana/unifi-network-combined.json
+  configMapRef:
+    name: dashboard-unifi-network-combined
+    key: unifi-network-combined.json
