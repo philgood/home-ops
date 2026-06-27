@@ -12,6 +12,8 @@ spec:
       check_for_updates: "false"
       check_for_plugin_updates: "false"
       reporting_enabled: "false"
+    dashboards:
+      default_home_dashboard_path: /etc/grafana/home.json
     auth:
       disable_login_form: "false"
     auth.anonymous:
@@ -36,6 +38,9 @@ spec:
             - name: teslamate-datasource
               secret:
                 secretName: grafana-teslamate-datasource-secret
+            - name: home-dashboard
+              configMap:
+                name: grafana-home-dashboard
           containers:
             - name: grafana
               env:
@@ -55,6 +60,10 @@ spec:
                 - name: teslamate-datasource
                   mountPath: /etc/grafana/provisioning/datasources/teslamate.yaml
                   subPath: datasource.yaml
+                  readOnly: true
+                - name: home-dashboard
+                  mountPath: /etc/grafana/home.json
+                  subPath: home.json
                   readOnly: true
               securityContext:
                 allowPrivilegeEscalation: false

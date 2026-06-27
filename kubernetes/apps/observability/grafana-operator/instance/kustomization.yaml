@@ -6,4 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./grafana.yaml
   - ./grafanadatasource.yaml
+  - ./home-dashboard-configmap.yaml
   - ./servicemonitor.yaml
