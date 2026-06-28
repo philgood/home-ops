@@ -30,6 +30,8 @@ spec:
               SABNZBD__PORT: &port 80
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd.narden.au
+              SABNZBD__MISC__DOWNLOAD_DIR: /media/Downloads/sabnzbd/incomplete
+              SABNZBD__MISC__COMPLETE_DIR: /media/Downloads/sabnzbd/complete
               TZ: Australia/Sydney
             envFrom:
               - secretRef:
@@ -76,9 +78,13 @@ spec:
         type: nfs
         server: nas.internal
         path: /mnt/DataPool/media
-        globalMounts:
-          - path: /media/Downloads/sabnzbd
-            subPath: Downloads/sabnzbd
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /media/Downloads/sabnzbd/incomplete
+                subPath: Downloads/sabnzbd/incomplete
+              - path: /media/Downloads/sabnzbd/complete
+                subPath: Downloads/sabnzbd/complete
       tmpfs:
         type: emptyDir
         advancedMounts:
