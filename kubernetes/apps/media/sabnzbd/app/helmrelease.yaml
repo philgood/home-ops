@@ -78,13 +78,9 @@ spec:
         type: nfs
         server: nas.internal
         path: /mnt/DataPool/media
-        advancedMounts:
-          sabnzbd:
-            app:
-              - path: /media/Downloads/sabnzbd/incomplete
-                subPath: Downloads/sabnzbd/incomplete
-              - path: /media/Downloads/sabnzbd/complete
-                subPath: Downloads/sabnzbd/complete
+        globalMounts:
+          - path: /media/Downloads/sabnzbd
+            subPath: Downloads/sabnzbd
       tmpfs:
         type: emptyDir
         advancedMounts:
