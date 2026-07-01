@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: docker.io/evcc/evcc
-              tag: 0.309.2@sha256:af76f38f3dc921e817308a4735dbdda72172ce7e61061d4ddb21616f1bf93c95
+              tag: 0.310.1@sha256:1e20d89fb3e4a12aadac93b936c89ad2015d8bd0741c96b16087c5769d16ad24
             env:
               TZ: Australia/Sydney
               EVCC_NETWORK_URI: "https://evcc.narden.au"
