@@ -28,7 +28,6 @@ spec:
               tag: v3.7.0
             args:
               - --workspace=/siyuan/workspace
-              - --lang=en_US
             env:
               TZ: Australia/Sydney
             envFrom:
