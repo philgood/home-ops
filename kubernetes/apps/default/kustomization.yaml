@@ -19,3 +19,4 @@ resources:
   - ./vikunja/ks.yaml
   - ./manyfold/ks.yaml
   - ./kite/ks.yaml
+  - ./siyuan/ks.yaml
