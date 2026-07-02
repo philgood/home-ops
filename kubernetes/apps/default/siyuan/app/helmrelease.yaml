@@ -39,8 +39,7 @@ spec:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet:
-                    path: /
+                  tcpSocket:
                     port: &port 6806
                   initialDelaySeconds: 10
                   periodSeconds: 10
@@ -50,8 +49,7 @@ spec:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet:
-                    path: /
+                  tcpSocket:
                     port: *port
                   initialDelaySeconds: 10
                   periodSeconds: 10
