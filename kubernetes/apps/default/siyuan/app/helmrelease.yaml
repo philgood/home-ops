@@ -27,6 +27,7 @@ spec:
               repository: b3log/siyuan
               tag: v3.7.0
             args:
+              - serve
               - --workspace=/siyuan/workspace
             env:
               TZ: Australia/Sydney
