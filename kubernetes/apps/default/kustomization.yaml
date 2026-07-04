@@ -19,4 +19,4 @@ resources:
   - ./vikunja/ks.yaml
   - ./manyfold/ks.yaml
   - ./kite/ks.yaml
-  - ./affine/ks.yaml
+  #- ./affine/ks.yaml
