@@ -43,6 +43,16 @@
 
   packageRules: [
     // -------------------------
+    // Deduplication fixes
+    // -------------------------
+    {
+      description: "Intel device plugins - fix duplicate registryUrl from inline HelmRepository+HelmRelease",
+      matchPackageNames: ["intel-device-plugins-operator", "intel-device-plugins-gpu"],
+      matchDatasources: ["helm"],
+      registryUrls: ["https://intel.github.io/helm-charts"],
+    },
+
+    // -------------------------
     // Grouping rules
     // -------------------------
     {
