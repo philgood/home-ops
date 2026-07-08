@@ -41,14 +41,6 @@
     managerFilePatterns: ["/(^|/)kustomization\\.ya?ml(?:\\.j2)?$/"],
   },
 
-  hostRules: [
-    {
-      matchHost: "ghcr.io",
-      username: "philgood",
-      password: process.env.GHCR_TOKEN,
-    },
-  ],
-
   packageRules: [
     // -------------------------
     // Grouping rules
