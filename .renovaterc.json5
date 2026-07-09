@@ -114,18 +114,15 @@
     // Automerge rules
     // -------------------------
     {
-      // Low-risk updates with a short soak period to catch yanked releases
       description: "Auto-merge minor and patch updates",
       matchUpdateTypes: ["minor", "patch", "digest", "pin"],
       automerge: true,
-      minimumReleaseAge: "1 day",
     },
     {
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
       matchUpdateTypes: ["minor", "patch", "digest"],
-      minimumReleaseAge: "1 day",
       ignoreTests: true,
     },
     {
