@@ -99,7 +99,7 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.narden.au
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]
         hostnames:
