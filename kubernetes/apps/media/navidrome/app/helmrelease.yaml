@@ -92,7 +92,7 @@ spec:
       music:
         type: nfs
         server: nas.internal
-        path: /mnt/DataPool/media/music  # Update to your actual music path
+        path: /mnt/DataPool/media/music
         globalMounts:
           - path: /music
             readOnly: true

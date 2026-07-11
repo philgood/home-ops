@@ -1,0 +1,224 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app slskd
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+
+    controllers:
+      slskd:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-dirs:
+            image:
+              repository: docker.io/library/busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - mkdir -p /media/downloads/slskd/complete /media/downloads/slskd/incomplete
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
+        containers:
+          app:
+            image:
+              repository: ghcr.io/slskd/slskd
+              tag: 0.25.1@sha256:ab9ed50e028b524cefdb7c1dd8ebca368a076e18441ee8ac2326473eb850b4c3
+            env:
+              TZ: Australia/Sydney
+              DOTNET_BUNDLE_EXTRACT_BASE_DIR: /tmp/.net
+              SLSKD_APP_DIR: /config
+              SLSKD_HTTP_PORT: &port 5030
+              SLSKD_NO_AUTH: "true"
+              SLSKD_NO_HTTPS: "true"
+              SLSKD_NO_VERSION_CHECK: "true"
+              SLSKD_REMOTE_CONFIGURATION: "true"
+              SLSKD_SLSK_LISTEN_PORT: &soulseekPort 50300
+            envFrom:
+              - secretRef:
+                  name: slskd-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
+              readOnlyRootFilesystem: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+          filebrowser:
+            image:
+              repository: ghcr.io/gtsteffaniak/filebrowser
+              tag: 1.4.0-stable-slim@sha256:436bb660ae4bd84e7bffd70b14aa4a11c3438bc593d3c207213c4e383d0ba255
+            env:
+              FILEBROWSER_CONFIG: /config/config.yaml
+            probes:
+              liveness: &fb-probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &fb-port 8080
+                  periodSeconds: 10
+              readiness: *fb-probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
+              readOnlyRootFilesystem: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+
+    configMaps:
+      config:
+        data:
+          slskd.yml: |-
+            directories:
+              downloads: /media/downloads/slskd/complete
+              incomplete: /media/downloads/slskd/incomplete
+            permissions:
+              file:
+                mode: 750
+            shares:
+              directories:
+                - /media/music
+              filters:
+                - \.ini$
+                - Thumbs.db$
+                - \.DS_Store$
+      filebrowser-config:
+        data:
+          config.yaml: |
+            auth:
+              methods:
+                noauth: true
+            server:
+              port: 8080
+              cacheDir: /home/filebrowser/data/cache
+              sources:
+                - path: /media/downloads/slskd
+                  config:
+                    defaultEnabled: true
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+      filebrowser:
+        controller: *app
+        ports:
+          http:
+            port: *fb-port
+      soulseek:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 172.20.24.79
+        controller: *app
+        externalTrafficPolicy: Local
+        ports:
+          soulseek-tcp:
+            port: *soulseekPort
+            protocol: TCP
+
+    route:
+      app:
+        hostnames:
+          - slskd.narden.au
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+      filebrowser:
+        hostnames:
+          - slskd-files.narden.au
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: filebrowser
+                port: *fb-port
+
+    persistence:
+      config:
+        existingClaim: slskd
+      config-file:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /config/slskd.yml
+            subPath: slskd.yml
+      filebrowser-config:
+        type: configMap
+        identifier: filebrowser-config
+        advancedMounts:
+          slskd:
+            filebrowser:
+              - path: /config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+      filebrowser-data:
+        type: emptyDir
+        advancedMounts:
+          slskd:
+            filebrowser:
+              - path: /home/filebrowser/data
+      media:
+        type: nfs
+        server: nas.internal
+        path: /mnt/DataPool/media
+        globalMounts:
+          - path: /media
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
