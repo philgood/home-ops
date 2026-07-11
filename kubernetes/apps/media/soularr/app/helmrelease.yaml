@@ -90,7 +90,7 @@ spec:
       var:
         type: emptyDir
         globalMounts:
-          - path: /data/var
+          - path: /data
       media:
         type: nfs
         server: nas.internal
