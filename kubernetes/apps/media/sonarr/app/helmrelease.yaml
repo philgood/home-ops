@@ -78,6 +78,8 @@ spec:
             namespace: network
             sectionName: https
       api:
+        annotations:
+          gatus.home-operations.com/enabled: "false"
         hostnames: ["sonarr.narden.au"]
         parentRefs:
           - name: envoy-external

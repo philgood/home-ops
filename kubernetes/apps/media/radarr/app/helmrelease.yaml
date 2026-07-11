@@ -96,6 +96,8 @@ spec:
             namespace: network
             sectionName: https
       api:
+        annotations:
+          gatus.home-operations.com/enabled: "false"
         hostnames:
           - radarr.narden.au
         parentRefs:
