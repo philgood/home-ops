@@ -85,3 +85,7 @@ spec:
         path: /mnt/DataPool/media/downloads/slskd/complete
         globalMounts:
           - path: /slskd
+      crontabs:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/crontabs
