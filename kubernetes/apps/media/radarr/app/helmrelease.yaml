@@ -90,11 +90,33 @@ spec:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]
         hostnames:
-          - "radarr.narden.au"
+          - radarr.narden.au
         parentRefs:
           - name: envoy-external
             namespace: network
             sectionName: https
+      api:
+        hostnames:
+          - radarr.narden.au
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
+            backendRefs:
+              - identifier: app
+                port: *port
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /feed
+            backendRefs:
+              - identifier: app
+                port: *port
     service:
       app:
         ports:
