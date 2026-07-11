@@ -20,3 +20,4 @@ resources:
   - ./sabnzbd/ks.yaml
   - ./navidrome/ks.yaml
   - ./slskd/ks.yaml
+  - ./lidarr/ks.yaml
