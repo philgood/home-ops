@@ -191,6 +191,10 @@ spec:
     persistence:
       config:
         existingClaim: slskd
+        advancedMounts:
+          slskd:
+            app:
+              - path: /config
       config-file:
         type: configMap
         identifier: config
