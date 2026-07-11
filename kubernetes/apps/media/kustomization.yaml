@@ -21,3 +21,5 @@ resources:
   - ./navidrome/ks.yaml
   - ./slskd/ks.yaml
   - ./lidarr/ks.yaml
+  - ./soularr/ks.yaml
+  - ./explo/ks.yaml

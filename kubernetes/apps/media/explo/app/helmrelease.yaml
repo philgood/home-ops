@@ -1,0 +1,94 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app explo
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      explo:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/lumepart/explo
+              tag: v1.1.2@sha256:f22b9131501c68e68a2598b2e6ddceeda7ac547ab6ea1bb701b49f93f54b7f9d
+            env:
+              TZ: Australia/Sydney
+              WEB_UI: "true"
+              EXPLO_SYSTEM: subsonic
+              SYSTEM_URL: http://navidrome.media.svc.cluster.local:4533
+              SLSKD_URL: http://slskd.media.svc.cluster.local:5030
+              DOWNLOAD_SERVICES: slskd
+              MIGRATE_DOWNLOADS: "true"
+              WIZARD_COMPLETE: "true"
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 7288
+    route:
+      app:
+        hostnames:
+          - explo.narden.au
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+    persistence:
+      config:
+        existingClaim: explo-config
+        globalMounts:
+          - path: /opt/explo/config
+      data:
+        type: nfs
+        server: nas.internal
+        path: /mnt/DataPool/media/music
+        globalMounts:
+          - path: /data
+      slskd-downloads:
+        type: nfs
+        server: nas.internal
+        path: /mnt/DataPool/media/downloads/slskd/complete
+        globalMounts:
+          - path: /slskd
