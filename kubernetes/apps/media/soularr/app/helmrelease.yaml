@@ -87,6 +87,10 @@ spec:
               - path: /data/config.ini
                 subPath: config.ini
                 readOnly: true
+      var:
+        type: emptyDir
+        globalMounts:
+          - path: /data/var
       media:
         type: nfs
         server: nas.internal
