@@ -29,18 +29,6 @@ spec:
       lidarr:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          fix-music-perms:
-            image:
-              repository: docker.io/library/busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - mkdir -p /media/music && chown -R 3000:3000 /media/music
-            securityContext:
-              runAsUser: 0
-              runAsNonRoot: false
         containers:
           app:
             image:
