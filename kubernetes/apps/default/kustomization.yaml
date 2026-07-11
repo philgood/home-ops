@@ -8,7 +8,7 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  #- ./homepage/ks.yaml
+  - ./homepage/ks.yaml
   - ./linkding/ks.yaml
   - ./spoolman/ks.yaml
   #- ./atuin/ks.yaml

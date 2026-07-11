@@ -15,6 +15,10 @@ layout:
     style: row
     columns: 4
     icon: mdi-play-circle
+  Music:
+    style: row
+    columns: 4
+    icon: mdi-music
   Downloads:
     style: row
     columns: 4

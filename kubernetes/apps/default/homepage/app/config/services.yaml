@@ -29,6 +29,36 @@
           url: http://seerr.media
           key: "{{HOMEPAGE_VAR_SEERR_TOKEN}}"
 
+- Music:
+    - Navidrome:
+        href: https://navidrome.${SECRET_DOMAIN}
+        icon: navidrome.png
+        description: Music streaming
+    - Feishin:
+        href: https://music.${SECRET_DOMAIN}
+        icon: feishin.png
+        description: Music player
+    - Lidarr:
+        href: https://lidarr.${SECRET_DOMAIN}
+        icon: lidarr.png
+        description: Music library management
+        widget:
+          type: lidarr
+          url: http://lidarr.media:8686
+          key: "{{HOMEPAGE_VAR_LIDARR_TOKEN}}"
+    - Explo:
+        href: https://explo.${SECRET_DOMAIN}
+        icon: mdi-compass
+        description: Music discovery
+    - Soularr:
+        href: https://soularr.${SECRET_DOMAIN}
+        icon: mdi-music-note-plus
+        description: Soulseek bridge
+    - Slskd:
+        href: https://slskd.${SECRET_DOMAIN}
+        icon: mdi-account-music
+        description: Soulseek client
+
 - Downloads:
     - Autobrr:
         href: https://autobrr.${SECRET_DOMAIN}
@@ -50,6 +80,14 @@
         href: https://qb.${SECRET_DOMAIN}
         icon: qbittorrent.png
         description: BitTorrent client
+    - SABnzbd:
+        href: https://sabnzbd.${SECRET_DOMAIN}
+        icon: sabnzbd.png
+        description: Usenet downloader
+        widget:
+          type: sabnzbd
+          url: http://sabnzbd.media
+          key: "{{HOMEPAGE_VAR_SABNZBD_TOKEN}}"
 
 - Home Automation:
     - Home Assistant:
