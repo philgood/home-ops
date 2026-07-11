@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: radarr-oidc
+  namespace: media
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: radarr-app
+  oidc:
+    provider:
+      issuer: https://id.${SECRET_DOMAIN}
+    clientID: 90ae50c9-d7ce-4876-90b7-f2893f7e260c
+    clientSecret:
+      name: radarr
+    redirectURL: https://radarr.${SECRET_DOMAIN}/oauth2/callback
+    scopes: ["openid", "profile", "email"]
