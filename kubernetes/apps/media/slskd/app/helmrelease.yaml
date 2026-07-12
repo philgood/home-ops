@@ -144,6 +144,7 @@ spec:
 
     service:
       app:
+        forceRename: *app
         controller: *app
         ports:
           http:
