@@ -122,7 +122,7 @@ spec:
               file:
                 mode: 644
               directory:
-                mode: 755
+                mode: 777
             shares:
               directories:
                 - /media/music
