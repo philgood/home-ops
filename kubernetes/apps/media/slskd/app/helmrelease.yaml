@@ -120,7 +120,9 @@ spec:
               incomplete: /media/downloads/slskd/incomplete
             permissions:
               file:
-                mode: 750
+                mode: 644
+              directory:
+                mode: 755
             shares:
               directories:
                 - /media/music
