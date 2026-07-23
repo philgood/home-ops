@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kite-org/kite
-              tag: v0.14.0
+              tag: v0.14.1
             env:
               HOST: https://kite.narden.au
               DB_DSN: /data/db.sqlite
