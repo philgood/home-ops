@@ -2,31 +2,35 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  #- ./angelnu-charts.yaml
-  #- ./backube.yaml
-  #- ./bjw-s.yaml
-  #- ./cilium.yaml
-  #- ./coder.yaml
-  #- ./controlplaneio.yaml
-  #- ./coredns.yaml
-  #- ./crunchy-userinit.yaml
-  #- ./crunchydata.yaml
-  #- ./csi-driver-smb.yaml
-  - ./external-dns.yaml
-  - ./external-secrets.yaml
-  - ./grafana.yaml
-  #- ./headlamp.yaml
-  #- ./ingress-nginx.yaml
-  #- ./intel.yaml
-  #- ./jetstack.yaml
-  #- ./k8s-gateway.yaml
-  #- ./metrics-server.yaml
-  #- ./node-feature-discovery.yaml
-  #- ./openebs.yaml
-  #- ./piraeus.yaml
-  #- ./prometheus-community.yaml
-  #- ./rook-ceph.yaml
-  #- ./spegel.yaml
-  #- ./stakater.yaml
-  #- ./weave-gitops.yaml
+# All chart sources are now OCIRepositories defined alongside their HelmRelease.
+# HelmRepositories pointing at *.github.io / Pages-hosted sites fail on this
+# IPv4-only cluster: DNS returns AAAA, source-controller dials IPv6, and gets
+# "network is unreachable". Prefer an OCIRepository for any new chart source.
+resources: []
+# - ./angelnu-charts.yaml
+# - ./backube.yaml
+# - ./bjw-s.yaml
+# - ./cilium.yaml
+# - ./coder.yaml
+# - ./controlplaneio.yaml
+# - ./coredns.yaml
+# - ./crunchy-userinit.yaml
+# - ./crunchydata.yaml
+# - ./csi-driver-smb.yaml
+# - ./external-dns.yaml
+# - ./external-secrets.yaml
+# - ./grafana.yaml
+# - ./headlamp.yaml
+# - ./ingress-nginx.yaml
+# - ./intel.yaml
+# - ./jetstack.yaml
+# - ./k8s-gateway.yaml
+# - ./metrics-server.yaml
+# - ./node-feature-discovery.yaml
+# - ./openebs.yaml
+# - ./piraeus.yaml
+# - ./prometheus-community.yaml
+# - ./rook-ceph.yaml
+# - ./spegel.yaml
+# - ./stakater.yaml
+# - ./weave-gitops.yaml
