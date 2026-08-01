@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: mikejmcguire/hass-actron-amd64
-              tag: 2025.12.0@sha256:0dcfc89021f7f988f8a2bba828c5a87b338826ec3061b702942426e856886dac
+              tag: 2026.7.0@sha256:c34c31d204385c87a03a61b885a290de46f41c48aac3ac2890187bb6378ac9fb
             env:
               TZ: Australia/Sydney
             probes:
