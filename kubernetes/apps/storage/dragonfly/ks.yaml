@@ -36,6 +36,8 @@ spec:
   dependsOn:
     - name: dragonfly
       namespace: storage
+    - name: dragonfly-crd
+      namespace: storage
   path: ./kubernetes/apps/storage/dragonfly/cluster
   prune: true
   sourceRef:
