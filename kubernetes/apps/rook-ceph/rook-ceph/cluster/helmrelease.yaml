@@ -47,6 +47,12 @@ spec:
           - name: envoy-internal
             namespace: network
     cephClusterSpec:
+      # TEMPORARY: mons upgraded to v20.2.4 while OSDs stayed on v20.2.2. The old
+      # OSDs cannot decrypt cephx rotating keys from the new mons, so they
+      # crashloop -- which makes the cluster unhealthy, which makes Rook refuse to
+      # upgrade them. Deadlock. This flag lets Rook finish the OSD upgrade.
+      # REMOVE once all daemons report v20.2.4 and health is HEALTH_OK.
+      skipUpgradeChecks: true
       cephConfig:
         global:
           bdev_enable_discard: "true" # quote
