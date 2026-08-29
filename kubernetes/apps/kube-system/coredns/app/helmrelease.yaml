@@ -41,6 +41,16 @@ spec:
             use_tcp: true
         port: 53
         plugins:
+          # This cluster has no IPv6 route, but several upstreams Flux depends
+          # on return AAAA records (pkg-containers.githubusercontent.com,
+          # raw.githubusercontent.com, registry.k8s.io, quay.io), so fetches
+          # intermittently dial IPv6 and fail with "network is unreachable".
+          # Answer every AAAA query with a cacheable NODATA so callers use A.
+          - name: template
+            parameters: ANY AAAA
+            configBlock: |-
+              rcode NOERROR
+              authority "{{ .Zone }} 60 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. (1 60 60 60 60)"
           - name: errors
           - name: health
             configBlock: |-
