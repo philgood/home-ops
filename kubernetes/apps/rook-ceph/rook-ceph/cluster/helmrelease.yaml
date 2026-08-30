@@ -65,6 +65,8 @@ spec:
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       healthCheck:
         muteHealthWarning:
+          AUTH_INSECURE_SERVICE_KEY_TYPE:
+            policy: mute
           AUTH_INSECURE_ROTATING_SERVICE_KEY_TYPE:
             policy: mute
           AUTH_INSECURE_CLIENT_KEY_TYPE:
