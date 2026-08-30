@@ -64,10 +64,6 @@ spec:
         ssl: false
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       healthCheck:
-        # Ceph 20 (Tentacle) deprecated the older cephx key cipher and raised the
-        # warnings to HEALTH_ERR severity. Rotating the CSI keys would risk the
-        # PV connections backing every RBD volume, so those stay on `aes` below
-        # and the resulting warnings are muted. Revisit if cephx is hardened later.
         muteHealthWarning:
           AUTH_INSECURE_ROTATING_SERVICE_KEY_TYPE:
             policy: mute
@@ -78,6 +74,7 @@ spec:
           AUTH_INSECURE_KEYS_CREATABLE:
             policy: mute
       mgr:
+        count: 2
         modules:
           - name: diskprediction_local
             enabled: true
@@ -97,12 +94,9 @@ spec:
       security:
         cephx:
           daemon:
-            # Bumping keyGeneration rotates OSD/mgr keys once. Currently at 1.
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
           csi:
-            # Deliberately left on the old cipher: rotating CSI keys can break
-            # in-flight PV connections for every RBD volume in the cluster.
             keyType: aes
       storage:
         useAllNodes: true
