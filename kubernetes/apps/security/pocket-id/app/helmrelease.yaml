@@ -87,7 +87,7 @@ spec:
         annotations:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.kubernetes.io/target: external.${SECRET_DOMAIN}
         hostnames:
           - id.${SECRET_DOMAIN}
         parentRefs:

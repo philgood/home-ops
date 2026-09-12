@@ -65,7 +65,7 @@ spec:
         controller: mosquitto
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mqtt.narden.au
+          external-dns.kubernetes.io/hostname: mqtt.narden.au
           lbipam.cilium.io/ips: 172.20.24.99
         ports:
           mqtt:
