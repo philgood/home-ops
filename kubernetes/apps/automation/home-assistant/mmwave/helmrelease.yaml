@@ -45,6 +45,7 @@ spec:
               TZ: Australia/Sydney
               HA_BASE_URL: http://home-assistant.automation.svc.cluster.local:8123
               DATA_DIR: /data
+              PORT: "8099"
             envFrom:
               - secretRef:
                   name: home-assistant-mmwave-secret  
