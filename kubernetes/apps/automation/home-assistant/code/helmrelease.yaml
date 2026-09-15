@@ -60,8 +60,6 @@ spec:
                 enabled: true
               startup:
                 enabled: true
-            securityContext:
-              allowPrivilegeEscalation: false
             resources:
               requests:
                 cpu: 10m
