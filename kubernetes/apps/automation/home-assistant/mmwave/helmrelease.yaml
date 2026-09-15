@@ -44,6 +44,7 @@ spec:
             env:
               TZ: Australia/Sydney
               HA_BASE_URL: http://home-assistant.automation.svc.cluster.local:8123
+              DATA_DIR: /data
             envFrom:
               - secretRef:
                   name: home-assistant-mmwave-secret  
@@ -85,3 +86,13 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+    persistence:
+      data:
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
