@@ -17,6 +17,8 @@ spec:
     remediation:
       retries: 3
   values:
+    defaultPodOptions:
+      automountServiceAccountToken: true
     controllers:
       dragonfly-operator:
         strategy: RollingUpdate
