@@ -118,11 +118,11 @@ spec:
             directories:
               downloads: /media/downloads/slskd/complete
               incomplete: /media/downloads/slskd/incomplete
-            permissions:
-              file:
-                mode: 666
-              directory:
-                mode: 777
+            transfers:
+              download:
+                destination:
+                  permissions:
+                    mode: 666
             shares:
               directories:
                 - /media/music
