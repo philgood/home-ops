@@ -109,6 +109,16 @@
         commitMessageTopic: "{{{groupName}}} group",
       },
     },
+    {
+      // Kubernetes cannot outrun the Talos line that runs it: Talos 1.13 tops
+      // out at Kubernetes 1.36.3. Grouping batches these two but cannot hold
+      // one back, so v1.37.0 was merged twice and broke upgrades both times.
+      // Raise this ceiling only after the cluster is on Talos 1.14.
+      description: "Kubernetes cannot outrun Talos",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/siderolabs/kubelet"],
+      allowedVersions: "<1.37",
+    },
 
     // -------------------------
     // Automerge rules

@@ -6,8 +6,12 @@ metadata:
   name: kubernetes
 spec:
   kubernetes:
+    # Must stay within what the running Talos supports: the whole 1.13 line
+    # tops out at Kubernetes 1.36.3, so 1.37 needs Talos 1.14 first. Keep this
+    # in step with kubernetesVersion in talos/talenv.yaml -- when they disagree,
+    # tuppr and the generated machine config fight over the cluster.
     # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-    version: v1.37.0
+    version: v1.36.3
   healthChecks:
     - apiVersion: volsync.backube/v1alpha1
       kind: ReplicationSource
