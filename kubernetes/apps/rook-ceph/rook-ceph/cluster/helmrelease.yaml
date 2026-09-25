@@ -95,11 +95,30 @@ spec:
           requireMsgr2: true
       security:
         cephx:
+          # Daemon keys are userspace only -- a client never decrypts a service
+          # key, it just relays the ticket -- so aes256k here is safe even while
+          # the kernel clients below cannot speak it. Generation 3 exists to
+          # catch mgr.b, whose key was minted as aes when the second mgr was
+          # added a day after the generation 2 rotation.
           daemon:
             keyRotationPolicy: KeyGeneration
+            keyGeneration: 3
+            keyType: aes256k
+          # No peers are configured (ceph-blockpool has mirroring disabled and
+          # there is no CephRBDMirror), so this rotates a key nothing consumes.
+          rbdMirrorPeer:
+            keyRotationPolicy: KeyGeneration
             keyGeneration: 2
+          # Must stay aes until the cluster is on Talos 1.14. RBD volumes are
+          # mounted by the kernel (no mounter override on ceph-block), and the
+          # libceph aes256k patches only land in the 1.14 kernel:
+          # siderolabs/pkgs@84c1b87 "backport aes256k support (Ceph)".
+          # Rotating this on 1.13 would break every RBD mount in the cluster.
           csi:
             keyType: aes
+          # allowedCiphers is deliberately unset. Restricting it to aes256k
+          # would forbid the aes CSI keys above, and Rook documents it as able
+          # to disrupt cluster availability. Set it when CSI moves to aes256k.
       storage:
         useAllNodes: true
         useAllDevices: false
