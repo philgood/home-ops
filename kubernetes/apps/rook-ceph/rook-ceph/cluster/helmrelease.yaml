@@ -95,15 +95,19 @@ spec:
           requireMsgr2: true
       security:
         cephx:
-          # Daemon keys are userspace only -- a client never decrypts a service
-          # key, it just relays the ticket -- so aes256k here is safe even while
-          # the kernel clients below cannot speak it. Generation 3 exists to
-          # catch mgr.b, whose key was minted as aes when the second mgr was
-          # added a day after the generation 2 rotation.
+          # Generation 3 rotated mgr.b, whose key was minted as aes when the
+          # second mgr was added a day after the generation 2 rotation. Daemon
+          # keys are userspace only -- a client never decrypts a service key, it
+          # only relays the ticket -- so aes256k here is safe even though the
+          # kernel clients below cannot speak it.
+          #
+          # Do not add keyType here. Rook treats a set daemon.keyType as a
+          # bootstrap workaround and responds by starting the mons with
+          # --mon-auth-emergency-allowed-ciphers, which raises a permanent
+          # AUTH_EMERGENCY_CIPHERS_SET warning. Bump the generation instead.
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 3
-            keyType: aes256k
           # No peers are configured (ceph-blockpool has mirroring disabled and
           # there is no CephRBDMirror), so this rotates a key nothing consumes.
           rbdMirrorPeer:
@@ -116,9 +120,9 @@ spec:
           # Rotating this on 1.13 would break every RBD mount in the cluster.
           csi:
             keyType: aes
-          # allowedCiphers is deliberately unset. Restricting it to aes256k
-          # would forbid the aes CSI keys above, and Rook documents it as able
-          # to disrupt cluster availability. Set it when CSI moves to aes256k.
+          # allowedCiphers is deliberately unset: it would forbid the aes CSI
+          # keys above, Rook documents it as able to disrupt availability, and
+          # Rook's own guidance is to leave it unmodified.
       storage:
         useAllNodes: true
         useAllDevices: false
