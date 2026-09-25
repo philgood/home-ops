@@ -29,7 +29,7 @@ spec:
             # The talosctl image is just the binary plus CA certs -- no shell --
             # so the rename and prune happen afterwards in busybox.
             - name: snapshot
-              image: ghcr.io/siderolabs/talosctl:v1.13.9
+              image: ghcr.io/siderolabs/talosctl:v1.14.1
               # 172.20.24.9 is the control plane VIP, so this follows whichever
               # node currently holds it rather than pinning to one that may be down.
               args:
