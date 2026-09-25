@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: etcd-backup
+spec:
+  groups:
+    - name: etcd-backup.rules
+      rules:
+        # A backup that silently stops running is worse than no backup, because
+        # it is trusted. The schedule is daily, so 36h allows one missed run.
+        - alert: EtcdBackupMissing
+          expr: |-
+            time() - max(kube_cronjob_status_last_successful_time{cronjob="etcd-backup"}) > 129600
+          for: 1h
+          annotations:
+            summary: >-
+              No successful etcd snapshot for over 36h. The cluster has no recent
+              restore point.
+          labels:
+            severity: critical
+
+        - alert: EtcdBackupJobFailed
+          expr: |-
+            kube_job_status_failed{job_name=~"etcd-backup-.*"} > 0
+          for: 15m
+          annotations:
+            summary: >-
+              etcd backup job {{ $labels.job_name }} failed.
+          labels:
+            severity: warning

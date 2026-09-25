@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/batch/cronjob_v1.json
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etcd-backup
+spec:
+  schedule: "30 2 * * *"
+  timeZone: Australia/Sydney
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          initContainers:
+            # The talosctl image is just the binary plus CA certs -- no shell --
+            # so the directory has to exist before it writes, and the rename and
+            # prune happen afterwards in busybox.
+            - name: mkdir
+              image: docker.io/library/busybox:1.37.0
+              command: ["sh", "-c", "mkdir -p /nfs/etcd-backup"]
+              volumeMounts:
+                - name: nfs
+                  mountPath: /nfs
+            - name: snapshot
+              image: ghcr.io/siderolabs/talosctl:v1.13.9
+              # 172.20.24.9 is the control plane VIP, so this follows whichever
+              # node currently holds it rather than pinning to one that may be down.
+              args:
+                - --talosconfig=/var/run/secrets/talos.dev/config
+                - --endpoints=172.20.24.9
+                - --nodes=172.20.24.9
+                - etcd
+                - snapshot
+                - /nfs/etcd-backup/.etcd-snapshot.tmp
+              volumeMounts:
+                - name: talosconfig
+                  mountPath: /var/run/secrets/talos.dev
+                  readOnly: true
+                - name: nfs
+                  mountPath: /nfs
+          containers:
+            # Only promote the snapshot to a dated filename once talosctl exited
+            # cleanly, so a failed run can never overwrite a good backup.
+            - name: rotate
+              image: docker.io/library/busybox:1.37.0
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  dir=/nfs/etcd-backup
+                  mv "$dir/.etcd-snapshot.tmp" "$dir/etcd-$(date +%Y%m%d-%H%M%S).db"
+                  find "$dir" -name 'etcd-*.db' -mtime +14 -delete
+                  echo "current snapshots:"
+                  ls -lh "$dir"
+              volumeMounts:
+                - name: nfs
+                  mountPath: /nfs
+          volumes:
+            - name: talosconfig
+              secret:
+                secretName: etcd-backup-talosconfig
+            - name: nfs
+              nfs:
+                server: nas.internal
+                path: /mnt/DataPool/apps
