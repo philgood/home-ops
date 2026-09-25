@@ -18,14 +18,7 @@ spec:
           restartPolicy: OnFailure
           initContainers:
             # The talosctl image is just the binary plus CA certs -- no shell --
-            # so the directory has to exist before it writes, and the rename and
-            # prune happen afterwards in busybox.
-            - name: mkdir
-              image: docker.io/library/busybox:1.37.0
-              command: ["sh", "-c", "mkdir -p /nfs/etcd-backup"]
-              volumeMounts:
-                - name: nfs
-                  mountPath: /nfs
+            # so the rename and prune happen afterwards in busybox.
             - name: snapshot
               image: ghcr.io/siderolabs/talosctl:v1.13.9
               # 172.20.24.9 is the control plane VIP, so this follows whichever
@@ -36,7 +29,7 @@ spec:
                 - --nodes=172.20.24.9
                 - etcd
                 - snapshot
-                - /nfs/etcd-backup/.etcd-snapshot.tmp
+                - /nfs/.etcd-snapshot.tmp
               volumeMounts:
                 - name: talosconfig
                   mountPath: /var/run/secrets/talos.dev
@@ -53,7 +46,7 @@ spec:
                 - -c
                 - |
                   set -eu
-                  dir=/nfs/etcd-backup
+                  dir=/nfs
                   mv "$dir/.etcd-snapshot.tmp" "$dir/etcd-$(date +%Y%m%d-%H%M%S).db"
                   find "$dir" -name 'etcd-*.db' -mtime +14 -delete
                   echo "current snapshots:"
@@ -66,6 +59,9 @@ spec:
               secret:
                 secretName: etcd-backup-talosconfig
             - name: nfs
+              # Dedicated NFS export. The parent /mnt/DataPool/apps is exported
+              # read-only, so this needs its own read-write share on the NAS,
+              # configured like the volsync one.
               nfs:
                 server: nas.internal
-                path: /mnt/DataPool/apps
+                path: /mnt/DataPool/apps/etcd-backup
