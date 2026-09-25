@@ -16,6 +16,15 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          # Matches the ownership of the NFS export, so this works whether or
+          # not the share squashes root.
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            seccompProfile:
+              type: RuntimeDefault
           initContainers:
             # The talosctl image is just the binary plus CA certs -- no shell --
             # so the rename and prune happen afterwards in busybox.
