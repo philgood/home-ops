@@ -128,14 +128,15 @@ spec:
           # CEPH_CRYPTO_AES256KRB5 backport, so the 57 ceph-block PVCs can
           # authenticate with it.
           #
-          # keepPriorKeyCountMax keeps the previous aes key valid through the
-          # migration, so anything still holding it does not lose access
-          # mid-rotation. Drop it to 0 once the rotation has settled.
+          # Rook rotates these by minting client.csi-*.<generation> entities
+          # rather than replacing keys in place, so the generation-1 entities
+          # lingered as prior keys. All four drivers are verified on the .2
+          # entities with aes256k, so 0 drops the old aes ones.
           csi:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
             keyType: aes256k
-            keepPriorKeyCountMax: 1
+            keepPriorKeyCountMax: 0
           # allowedCiphers stays unset until the prior aes keys are dropped;
           # Rook documents it as able to disrupt availability and advises
           # leaving it alone.
