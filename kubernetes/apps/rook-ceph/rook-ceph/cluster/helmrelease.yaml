@@ -63,18 +63,12 @@ spec:
         urlPrefix: /
         ssl: false
         prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
-      healthCheck:
-        # The two service-key warnings are deliberately absent: the daemon keys
-        # are aes256k now, so muting them would only hide a future daemon that
-        # gets minted on aes, which is exactly how mgr.b went unnoticed.
-        # These three stay until CSI can move off aes on Talos 1.14.
-        muteHealthWarning:
-          AUTH_INSECURE_CLIENT_KEY_TYPE:
-            policy: mute
-          AUTH_INSECURE_KEYS_ALLOWED:
-            policy: mute
-          AUTH_INSECURE_KEYS_CREATABLE:
-            policy: mute
+      # healthCheck is deliberately absent so the chart's own daemonHealth and
+      # livenessProbe defaults apply. It previously existed only to hold cephx
+      # mutes; every entity is on aes256k and allowedCiphers forbids aes, so all
+      # five AUTH_INSECURE_* warnings are resolved rather than suppressed.
+      # Muting any of them again would hide a daemon minted on aes, which is
+      # exactly how mgr.b went unnoticed for a day.
       mgr:
         count: 2
         modules:
