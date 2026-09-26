@@ -9,11 +9,11 @@ patchesDir: patches
 # how the nodes already install: factory.talos.dev/metal-installer/<id>:<ver>.
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.14.1
-# Deliberately behind the Talos line: tuppr's KubernetesUpgrade drives the
-# Kubernetes version, so this tracks what the cluster already runs rather than
-# leading it. Raise it only once tuppr has taken the cluster there.
+# tuppr's KubernetesUpgrade drives the actual rollout; this must match it, or
+# the next `just talos apply` fights tuppr over the kubelet image. Do not run
+# that apply until tuppr reports the upgrade Completed.
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.36.3
+kubernetesVersion: v1.37.1
 
 secureboot: false
 schematicId: "@schematics/control-plane.yaml"
