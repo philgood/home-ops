@@ -107,8 +107,7 @@ spec:
           # Generation 3 rotated mgr.b, whose key was minted as aes when the
           # second mgr was added a day after the generation 2 rotation. Daemon
           # keys are userspace only -- a client never decrypts a service key, it
-          # only relays the ticket -- so aes256k here is safe even though the
-          # kernel clients below cannot speak it.
+          # only relays the ticket.
           #
           # Do not add keyType here. Rook treats a set daemon.keyType as a
           # bootstrap workaround and responds by starting the mons with
@@ -122,16 +121,24 @@ spec:
           rbdMirrorPeer:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
-          # Must stay aes until the cluster is on Talos 1.14. RBD volumes are
-          # mounted by the kernel (no mounter override on ceph-block), and the
-          # libceph aes256k patches only land in the 1.14 kernel:
-          # siderolabs/pkgs@84c1b87 "backport aes256k support (Ceph)".
-          # Rotating this on 1.13 would break every RBD mount in the cluster.
+          # RBD volumes are mounted by the kernel (no mounter override on
+          # ceph-block), so these keys could not leave aes until the kernel
+          # could speak aes256k. Talos v1.14.1 builds from pkgs
+          # v1.14.0-25-gf694e1b, which carries the libceph
+          # CEPH_CRYPTO_AES256KRB5 backport, so the 57 ceph-block PVCs can
+          # authenticate with it.
+          #
+          # keepPriorKeyCountMax keeps the previous aes key valid through the
+          # migration, so anything still holding it does not lose access
+          # mid-rotation. Drop it to 0 once the rotation has settled.
           csi:
-            keyType: aes
-          # allowedCiphers is deliberately unset: it would forbid the aes CSI
-          # keys above, Rook documents it as able to disrupt availability, and
-          # Rook's own guidance is to leave it unmodified.
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            keyType: aes256k
+            keepPriorKeyCountMax: 1
+          # allowedCiphers stays unset until the prior aes keys are dropped;
+          # Rook documents it as able to disrupt availability and advises
+          # leaving it alone.
       storage:
         useAllNodes: true
         useAllDevices: false
