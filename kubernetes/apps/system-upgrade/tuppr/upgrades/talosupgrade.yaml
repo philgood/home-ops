@@ -6,8 +6,12 @@ metadata:
   name: talos
 spec:
   talos:
-    # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-    version: v1.13.9
+    # Keep in step with talosVersion in talos/topf.yaml. Tracked against the
+    # release list because ghcr.io/siderolabs/installer stopped publishing
+    # after v1.13.10; tuppr builds the image from each node's own
+    # .machine.install.image, which is an Image Factory reference.
+    # renovate: datasource=github-releases depName=siderolabs/talos
+    version: v1.14.1
   policy:
     rebootMode: default
   healthChecks:
