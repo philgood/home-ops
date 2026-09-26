@@ -76,8 +76,14 @@ spec:
     route:
       app:
         annotations:
+          # There is no 200 anywhere to probe: / and /health both 404, and the
+          # MCP endpoint only answers POST. A GET to /mcp returns 405, which
+          # still proves DNS, the gateway, the service, the pod and that the
+          # MCP route is mounted -- a 404 here would mean the app is up but
+          # MCP is not registered.
           gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 200"]
+            path: /mcp
+            conditions: ["[STATUS] == 405"]
         hostnames:
           - "hass-mcp.narden.au"
         parentRefs:
