@@ -137,9 +137,13 @@ spec:
             keyGeneration: 2
             keyType: aes256k
             keepPriorKeyCountMax: 0
-          # allowedCiphers stays unset until the prior aes keys are dropped;
-          # Rook documents it as able to disrupt availability and advises
-          # leaving it alone.
+          # Every one of the 14 auth entities is on aes256k -- mons, osds, mgrs,
+          # admin, exporter, crash, rbd-mirror-peer and the four csi .2 clients
+          # -- so forbidding aes locks in the hardening rather than merely
+          # preferring it. Rook flags this field as able to disrupt
+          # availability, which is true while anything still holds an aes key;
+          # audit with `ceph auth ls` before ever narrowing it further.
+          allowedCiphers: [aes256k]
       storage:
         useAllNodes: true
         useAllDevices: false
