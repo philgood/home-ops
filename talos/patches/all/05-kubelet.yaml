@@ -1,0 +1,8 @@
+---
+# Was machine.kubelet. In v1.14 the kubelet is its own document and setting the
+# v1alpha1 form alongside it is rejected. `config` is the old `extraConfig`;
+# nodeIP moved to KubeNodeConfig (see control-plane/01-kube-node.yaml).
+apiVersion: v1alpha1
+kind: KubeletConfig
+config:
+  serializeImagePulls: false

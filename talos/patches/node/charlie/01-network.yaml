@@ -1,0 +1,65 @@
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: ethSel0
+selector:
+  match: glob("0-1.0", link.bus_path)
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: ethSel1
+selector:
+  match: glob("1-1.0", link.bus_path)
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: bond0-m0
+selector:
+  match: glob("58:47:ca:7a:c3:dd", mac(link.hardware_addr)) && glob("igc", link.driver)
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - bond0-m0
+bondMode: active-backup
+mtu: 1500
+addresses:
+  - address: 172.20.24.12/24
+routes:
+  - gateway: 172.20.24.1
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 172.20.24.9
+link: bond0
+---
+# Thunderbolt mesh to the other two nodes.
+apiVersion: v1alpha1
+kind: LinkConfig
+name: ethSel0
+mtu: 65520
+addresses:
+  - address: 169.254.255.103/32
+routes:
+  - destination: 169.254.255.101/32
+    metric: 2048
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: ethSel1
+mtu: 65520
+addresses:
+  - address: 169.254.255.103/32
+routes:
+  - destination: 169.254.255.102/32
+    metric: 2048
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.21
+vlanID: 21
+parent: bond0
+mtu: 1500
+addresses:
+  - address: 172.20.21.12/24

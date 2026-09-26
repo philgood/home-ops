@@ -8,7 +8,7 @@ Step-by-step rebuild guide for the 3-node MS-01 cluster. Use this if you need to
 
 | Layer | Tool |
 |-------|------|
-| OS | Talos Linux (managed via `talhelper`) |
+| OS | Talos Linux (managed via `topf`) |
 | Kubernetes | v1.36 (single control-plane pool, all 3 nodes schedulable) |
 | GitOps | Flux (deployed via `flux-operator` + `flux-instance`) |
 | Secrets | Doppler → External Secrets Operator |
@@ -33,7 +33,7 @@ You will also need:
 
 ## Step 1 — Flash Talos to each MS-01
 
-Each node needs the factory image baked with the correct schematic (i915, intel-ucode, thunderbolt extensions + `i915.enable_guc=3`). The current installer URL is stored in `talconfig.yaml` as `talosImageURL`:
+Each node needs the factory image baked with the correct schematic (i915, intel-ucode, thunderbolt extensions + `i915.enable_guc=3`). The schematic is declared in `talos/schematics/control-plane.yaml` and resolved to an installer image by `topf`, tagged with `talosVersion` from `talos/topf.yaml`:
 
 ```
 factory.talos.dev/metal-installer/6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e
@@ -58,10 +58,14 @@ factory.talos.dev/metal-installer/6471689ef9198e2867a84e0dc40552e7c3a94cb5d31498
 ## Step 2 — Generate Talos machine configs
 
 ```sh
-just talos generate-config
+just talos render
 ```
 
-Reads `talconfig.yaml` + `talsecret.yaml` and writes per-node configs to `talos/clusterconfig/`.
+Reads `topf.yaml` + `patches/` + `talsecret.yaml` and writes per-node configs to `talos/output/`.
+That directory is gitignored: the rendered files embed the cluster PKI.
+
+Use `just talos diff` to see what would change on the running nodes before
+applying anything, and `just talos apply` to apply it.
 
 ---
 
@@ -196,9 +200,10 @@ The repo is public HTTPS — no deploy key needed. If you see auth errors, check
 
 | File | Purpose |
 |------|---------|
-| `talos/talconfig.yaml` | Node IPs, disk serials, schematic, patches |
+| `talos/topf.yaml` | Node IPs, roles, schematic, Talos + Kubernetes versions |
+| `talos/patches/` | Machine config patches, layered all/ → control-plane/ → node/ |
+| `talos/schematics/` | Image Factory customization (extensions, kernel args) |
 | `talos/talsecret.yaml` | Talos cluster PKI — **back this up outside git** |
-| `talos/talenv.yaml` | Talos + Kubernetes versions (updated by Renovate) |
 | `bootstrap/helmfile.yaml` | Bootstrap chart sequence |
 | `scripts/bootstrap-apps.sh` | Orchestration script for `just bootstrap apps` |
 

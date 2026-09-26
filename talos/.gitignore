@@ -1,0 +1,4 @@
+# Rendered machine configs. These embed the cluster PKI in plaintext and are
+# reproducible from topf.yaml + patches + Doppler, so they are never committed.
+output/
+talosconfig

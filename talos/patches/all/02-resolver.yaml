@@ -1,0 +1,10 @@
+---
+# Was machine.network.nameservers + disableSearchDomain, which v1.14 rejects
+# alongside the generated network documents.
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 172.20.24.1
+  - address: 1.1.1.1
+searchDomains:
+  disableDefault: true

@@ -1,0 +1,27 @@
+---
+# Must keep resolving to schematic id
+# 6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e, which is
+# what the nodes are installed from today. Changing anything here produces a
+# different id and therefore a different installer image.
+customization:
+  extraKernelArgs:
+    - -init_on_alloc                      # Less security, faster puter
+    - -init_on_free                       # Less security, faster puter
+    - -selinux                            # Less security, faster puter
+    - apparmor=0                          # Less security, faster puter
+    - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
+    - init_on_alloc=0                     # Less security, faster puter
+    - init_on_free=0                      # Less security, faster puter
+    - intel_iommu=on                      # PCI Passthrough
+    - iommu=pt                            # PCI Passthrough
+    - mitigations=off                     # Less security, faster puter
+    - security=none                       # Less security, faster puter
+    - talos.auditd.disabled=1             # Less security, faster puter
+    - net.ifnames=0
+    - pcie_ports=native
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/i915
+      - siderolabs/intel-ucode
+      - siderolabs/thunderbolt
+      - siderolabs/util-linux-tools

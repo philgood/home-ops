@@ -1,0 +1,9 @@
+---
+# Was additionalApiServerCertSans in talconfig.yaml -- the same two names, but
+# on the kube-apiserver certificate rather than the machine one. The v1.14
+# field is certExtraSANs.
+apiVersion: v1alpha1
+kind: KubeAPIServerConfig
+certExtraSANs:
+  - 127.0.0.1
+  - 172.20.24.9

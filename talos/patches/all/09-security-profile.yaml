@@ -1,0 +1,8 @@
+---
+# v1.14 introduced this and defaults it to true (sandboxd workload isolation).
+# The cluster has never run with it: pinned false so the OS upgrade does not
+# quietly change how every workload is executed. Revisit deliberately, after
+# checking the Intel GPU plugin and the host-namespace agents under it.
+apiVersion: v1alpha1
+kind: SecurityProfileConfig
+workloadIsolation: false

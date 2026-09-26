@@ -1,0 +1,10 @@
+---
+# Was cluster.apiServer.admissionControl: {$patch: delete} in talconfig.yaml.
+# v1.14 generates this as a document instead, defaulting to enforce=baseline
+# with only kube-system exempt -- which would reject the privileged and
+# host-namespace pods in network, rook-ceph, observability and default.
+# Deleting it keeps the cluster exactly as it runs today.
+apiVersion: v1alpha1
+kind: KubeAdmissionControlConfig
+name: PodSecurity
+$patch: delete

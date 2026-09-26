@@ -1,0 +1,17 @@
+---
+# Was a machine.files write to /etc/cri/conf.d/20-customization.part. That form
+# still works in v1.14 but is deprecated, and it occupies the reserved document
+# name "customization" -- hence the name below.
+apiVersion: v1alpha1
+kind: CRICustomizationConfig
+name: containerd
+content: |-
+  [plugins."io.containerd.cri.v1.images"]
+    discard_unpacked_layers = false
+  [plugins."io.containerd.grpc.v1.cri"]
+    enable_unprivileged_ports = true
+    enable_unprivileged_icmp = true
+  [plugins."io.containerd.grpc.v1.cri".containerd]
+    discard_unpacked_layers = false
+  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+    discard_unpacked_layers = false

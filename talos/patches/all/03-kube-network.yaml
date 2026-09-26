@@ -1,0 +1,9 @@
+---
+# Was clusterPodNets / clusterSvcNets in talconfig.yaml.
+apiVersion: v1alpha1
+kind: KubeNetworkConfig
+dnsDomain: cluster.local
+podSubnets:
+  - 10.42.0.0/16
+serviceSubnets:
+  - 10.43.0.0/16

@@ -98,7 +98,7 @@ function sync_helm_releases() {
 
 function main() {
     check_env KUBECONFIG TALOSCONFIG
-    check_cli helmfile kubectl kustomize talhelper yq
+    check_cli helmfile kubectl kustomize topf yq
 
     # Apply resources and Helm releases
     wait_for_nodes

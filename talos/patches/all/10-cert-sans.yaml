@@ -1,0 +1,7 @@
+---
+# Was additionalMachineCertSans in talconfig.yaml. The Talos API is reached on
+# the VIP and on loopback, so both need to be in the machine certificate.
+machine:
+  certSANs:
+    - 127.0.0.1
+    - 172.20.24.9

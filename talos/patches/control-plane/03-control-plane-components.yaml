@@ -1,0 +1,37 @@
+---
+# Helm-managed CoreDNS replaces the built-in.
+apiVersion: v1alpha1
+kind: KubeCoreDNSConfig
+enabled: false
+---
+# Cilium replaces kube-proxy.
+apiVersion: v1alpha1
+kind: KubeProxyConfig
+enabled: false
+---
+apiVersion: v1alpha1
+kind: KubeAPIServerConfig
+extraArgs:
+  # https://kubernetes.io/docs/tasks/extend-kubernetes/configure-aggregation-layer/
+  enable-aggregator-routing: "true"
+  feature-gates: MutatingAdmissionPolicy=true
+  runtime-config: admissionregistration.k8s.io/v1beta1=true
+---
+apiVersion: v1alpha1
+kind: KubeControllerManagerConfig
+extraArgs:
+  bind-address: "0.0.0.0"
+---
+apiVersion: v1alpha1
+kind: KubeSchedulerConfig
+extraArgs:
+  bind-address: "0.0.0.0"
+---
+# cluster.etcd is not deprecated in v1.14 -- there is no KubeEtcdConfig -- so
+# this stays a v1alpha1 patch.
+cluster:
+  etcd:
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+    advertisedSubnets:
+      - 172.20.24.0/24

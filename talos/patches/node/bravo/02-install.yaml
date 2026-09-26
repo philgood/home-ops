@@ -1,0 +1,9 @@
+---
+# Was machine.install.diskSelector.serial. topf supplies install.image itself
+# from talosVersion + schematicId, so only the disk is pinned here.
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+provisioning:
+  diskSelector:
+    match: disk.serial == "22323B87677A"
+  wipe: false

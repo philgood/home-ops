@@ -1,0 +1,13 @@
+---
+# Single KubeNodeConfig patch: a second one elsewhere makes the taint delete
+# below run against a document that no longer carries the key.
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+nodeIP:
+  validSubnets:
+    - 172.20.24.0/24
+taints:
+  # Was cluster.allowSchedulingOnControlPlanes: true. In v1.14 that is
+  # expressed by removing the taint rather than by a cluster-level flag.
+  node-role.kubernetes.io/control-plane:
+    $patch: delete

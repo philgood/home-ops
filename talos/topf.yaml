@@ -1,0 +1,30 @@
+---
+clusterName: kubernetes
+clusterEndpoint: https://172.20.24.9:6443
+
+secretsPath: talsecret.yaml
+patchesDir: patches
+
+# The installer image is built from these plus the schematic below, which is
+# how the nodes already install: factory.talos.dev/metal-installer/<id>:<ver>.
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: v1.14.1
+# Deliberately behind the Talos line: tuppr's KubernetesUpgrade drives the
+# Kubernetes version, so this tracks what the cluster already runs rather than
+# leading it. Raise it only once tuppr has taken the cluster there.
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.36.3
+
+secureboot: false
+schematicId: "@schematics/control-plane.yaml"
+
+nodes:
+  - host: alpha
+    ip: 172.20.24.10
+    role: control-plane
+  - host: bravo
+    ip: 172.20.24.11
+    role: control-plane
+  - host: charlie
+    ip: 172.20.24.12
+    role: control-plane
