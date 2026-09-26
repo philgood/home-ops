@@ -90,17 +90,16 @@ spec:
         provider: host
         addressRanges:
           public: ["172.20.24.0/24"]
-          # The cluster network normally runs on the Thunderbolt mesh
-          # (169.254.255.0/24). It is pulled out because the mesh lost carrier
-          # on every link during the Talos 1.14.1 upgrade: the fabric still
-          # discovers peers on all three nodes, but ThunderboltIP never
-          # establishes, and neither a node reboot nor a hardware reset brought
-          # it back. With replication pointed at a dead network, 25 of 33 PGs
-          # could not peer and OSD heartbeats reached 130s.
+          # Replication runs on the Thunderbolt mesh: 20 Gb/s links at 65520
+          # MTU, measured sub-millisecond across all three legs.
           #
-          # Replication now shares the public network, which is slower but
-          # healthy. Put this back once the mesh has carrier again:
-          #   cluster: ["169.254.255.0/24"]
+          # This was briefly removed during the Talos 1.14.1 upgrade, when the
+          # mesh really did lose ThunderboltIP and 25 of 33 PGs stopped
+          # peering. Verify with /sys/class/net/<link>/carrier rather than the
+          # linkState column of `talosctl get links` -- that table shifts
+          # columns when a link has no alias, which is what made a recovered
+          # mesh look dead.
+          cluster: ["169.254.255.0/24"]
         connections:
           requireMsgr2: true
       security:
