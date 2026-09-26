@@ -13,6 +13,9 @@
 # Kubernetes
 kubeconfig
 talosconfig
+# Local client config, not shared
+/.mcp.json
+
 # Misc.
 .private/
 .task/
