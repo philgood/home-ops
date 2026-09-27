@@ -1,8 +1,15 @@
 ---
-# Must keep resolving to schematic id
-# 6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e, which is
-# what the nodes are installed from today. Changing anything here produces a
-# different id and therefore a different installer image.
+# Resolves to schematic id
+# 7dc1e96feedafefdd28936b7dd63659944928dabe718d61ba1d56974454983de.
+#
+# The nodes are still running the previous image,
+# 6471689ef9198e2867a84e0dc40552e7c3a94cb5d314985518dee17b6c077f8e --
+# thunderbolt.host_reset=0 was added 2026-09-27 and has NOT been rolled out yet.
+#
+# Kernel args live in the installer image, so `just talos apply` will not pick
+# this up: it needs a Talos upgrade to the new installer. Comments here are
+# stripped before the id is computed, so editing them is free; editing anything
+# under customization: is not.
 customization:
   extraKernelArgs:
     - -init_on_alloc                      # Less security, faster puter
@@ -17,6 +24,14 @@ customization:
     - mitigations=off                     # Less security, faster puter
     - security=none                       # Less security, faster puter
     - talos.auditd.disabled=1             # Less security, faster puter
+    # Stops the kernel resetting the USB4 host router during driver init, which
+    # otherwise leaves Thunderbolt ports enumerated but with no link after a
+    # reboot -- the state that needs a physical cable replug to clear. Ceph's
+    # cluster_network rides the TB mesh (169.254.255.0/24), so that failure
+    # takes the cluster network with it. Does NOT fix the other half: a running
+    # node's TB stack wedging when a peer reboots. Only moving cluster_network
+    # off Thunderbolt fixes that.
+    - thunderbolt.host_reset=0
     - net.ifnames=0
     - pcie_ports=native
   systemExtensions:
