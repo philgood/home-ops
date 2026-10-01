@@ -5,7 +5,7 @@ KUBECONFIG = "{{config_root}}/kubeconfig"
 TALOSCONFIG = "{{config_root}}/talos/talosconfig"
 
 [tools]
-"python" = "3.14.7"
+"python" = "3.14.8"
 "aqua:helmfile/vals" = "0.47.0"
 "aqua:casey/just" = "latest"
 "aqua:charmbracelet/gum" = "latest"
