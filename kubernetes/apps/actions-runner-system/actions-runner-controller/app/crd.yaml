@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/gitrepository-source-v1.json
+# Helm installs CRDs on first install and never upgrades them, so bumping the
+# charts alone leaves the CRDs frozen at whatever version first landed. That is
+# what broke home-ops-runner on 2026-10-02: chart 0.15.0 sets
+# .spec.listenerConfig on AutoscalingRunnerSet, the CRD was still 0.14.2, and
+# the server-side apply was rejected with "field not declared in schema".
+#
+# Tracking crds/ from the chart's own tag makes the CRDs a managed dependency
+# that Renovate bumps in lockstep with the charts. Note the tag is prefixed
+# rather than plain semver, so .renovaterc.json5 carries a regex versioning
+# rule to parse it.
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: gha-runner-scale-set-crd
+spec:
+  interval: 30m
+  url: https://github.com/actions/actions-runner-controller
+  ref:
+    tag: gha-runner-scale-set-0.15.0
+  ignore: |
+    # exclude
+    /*
+    # include
+    !charts/gha-runner-scale-set-controller/crds
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: gha-runner-scale-set-crd
+spec:
+  path: ./charts/gha-runner-scale-set-controller/crds
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: gha-runner-scale-set-crd
+  wait: true
+  interval: 15m
+  retryInterval: 1m
+  timeout: 5m

@@ -110,6 +110,30 @@
       },
     },
     {
+      // Group the controller chart, the runner scale-set chart and the CRDs so
+      // they move together. Helm never upgrades CRDs, so a chart that advances
+      // without them fails its server-side apply -- which is exactly how 0.15.0
+      // broke home-ops-runner ("`.spec.listenerConfig`: field not declared in
+      // schema") on 2026-10-02.
+      description: "Actions Runner Controller Group",
+      groupName: "Actions Runner Controller",
+      matchPackageNames: [
+        "/gha-runner-scale-set/",
+        "actions/actions-runner-controller",
+      ],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
+      // The CRD source is a GitRepository pinned to the chart's own git tag,
+      // which is prefixed rather than plain semver, so the default versioning
+      // cannot parse it and would silently never raise a PR.
+      description: "Actions Runner Controller CRDs - prefixed tag",
+      matchPackageNames: ["actions/actions-runner-controller"],
+      versioning: "regex:^gha-runner-scale-set-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+    },
+    {
       // Kubernetes cannot outrun the Talos line that runs it. The cluster is on
       // Talos 1.14, which defaults to Kubernetes 1.37, so the ceiling is 1.38.
       // Grouping batches Talos and kubelet together but cannot hold one back,

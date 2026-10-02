@@ -32,6 +32,11 @@ spec:
       app.kubernetes.io/name: *name
   dependsOn:
     - name: actions-runner-controller
+    # The runner chart is what consumes new CRD fields, so it must not be
+    # upgraded before the CRDs are. Created by the app Kustomization above,
+    # hence actions-runner-system rather than flux-system.
+    - name: gha-runner-scale-set-crd
+      namespace: actions-runner-system
     - name: external-secrets
       namespace: external-secrets
   interval: 1h
