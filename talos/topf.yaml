@@ -8,7 +8,7 @@ patchesDir: patches
 # The installer image is built from these plus the schematic below, which is
 # how the nodes already install: factory.talos.dev/metal-installer/<id>:<ver>.
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: v1.14.1
+talosVersion: v1.14.2
 # tuppr's KubernetesUpgrade drives the actual rollout; this must match it, or
 # the next `just talos apply` fights tuppr over the kubelet image. Do not run
 # that apply until tuppr reports the upgrade Completed.
