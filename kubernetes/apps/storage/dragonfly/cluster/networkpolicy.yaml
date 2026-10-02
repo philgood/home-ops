@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/networking.k8s.io/networkpolicy_v1.json
+# dragonfly-operator v1.7.0 started creating its own NetworkPolicy, owned by the
+# Dragonfly CR, whose 6379 ingress rule is `from: [{podSelector: {}}]` with no
+# namespaceSelector -- which means "same namespace only". That silently cut off
+# manyfold in `default`, the only cross-namespace consumer, on 2026-09-29.
+#
+# The operator has no flag to disable that policy and the `networkPolicyEnabled`
+# CR field does not exist in the v1alpha1 CRD (it gets pruned on write), so the
+# fix is to add a second policy. NetworkPolicies are additive -- the union of
+# every policy selecting a pod is what is allowed -- and this one is not owned
+# by the CR, so the operator leaves it alone across upgrades.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dragonfly-allow-manyfold
+spec:
+  podSelector:
+    matchLabels:
+      app: dragonfly
+      app.kubernetes.io/name: dragonfly
+      app.kubernetes.io/part-of: dragonfly
+  policyTypes: ["Ingress"]
+  ingress:
+    # Both selectors in one `from` entry are ANDed: manyfold's pods, in the
+    # default namespace -- not the whole namespace.
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: manyfold
+      ports:
+        - port: 6379
+          protocol: TCP
