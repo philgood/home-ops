@@ -157,4 +157,4 @@ spec:
     - datasourceName: Prometheus
       inputName: DS_PROMETHEUS
   folder: Kubernetes
-  url: https://grafana.com/api/dashboards/24987/revisions/2/download
+  url: https://grafana.com/api/dashboards/24987/revisions/6/download
