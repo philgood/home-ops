@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: mytesla/teslamateapi
-              tag: v2.9@sha256:0a1affe91f4392046458847f9260898b9648533913f0256a4c01f51d0ff84242
+              tag: v2.9@sha256:0a7558cff119095aad52934e549b9ab76c1810b3f8d8c20e5401f4ce84e76c08
             env:
               TZ: Australia/Sydney
             envFrom:
