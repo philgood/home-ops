@@ -5,7 +5,7 @@ kind: Dragonfly
 metadata:
   name: dragonfly
 spec:
-  image: ghcr.io/dragonflydb/dragonfly:v2.0.0
+  image: ghcr.io/dragonflydb/dragonfly:v2.0.2
   replicas: 3
   # No networkPolicyEnabled here: the v1alpha1 CRD has no such field and does
   # not preserve unknown ones, so Kubernetes prunes it on write and it silently
