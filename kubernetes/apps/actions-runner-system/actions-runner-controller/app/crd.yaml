@@ -18,7 +18,7 @@ spec:
   interval: 30m
   url: https://github.com/actions/actions-runner-controller
   ref:
-    tag: gha-runner-scale-set-0.15.0
+    tag: gha-runner-scale-set-0.15.1
   ignore: |
     # exclude
     /*
