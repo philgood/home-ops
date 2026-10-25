@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: brchri/tesla-geogdo
-              tag: 2.3.2@sha256:facd09cfd0e946c41361dc563a047cc89f0b5489f70330c770ca1fe70476fe17
+              tag: 2.3.3@sha256:9fcb3c170cc6551f1f3632bedd5fd73a760e6fc3638eb4d7e3557dc60d5dae96
             env:
               TZ: Australia/Sydney
             envFrom:
