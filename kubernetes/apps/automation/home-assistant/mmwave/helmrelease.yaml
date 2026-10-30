@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: docker.io/everythingsmarthome/everything-presence-mmwave-configurator
-              tag: 2.2.5@sha256:c724233656a40394b72b234544c7e0dd518cb5655bd1e965852cb10652e12b70
+              tag: 2.2.5@sha256:5b28d8ec611322a89c6833f2467019ec5242664870f131b7c3c9fa1911f5138d
             env:
               TZ: Australia/Sydney
               HA_BASE_URL: http://home-assistant.automation.svc.cluster.local:8123
