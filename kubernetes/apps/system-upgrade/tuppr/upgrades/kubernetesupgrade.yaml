@@ -12,7 +12,7 @@ spec:
     # when they disagree, tuppr and the generated machine config fight over the
     # cluster, which broke the upgrade twice before.
     # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-    version: v1.37.1
+    version: v1.37.2
   healthChecks:
     - apiVersion: volsync.backube/v1alpha1
       kind: ReplicationSource
