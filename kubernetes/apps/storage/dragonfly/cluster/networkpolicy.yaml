@@ -62,3 +62,18 @@ spec:
       ports:
         - port: 9999
           protocol: TCP
+    # Prometheus scrapes the dragonfly PodMonitor on its `admin` port (9999)
+    # from the observability namespace. Without this the target is simply
+    # down -- the pods are healthy and a master is elected, Prometheus just
+    # cannot reach them. Third gap in the operator's same-namespace-only
+    # policy, after 6379 for consumers and 9999 for the operator itself.
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - port: 9999
+          protocol: TCP
