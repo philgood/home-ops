@@ -46,3 +46,13 @@ spec:
         enabled: true
         interval: 1m
         scrapeTimeout: 10s
+    # The chart defaults to a 1Gi ceiling, which drives GOMEMLIMIT to 90% of
+    # it. Rendering this repo's diffs peaks at 860-975Mi, so it was hitting
+    # the kernel OOM killer ~16s after every start (exit 137, 35 restarts).
+    # The chart's own guidance is to raise this for large clusters.
+    resources:
+      limits:
+        memory: 2Gi
+      requests:
+        cpu: 50m
+        memory: 256Mi

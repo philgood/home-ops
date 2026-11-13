@@ -10,9 +10,12 @@ spec:
     operation: copy
   ref:
     tag: 4.4.0
-  url: oci://ghcr.io/home-operations/charts-mirror/openebs
-  verify:
-    provider: cosign
+  # Upstream publishes no cosign signature (no .sig tag, no OCI
+  # referrers), so the previous `verify: {provider: cosign}` cannot be
+  # satisfied here. This is the OpenEBS project's own registry rather
+  # than a third-party mirror, so provenance is arguably better, but
+  # the signature check is genuinely lost.
+  url: oci://ghcr.io/openebs/charts/openebs
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
