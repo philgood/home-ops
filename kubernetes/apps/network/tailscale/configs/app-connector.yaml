@@ -4,8 +4,15 @@ kind: Connector
 metadata:
   name: app-connector
 spec:
-  appConnector:
-    routes:
+  # Subnet router, not an app connector. An app connector routes traffic for
+  # DOMAINS declared in the tailnet policy file; its `routes` are only
+  # preconfigured routes for those domains. With no domains declared it
+  # advertises nothing usable ("appc: handling domains: []"), so tailnet
+  # clients can never reach these CIDRs by IP. A subnet router advertises the
+  # CIDRs directly, and `autoApprovers` (keyed on tag:k8s) in the tailnet
+  # policy approves them automatically, including after a recreate.
+  subnetRouter:
+    advertiseRoutes:
       - 172.20.22.0/24
       - 172.20.24.0/24
   hostname: homelab-ingress
