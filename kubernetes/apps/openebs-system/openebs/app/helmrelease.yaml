@@ -9,7 +9,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 4.4.0
+    tag: 4.6.2
   # Upstream publishes no cosign signature (no .sig tag, no OCI
   # referrers), so the previous `verify: {provider: cosign}` cannot be
   # satisfied here. This is the OpenEBS project's own registry rather
