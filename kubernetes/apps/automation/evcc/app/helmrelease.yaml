@@ -65,6 +65,28 @@ spec:
           - backendRefs:
               - identifier: app
                 port: http
+    # Reachable on the tailnet as https://evcc.taile9c64.ts.net without
+    # publishing anything or relying on the subnet router. The subnet router
+    # advertises 172.20.24.0/24, but evcc.narden.au is a PUBLIC name resolving
+    # to a PRIVATE address (172.20.24.21), and mobile resolvers routinely drop
+    # RFC1918 answers as DNS rebinding -- which is why it resolved from a
+    # laptop on 1.1.1.1 but not from the phone.
+    #
+    # tls.hosts[0] is NOT a certificate reference: the Tailscale operator reads
+    # it as the MagicDNS device name and terminates TLS itself. defaultBackend
+    # (rather than a host rule) is deliberate -- Tailscale sends the Host header
+    # as evcc.taile9c64.ts.net, so any host-matched rule would 404.
+    ingress:
+      tailscale:
+        className: tailscale
+        defaultBackend:
+          service:
+            name: evcc
+            port:
+              number: 7070
+        tls:
+          - hosts: ["evcc"]
+
     persistence:
       config:
         existingClaim: "evcc"
